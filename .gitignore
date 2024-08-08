@@ -1,120 +1,43 @@
-### NextJS ###
-# dependencies
-/node_modules
-/.pnp
-.pnp.js
-
-# testing
-/coverage
-
-# next.js
-/.next/
-/out/
-
-# production
-/build
-
-# misc
-.DS_Store
-*.pem
-
-# debug logs
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-.pnpm-debug.log*
-
-# local env files
-.env*.local
-
-# vercel
-.vercel
-
-# typescript
-*.tsbuildinfo
-next-env.d.ts
-
 ### Node ###
 # Logs
-logs
+logs/
 *.log
-lerna-debug.log*
 
-# Diagnostic reports (https://nodejs.org/api/report.html)
-report.[0-9]*.[0-9]*.[0-9]*.[0-9]*.json
+# Node modules and package management
+node_modules
+.pnp.*
+.yarn/
+.pnpm-debug.log*
 
-# Runtime data
-pids
-*.pid
-*.seed
-*.pid.lock
+### NextJS ###
+# Next.js build output
+.next/
+out/
+build/
 
-# Coverage directory used by tools like istanbul
-coverage
-*.lcov
+# Local environment files
+.env*.local
 
-# nyc test coverage
-.nyc_output
+### Miscellaneous ###
+# OS generated files
+.DS_Store
 
-# Grunt intermediate storage (https://gruntjs.com/creating-plugins#storing-task-files)
-...(about 57 lines omitted)...
-# Nuxt.js build / generate output
-.nuxt
-dist
-
-# Gatsby files
-.cache/
-# Uncomment the following line if your project uses Gatsby
-# public
-
-# vuepress build output
-.vuepress/dist
-
-# vuepress v2.x temp and cache directory
-.temp
-
-# Docusaurus cache and generated files
-.docusaurus
-
-# Serverless directories
-.serverless/
-
-# FuseBox cache
-.fusebox/
-
-# DynamoDB Local files
-.dynamodb/
-
-# TernJS port file
+# Editor-specific files
+.vscode-test/
 .tern-port
 
-# Stores VSCode versions used for testing VSCode extensions
-.vscode-test
+# Ignore all cache directories generally
+cache/
 
-# yarn v2
+# Specific tool caches
 .yarn/cache
 .yarn/unplugged
-.yarn/build-state.yml
-.yarn/install-state.gz
-.pnp.*
+.fusebox/
 
-### Node Patch ###
-# Serverless Webpack directories
-.webpack/
-
-# Optional stylelint cache
-
-# SvelteKit build / generate output
-.svelte-kit
-
-# Compiler files
-cache/
-out/
-
-# Ignores development broadcast logs
-!/broadcast
+# Development specific
 /broadcast/*/31337/
 /broadcast/**/dry-run/
 
-# Docs
+# Documentation
 docs/
+lib/
