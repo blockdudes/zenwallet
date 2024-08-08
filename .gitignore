@@ -1,7 +1,7 @@
 # Common directories and files to ignore
 
 # Dependency directories
-node_modules/
+node_modules
 vendor/
 
 # Environment files
