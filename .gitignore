@@ -91,6 +91,7 @@ dist/
 # Next.js build output
 .next
 out/
+lib/
 
 # Nuxt.js build output
 .nuxt
