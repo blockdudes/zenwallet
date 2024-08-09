@@ -5,7 +5,7 @@ import StoreProvider from "@/lib/StoreProvider";
 import { ConnectButton, ThirdwebProvider } from "thirdweb/react";
 import { client } from "@/lib/client";
 import { Toaster } from "react-hot-toast";
-
+import Navbar from "@/components/Navbar";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -24,7 +24,22 @@ export default function RootLayout({
       <body className={inter.className}>
         <ThirdwebProvider>
           <StoreProvider>
-            <div className="absolute top-3 right-3">
+            <img
+              src="/blue.svg"
+              alt="Blue"
+              className="fixed -top-[50px] -left-[15px] z-[-100] animate-floatUp"
+            />
+            <img
+              src="/green.svg"
+              alt="green"
+              className="fixed -bottom-[100px] -right-[150px] z-[-100] animate-floatDown"
+            />
+            {/* <img
+              src="/glass.svg"
+              alt="glass"
+              className="fixed z-[-100] backdrop-blur-2xl rounded-[40px]"
+            /> */}
+            <div className="fixed top-3 right-3">
               <div className="flex justify-center mb-20">
                 <ConnectButton
                   client={client}
@@ -35,11 +50,15 @@ export default function RootLayout({
                 />
               </div>
             </div>
-            <Toaster
-              position="top-center"
-              reverseOrder={false}
-            />
-            {children}
+            <Toaster position="top-center" reverseOrder={false} />
+            <div className="fixed top-0 left-0 w-full h-20">
+              <Navbar />
+            </div>
+            <div className="py-24 px-36 min-h-screen">
+              <div className="border-[1px] p-4 min-h-[calc(100vh_-_192px)] bg-[url('/glass.svg')] bg-cover bg-center bg-no-repeat rounded-[40px] backdrop-blur-2xl">
+                {children}
+              </div>
+            </div>
           </StoreProvider>
         </ThirdwebProvider>
       </body>

@@ -1,10 +1,14 @@
 import { configureStore } from '@reduxjs/toolkit'
+import pageSelectorSlice from './features/pageSelector/pageSelectorSlice'
 
 export const makeStore = () => {
   return configureStore({
-    reducer: {},
+    reducer: {
+      pageSelector: pageSelectorSlice,
+    },
   })
 }
+
 
 // Infer the type of makeStore
 export type AppStore = ReturnType<typeof makeStore>
