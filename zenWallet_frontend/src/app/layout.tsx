@@ -5,7 +5,8 @@ import StoreProvider from "@/lib/StoreProvider";
 import { ConnectButton, ThirdwebProvider } from "thirdweb/react";
 import { client } from "@/lib/client";
 import { Toaster } from "react-hot-toast";
-import Navbar from "@/components/Navbar";
+import Navbar from "@/components/root-components/Navbar";
+import { lightTheme } from "thirdweb/react";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -34,19 +35,18 @@ export default function RootLayout({
               alt="green"
               className="fixed -bottom-[100px] -right-[150px] z-[-100] animate-floatDown"
             />
-            {/* <img
-              src="/glass.svg"
-              alt="glass"
-              className="fixed z-[-100] backdrop-blur-2xl rounded-[40px]"
-            /> */}
-            <div className="fixed top-3 right-3">
-              <div className="flex justify-center mb-20">
+            <div className="fixed z-[100] top-3 right-3">
+              <div className="flex justify-center mb-20 ">
                 <ConnectButton
                   client={client}
-                  appMetadata={{
-                    name: "Example App",
-                    url: "https://example.com",
-                  }}
+                  theme={lightTheme({
+                    colors: {
+                      primaryButtonBg: "#ffffff",
+                      primaryButtonText: "#000000",
+                    },
+                    
+                  })}
+                  connectModal={{ size: "wide" }}
                 />
               </div>
             </div>
@@ -55,7 +55,7 @@ export default function RootLayout({
               <Navbar />
             </div>
             <div className="py-24 px-36 min-h-screen">
-              <div className="border-[1px] p-4 min-h-[calc(100vh_-_192px)] bg-[url('/glass.svg')] bg-cover bg-center bg-no-repeat rounded-[40px] backdrop-blur-2xl">
+              <div className="p-4 border-white/20 border-[1px] shadow-md  min-h-[calc(100vh_-_192px)] bg-[url('/glass.svg')] bg-cover bg-center bg-no-repeat rounded-[20px] backdrop-blur-2xl">
                 {children}
               </div>
             </div>

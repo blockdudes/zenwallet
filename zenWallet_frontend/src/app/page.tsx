@@ -1,13 +1,22 @@
 "use client";
 
+import { client } from "@/lib/client";
+import { useEffect } from "react";
 import toast from "react-hot-toast";
+import { ConnectButton } from "thirdweb/react";
+import { useActiveWalletConnectionStatus } from "thirdweb/react";
 
 export default function Home() {
+  const status = useActiveWalletConnectionStatus();
+
+  useEffect(() => {
+    console.log(status);
+  }, [status]);
+ 
   return (
     <main>
-
       <button
-        className="bg-[url('/glass.svg')] bg-cover bg-center bg-no-repeat rounded-md px-[20px] py-[10px] text-white"
+        className="bg-[url('/glass.svg')] bg-cover bg-center bg-no-repeat rounded-md px-[20px] py-[10px] text-white "
         onClick={async () =>
           toast.promise(
             new Promise((resolve, reject) => {

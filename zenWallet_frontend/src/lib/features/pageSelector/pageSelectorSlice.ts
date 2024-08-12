@@ -7,7 +7,7 @@ interface PageSelectorState {
 }
 
 const initialState: PageSelectorState = {
-  value: '',
+  value: 'wallet',
 }
 
 export const pageSelectorSlice = createSlice({
