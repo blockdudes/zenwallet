@@ -8,28 +8,37 @@ import {
   TabPanel,
 } from "@material-tailwind/react";
 import React, { useState } from "react";
+import toast from "react-hot-toast";
 import { FaEthereum } from "react-icons/fa";
 import { SiJsonwebtokens } from "react-icons/si";
+import { BeatLoader } from "react-spinners";
 
 const SendDetailsTabs = () => {
   const [tokenAddress, setTokenAddress] = useState("");
   const [recipientAddress, setRecipientAddress] = useState("");
   const [amount, setAmount] = useState("");
   const [isEth, setIsEth] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
-  const handleTokenAddressChange = (e: React.ChangeEvent<HTMLInputElement>) =>
-    setTokenAddress(e.target.value);
-  const handleRecipientAddressChange = (
-    e: React.ChangeEvent<HTMLInputElement>
-  ) => setRecipientAddress(e.target.value);
-  const handleAmountChange = (e: React.ChangeEvent<HTMLInputElement>) =>
-    setAmount(e.target.value);
-
-
-  const handleSend = () => {
-    setRecipientAddress("");
-    setTokenAddress("");
-    setAmount("");
+  async function handleSend() {
+    setIsLoading(true);
+    toast.promise(
+      new Promise<void>((resolve, reject) => {
+        console.log(isLoading);
+        setTimeout(() => {
+          setIsLoading(false);
+          resolve();
+          setRecipientAddress("");
+          setTokenAddress("");
+          setAmount("");
+        }, 3000);
+      }),
+      {
+        loading: "Sending...",
+        success: <b>Transaction sent!</b>,
+        error: <b>Could not send transaction.</b>,
+      }
+    );
     console.log({
       tokenAddress: isEth
         ? "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"
@@ -38,7 +47,15 @@ const SendDetailsTabs = () => {
       amount,
       isEth,
     });
-  };
+  }
+
+  const handleTokenAddressChange = (e: React.ChangeEvent<HTMLInputElement>) =>
+    setTokenAddress(e.target.value);
+  const handleRecipientAddressChange = (
+    e: React.ChangeEvent<HTMLInputElement>
+  ) => setRecipientAddress(e.target.value);
+  const handleAmountChange = (e: React.ChangeEvent<HTMLInputElement>) =>
+    setAmount(e.target.value);
 
   return (
     <div className="flex justify-center items-center h-full w-full">
@@ -162,7 +179,9 @@ const SendDetailsTabs = () => {
           className="w-1/2 bg-white/10 backdrop-blur-sm rounded-lg p-2"
           onClick={handleSend}
         >
-          Send
+          <div className="flex items-center justify-center h-[20px] text-white">
+            {isLoading ? <BeatLoader size={5} color="white" /> : "SEND"}
+          </div>
         </button>
       </div>
     </div>

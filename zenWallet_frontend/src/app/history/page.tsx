@@ -1,11 +1,12 @@
-import React from 'react'
+import HistoryTable from "@/components/history-components/historyTable";
+import React from "react";
 
 const HistoryPage = () => {
   return (
-    <div>
-      
+    <div className="p-4">
+      <HistoryTable />
     </div>
-  )
-}
+  );
+};
 
-export default HistoryPage
+export default HistoryPage;

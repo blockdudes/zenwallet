@@ -9,7 +9,7 @@ const WalletPage = () => {
 
   return (
     <div className="min-h-[calc(100vh_-_228px)] w-full flex p-10 justify-between items-center align-middle">
-      <div className="absolute top-[50px] left-[200px] flex justify-center align-middle items-start flex-col ">
+      <div className="absolute top-[100px] left-[220px] flex justify-center align-middle items-start flex-col ">
         <span className="text-white/50">Balance</span>
         <span className=" text-2xl text-white">29292</span>
       </div>

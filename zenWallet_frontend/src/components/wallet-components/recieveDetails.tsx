@@ -4,6 +4,7 @@ import { ClipboardDocumentCheckIcon } from "@heroicons/react/24/outline";
 import { Input } from "@material-tailwind/react";
 import QRCode from "react-qr-code";
 import { useActiveAccount } from "thirdweb/react";
+import toast from "react-hot-toast";
 
 const RecieveDetails = () => {
   const activeAccount = useActiveAccount();
@@ -12,6 +13,7 @@ const RecieveDetails = () => {
 
   const handleCopy = () => {
     navigator.clipboard.writeText(address || "");
+    toast.success("Address copied to clipboard");
   };
 
   const truncateAddress = (address: string) => {

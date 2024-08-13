@@ -1,6 +1,5 @@
 import { configureStore } from '@reduxjs/toolkit'
 import pageSelectorSlice from './features/pageSelector/pageSelectorSlice'
-
 export const makeStore = () => {
   return configureStore({
     reducer: {
