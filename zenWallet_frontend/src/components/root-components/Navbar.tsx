@@ -2,10 +2,11 @@
 import React from "react";
 import { useAppDispatch, useAppSelector } from "@/lib/hook";
 import { setPage } from "@/lib/features/pageSelector/pageSelectorSlice";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation"; // Corrected import for useRouter
 
 const Navbar = () => {
   const router = useRouter();
+  const pathname = usePathname();
 
   const page = useAppSelector((state) => state.pageSelector.value);
   const dispatch = useAppDispatch();
@@ -15,49 +16,52 @@ const Navbar = () => {
     router.push(`/${newPage}`); // Navigate to the new page
   };
 
+  // Determine the active page based on the current route
+  const isActive = (pageName: string) => pathname === `/${pageName}`;
+
   return (
-    <>
+    <div >
       <img
         src="/logoText.svg"
         alt="logo"
-        className="fixed top-4 left-5 z-[100] cursor-pointer"
+        className="fixed top-4 left-5 z-[100] cursor-pointer select-none"
         onClick={() => router.push("/")}
       />
-      <div className="flex items-center justify-center w-full h-20 space-x-10">
+      <div className="flex items-center justify-center w-full h-20 space-x-10 ">
         <span
-          className={`text-l  ${
-            page === "wallet" ? "text-yellow-500" : "text-white"
+          className={`text-l cursor-pointer select-none ${
+            isActive("wallet") ? "text-yellow-500" : "text-white"
           }`}
           onClick={() => handleNavigation("wallet")}
         >
           Wallet
         </span>
         <span
-          className={`text-l  ${
-            page === "swap" ? "text-yellow-500" : "text-white"
+          className={`text-l cursor-pointer select-none ${
+            isActive("swap") ? "text-yellow-500" : "text-white"
           }`}
           onClick={() => handleNavigation("swap")}
         >
           Swap
         </span>
         <span
-          className={`text-l ${
-            page === "aave" ? "text-yellow-500" : "text-white"
+          className={`text-l cursor-pointer select-none ${
+            isActive("aave") ? "text-yellow-500" : "text-white"
           }`}
           onClick={() => handleNavigation("aave")}
         >
           Aave
         </span>
         <span
-          className={`text-l ${
-            page === "history" ? "text-yellow-500" : "text-white"
+          className={`text-l cursor-pointer select-none ${
+            isActive("history") ? "text-yellow-500" : "text-white"
           }`}
           onClick={() => handleNavigation("history")}
         >
           History
         </span>
       </div>
-    </>
+    </div>
   );
 };
 

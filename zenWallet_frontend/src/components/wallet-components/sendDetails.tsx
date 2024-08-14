@@ -12,6 +12,7 @@ import toast from "react-hot-toast";
 import { FaEthereum } from "react-icons/fa";
 import { SiJsonwebtokens } from "react-icons/si";
 import { BeatLoader } from "react-spinners";
+import { useActiveAccount } from "thirdweb/react";
 
 const SendDetailsTabs = () => {
   const [tokenAddress, setTokenAddress] = useState("");
@@ -19,9 +20,41 @@ const SendDetailsTabs = () => {
   const [amount, setAmount] = useState("");
   const [isEth, setIsEth] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const activeAccount = useActiveAccount();
+
+  const storeTransaction = (transactionData: any) => {
+    // Fetch existing transactions from localStorage
+    const existingTransactions = localStorage.getItem("transactionData");
+    const transactions = existingTransactions
+      ? JSON.parse(existingTransactions)
+      : [];
+
+    if (!Array.isArray(transactions)) {
+      console.error("Stored transaction data is corrupted or not an array");
+      return; // Optionally handle this case more gracefully
+    }
+    // Add the new transaction to the array using the spread operator
+    const updatedTransactions = [...transactions, transactionData];
+
+    // Save the updated array back to localStorage
+    localStorage.setItem(
+      "transactionData",
+      JSON.stringify(updatedTransactions)
+    );
+  };
 
   async function handleSend() {
     setIsLoading(true);
+    // Store transaction data in local storage
+    const transactionData = {
+      TYPE: "send",
+      AMOUNT: amount,
+      TOKEN_ADDRESS: tokenAddress,
+      SENDER_ADDRESS: activeAccount?.address,
+      RECEIVER_ADDRESS: recipientAddress,
+    };
+    storeTransaction(transactionData);
+
     toast.promise(
       new Promise<void>((resolve, reject) => {
         console.log(isLoading);

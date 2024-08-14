@@ -6,31 +6,72 @@ import { Input } from "@material-tailwind/react";
 import { TokenSelectDialog } from "./tokenSelectDialog"; // Import the TokenSelectDialog component
 import toast from "react-hot-toast";
 import { BeatLoader } from "react-spinners";
+import { useActiveAccount } from "thirdweb/react";
 
 const SwapModal = () => {
   const [sellAmount, setSellAmount] = useState("");
   const [buyAmount, setBuyAmount] = useState("");
   const [sellToken, setSellToken] = useState({
     label: "",
-    value: "",
+    address: "",
     src: "https://assets.coingecko.com/coins/images/26580/standard/ONDO.png?1696525656",
   });
+
   const [buyToken, setBuyToken] = useState({
     label: "",
-    value: "",
+    address: "",
     src: "https://assets.coingecko.com/coins/images/26580/standard/ONDO.png?1696525656",
   });
   const [openSellDialog, setOpenSellDialog] = useState(false);
   const [openBuyDialog, setOpenBuyDialog] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const activeAccount = useActiveAccount();
+
+  // Define a new function to handle the sell amount change and calculate the buy amount
+  function handleSellAmountChange(e: React.ChangeEvent<HTMLInputElement>) {
+    const sellValue = e.target.value;
+    setSellAmount(sellValue);
+    const calculatedBuyAmount = sellValue ? (parseFloat(sellValue) * 5).toString() : "";
+    setBuyAmount(calculatedBuyAmount);
+  }
+
+  const storeTransaction = (transactionData: any) => {
+    // Fetch existing transactions from localStorage
+    const existingTransactions = localStorage.getItem("transactionData");
+    const transactions = existingTransactions
+      ? JSON.parse(existingTransactions)
+      : [];
+
+    if (!Array.isArray(transactions)) {
+      console.error("Stored transaction data is corrupted or not an array");
+      return; // Optionally handle this case more gracefully
+    }
+    // Add the new transaction to the array using the spread operator
+    const updatedTransactions = [...transactions, transactionData];
+
+    // Save the updated array back to localStorage
+    localStorage.setItem(
+      "transactionData",
+      JSON.stringify(updatedTransactions)
+    );
+  };
 
   async function handleSwap() {
     setIsLoading(true);
-    if (sellToken.value === buyToken.value) {
+    if (sellToken.address === buyToken.address) {
       toast.error("Tokens cannot be the same");
       setIsLoading(false);
       return;
     }
+    const transactionData = {
+      TYPE: "swap",
+      AMOUNT: sellAmount,
+      TOKEN_ADDRESS: sellToken.address,
+      SENDER_ADDRESS: activeAccount?.address,
+      RECEIVER_ADDRESS: "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48",
+    };
+    storeTransaction(transactionData);
+
     toast.promise(
       new Promise<void>((resolve, reject) => {
         console.log(isLoading);
@@ -41,12 +82,12 @@ const SwapModal = () => {
           setBuyAmount("");
           setSellToken({
             label: "",
-            value: "",
+            address: "",
             src: "https://assets.coingecko.com/coins/images/26580/standard/ONDO.png?1696525656",
           });
           setBuyToken({
             label: "",
-            value: "",
+            address: "",
             src: "https://assets.coingecko.com/coins/images/26580/standard/ONDO.png?1696525656",
           });
         }, 3000);
@@ -59,9 +100,9 @@ const SwapModal = () => {
     );
     console.log({
       "sell amount: ": sellAmount,
-      "sell token: ": sellToken.value,
+      "sell token: ": sellToken.address,
       "buy amount: ": buyAmount,
-      "buy token: ": buyToken.value,
+      "buy token: ": buyToken.address,
     });
   }
 
@@ -78,7 +119,7 @@ const SwapModal = () => {
               label="Sell"
               className="w-full [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
               value={sellAmount}
-              onChange={(e) => setSellAmount(e.target.value)}
+              onChange={handleSellAmountChange}
               onPointerEnterCapture={undefined}
               onPointerLeaveCapture={undefined}
               crossOrigin={undefined}
@@ -87,7 +128,7 @@ const SwapModal = () => {
               className="backdrop-blur-md bg-gray-200/30 rounded-full p-2 w-[180px] text-white flex items-center justify-between gap-2 text-xs"
               onClick={() => setOpenSellDialog(true)}
             >
-              {sellToken.value ? (
+              {sellToken.address ? (
                 <>
                   <div className="bg-white rounded-full p-1">
                     <img
@@ -127,7 +168,7 @@ const SwapModal = () => {
               label="Buy"
               className="w-full [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
               value={buyAmount}
-              onChange={(e) => setBuyAmount(e.target.value)}
+              readOnly
               onPointerEnterCapture={undefined}
               onPointerLeaveCapture={undefined}
               crossOrigin={undefined}
@@ -136,7 +177,7 @@ const SwapModal = () => {
               className="backdrop-blur-md bg-gray-200/30 rounded-full p-2 w-[180px] text-white flex items-center justify-between gap-2 text-sm"
               onClick={() => setOpenBuyDialog(true)}
             >
-              {buyToken.value ? (
+              {buyToken.address ? (
                 <>
                   <div className="bg-white rounded-full p-1">
                     <img
