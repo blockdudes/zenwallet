@@ -16,8 +16,8 @@ const LendComponent = () => {
   };
 
   return (
-    <div className="w-full h-full flex flex-col gap-3">
-      <div className="text-white ">ASSETS TO LEND</div>
+    <div className="w-full h-full flex flex-col gap-1">
+      <div className="text-white  bg-white/10 hover:bg-white/20 rounded-md px-5 py-1 backdrop-blur-sm">ASSETS TO LEND</div>
       <div className="relative ">
         <div className="text-sm text-left text-gray-300">
           {/* Static header */}

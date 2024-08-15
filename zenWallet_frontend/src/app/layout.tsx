@@ -3,10 +3,8 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import StoreProvider from "@/lib/StoreProvider";
 import { ConnectButton, ThirdwebProvider } from "thirdweb/react";
-import { client } from "@/lib/client";
 import { Toaster } from "react-hot-toast";
 import Navbar from "@/components/root-components/Navbar";
-import { lightTheme } from "thirdweb/react";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -35,21 +33,21 @@ export default function RootLayout({
               alt="green"
               className="fixed -bottom-[100px] -right-[150px] z-[-100] animate-floatDown"
             />
-            <div className="fixed z-[100] top-3 right-3">
-              <div className="flex justify-center mb-20 ">
-                <ConnectButton
-                  client={client}
-                  theme={lightTheme({
-                    colors: {
-                      primaryButtonBg: "#ffffff",
-                      primaryButtonText: "#000000",
-                    },
-                    
-                  })}
-                  connectModal={{ size: "wide" }}
-                />
-              </div>
-            </div>
+            <img
+              src="/star.svg"
+              alt="stars"
+              className="fixed bottom-[20px] left-[50px] z-[100] h-52 w-52"
+            />
+            <img
+              src="/star.svg"
+              alt="stars"
+              className="fixed top-[15px] right-[150px] z-[100] "
+            />
+            <img
+              src="/star.svg"
+              alt="stars"
+              className="fixed top-[110px] right-[160px] z-[100] h-12 w-12"
+            />
             <Toaster position="top-center" reverseOrder={false} />
             <div className="fixed top-0 left-0 w-full h-20">
               <Navbar />
