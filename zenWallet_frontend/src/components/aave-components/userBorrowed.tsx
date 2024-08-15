@@ -2,22 +2,101 @@
 import React, { useState } from "react";
 import { UserBorrowedDialog } from "./userBorrowedDialog";
 
+import {
+  getContract,
+  readContract,
+  prepareContractCall,
+  sendAndConfirmTransaction,
+} from "thirdweb";
+import { client } from "../../lib/client";
+import { sepolia } from "thirdweb/chains";
+import { useActiveAccount } from "thirdweb/react";
+
+import { zenContractABI } from "../../abis/zenContractABI";
+import { ethers } from "ethers";
+
 const ASSETS = [
-  { name: "Ethereum", amount: 5, address: "0x213243wqdsfrwqe1r32efdvwcsaxdewr" },
-  { name: "Cardano", amount: 1000, address: "0x213243wqdsfrwqe1r32efdvwcsaxdewr" },
+  {
+    name: "Ethereum",
+    amount: 5,
+    address: "0x213243wqdsfrwqe1r32efdvwcsaxdewr",
+  },
+  {
+    name: "Cardano",
+    amount: 1000,
+    address: "0x213243wqdsfrwqe1r32efdvwcsaxdewr",
+  },
 ];
 
 const UserBorrowed = () => {
   const [dialogOpen, setDialogOpen] = useState(false);
   const [selectedAsset, setSelectedAsset] = useState(null);
+  const activeAccount = useActiveAccount();
 
   const handleBorrowClick = (asset: any) => {
     setSelectedAsset(asset);
     setDialogOpen(true);
   };
 
+  const readRContract = async () => {
+    try {
+      if (activeAccount) {
+        const Gcontract = getContract({
+          address: "0x07BDb8D33CBD393311C0df5fC8d4e1F1717CdF7B",
+          abi: zenContractABI as any,
+          client: client,
+          chain: sepolia,
+        });
+
+        console.log(Gcontract);
+
+        const read = await readContract({
+          contract: Gcontract,
+          method:
+            "function getWallet(address signer) public view returns (Wallet memory)",
+          params: [activeAccount?.address],
+        });
+
+        console.log(read);
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const writeContract = async () => {
+    try {
+      if (activeAccount) {
+        const Gcontract = getContract({
+          address: "0x07BDb8D33CBD393311C0df5fC8d4e1F1717CdF7B",
+          abi: zenContractABI as any,
+          client: client,
+          chain: sepolia,
+        });
+
+        const transaction = await prepareContractCall({
+          contract: Gcontract,
+          method: "requestNewEVMWallet",
+          params: [],
+          value: BigInt(ethers.utils.parseEther("1").toString()),
+          gas: BigInt(100000),
+        });
+
+        const result = await sendAndConfirmTransaction({
+          transaction: transaction,
+          account: activeAccount,
+        });
+
+        console.log(result);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <div className="w-full h-full flex flex-col gap-3">
+      <button onClick={readRContract}>TTTt</button>
       <div className="text-white ">ASSETS YOU BORROWED</div>
       <div className="relative">
         <div className="text-sm text-left text-gray-300">
@@ -60,7 +139,12 @@ const UserBorrowed = () => {
           </div>
         </div>
       </div>
-      {dialogOpen && selectedAsset && <UserBorrowedDialog asset={selectedAsset} onClose={() => setDialogOpen(false)} />}
+      {dialogOpen && selectedAsset && (
+        <UserBorrowedDialog
+          asset={selectedAsset}
+          onClose={() => setDialogOpen(false)}
+        />
+      )}
     </div>
   );
 };
