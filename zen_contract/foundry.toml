@@ -2,6 +2,10 @@
 src = "src"
 out = "out"
 libs = ["lib"]
-libraries = ["src/zr/libraries/SignTypes.sol:SignTypes:0xccF68f83A9A6A780cb00fC9C6509A1814dB617c8"]
+libraries = ["src/zr/libraries/SignTypes.sol:SignTypes:0xa547575b26Ff136a9d2700ec067111cDAc67F158"]
+optimizer = true
+optimizer_runs = 200
+via_ir = true
 
 # See more config options https://github.com/foundry-rs/foundry/blob/master/crates/config/README.md#all-options
+

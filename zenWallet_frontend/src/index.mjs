@@ -32,16 +32,17 @@ export async function rlpEncodeTx(to, value, gasLimit, gasPrice, nonce, data) {
 }
 
 
-    const rlpEncodedTx = await rlpEncodeTx(
-        '0x20c9192B145CA6D6274704B244614f356361db59',
-        BigInt(ethers.parseUnits('0.001', 'ether').toString()),
-        25000,
-        Number(ethers.parseUnits('31', 'gwei')),
-        BigInt(0),
-        "0x",
-    );
+    // const rlpEncodedTx = await rlpEncodeTx(
+    //     '0x20c9192B145CA6D6274704B244614f356361db59',
+    //     BigInt(ethers.parseUnits('0.0001', 'ether').toString()),
+    //     25000,
+    //     Number(ethers.parseUnits('31', 'gwei')),
+    //     BigInt(0),
+    //     "0x"
+    // );
 
-    console.log("rlpEncodedTx:", Buffer.from(rlpEncodedTx).toString('hex')); 
+    // console.log("rlpEncodedTx:", Buffer.from(rlpEncodedTx).toString('hex')); 
+    console.log( await provider.getTransactionCount('0xf858B9B489005f7E09B568ff05A91B5ab761a91F'))
 // const hexString = '0x' + transaction.map(byte => byte.toString(16).padStart(2, '0')).join('');
 // console.log(hexString);
 

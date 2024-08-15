@@ -6,7 +6,7 @@ enum CALLBACK_TYPE {
     BORROW
 }
 interface ISaveAaveData extends Document{
-    userAddress: number;
+    userAddress: string;
     amount: number;
     tokenAddress: string;
     callbackType: CALLBACK_TYPE;
