@@ -1,0 +1,7 @@
+[profile.default]
+src = "src"
+out = "out"
+libs = ["lib"]
+libraries = ["src/zr/libraries/SignTypes.sol:SignTypes:0xccF68f83A9A6A780cb00fC9C6509A1814dB617c8"]
+
+# See more config options https://github.com/foundry-rs/foundry/blob/master/crates/config/README.md#all-options

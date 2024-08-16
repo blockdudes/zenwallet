@@ -1,0 +1,132 @@
+{
+    "contractName": "ZrSignFaucetTypes",
+    "abi": [],
+    "metadata": "{\"compiler\":{\"version\":\"0.8.19+commit.7dd6d404\"},\"language\":\"Solidity\",\"output\":{\"abi\":[],\"devdoc\":{\"kind\":\"dev\",\"methods\":{},\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{},\"version\":1}},\"settings\":{\"compilationTarget\":{\"/Users/chiragkumar/Desktop/zenPayWallet/zen_contract/src/zr/libraries/ZrSignFaucetTypes.sol\":\"ZrSignFaucetTypes\"},\"evmVersion\":\"paris\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\"},\"optimizer\":{\"enabled\":true,\"runs\":200},\"remappings\":[]},\"sources\":{\"/Users/chiragkumar/Desktop/zenPayWallet/zen_contract/src/zr/libraries/ZrSignFaucetTypes.sol\":{\"keccak256\":\"0x0d7d17cee8dd9ef1f39422d11f6af0cc1ffd64eb89ba37997a68276b7951d755\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://7fad6dcd9f462f42ed7344adbf7190be4d513c58fd28cf1642723d7fe4a6f358\",\"dweb:/ipfs/QmTA4Qpf79j7nbvXChREYPGxGzhi3HDvqXFHNYqtw8eFaA\"]}},\"version\":1}",
+    "bytecode": "60566037600b82828239805160001a607314602a57634e487b7160e01b600052600060045260246000fd5b30600052607381538281f3fe73000000000000000000000000000000000000000030146080604052600080fdfea2646970667358221220a9e217f5c9278aa22f1c5a1cfc2b28295d3b0faa9f1ecc73b463bc3d90b5f1c364736f6c63430008130033",
+    "deployedBytecode": "73000000000000000000000000000000000000000030146080604052600080fdfea2646970667358221220a9e217f5c9278aa22f1c5a1cfc2b28295d3b0faa9f1ecc73b463bc3d90b5f1c364736f6c63430008130033",
+    "sourceMap": "57:124:5:-:0;;;;;;;;;;;;;;;-1:-1:-1;;;57:124:5;;;;;;;;;;;;;;;;;",
+    "deployedSourceMap": "57:124:5:-:0;;;;;;;;",
+    "sourcePath": "/Users/chiragkumar/Desktop/zenPayWallet/zen_contract/src/zr/libraries/ZrSignFaucetTypes.sol",
+    "compiler": {
+        "name": "solc",
+        "version": "0.8.19+commit.7dd6d404"
+    },
+    "ast": {
+        "absolutePath": "/Users/chiragkumar/Desktop/zenPayWallet/zen_contract/src/zr/libraries/ZrSignFaucetTypes.sol",
+        "exportedSymbols": {
+            "ZrSignFaucetTypes": [
+                1561
+            ]
+        },
+        "id": 1562,
+        "license": "MIT",
+        "nodeType": "SourceUnit",
+        "nodes": [
+            {
+                "id": 1555,
+                "literals": [
+                    "solidity",
+                    "0.8",
+                    ".19"
+                ],
+                "nodeType": "PragmaDirective",
+                "src": "32:23:5"
+            },
+            {
+                "abstract": false,
+                "baseContracts": [],
+                "canonicalName": "ZrSignFaucetTypes",
+                "contractDependencies": [],
+                "contractKind": "library",
+                "fullyImplemented": true,
+                "id": 1561,
+                "linearizedBaseContracts": [
+                    1561
+                ],
+                "name": "ZrSignFaucetTypes",
+                "nameLocation": "65:17:5",
+                "nodeType": "ContractDefinition",
+                "nodes": [
+                    {
+                        "canonicalName": "ZrSignFaucetTypes.GasParams",
+                        "id": 1560,
+                        "members": [
+                            {
+                                "constant": false,
+                                "id": 1557,
+                                "mutability": "mutable",
+                                "name": "defaultGasPrice",
+                                "nameLocation": "124:15:5",
+                                "nodeType": "VariableDeclaration",
+                                "scope": 1560,
+                                "src": "116:23:5",
+                                "stateVariable": false,
+                                "storageLocation": "default",
+                                "typeDescriptions": {
+                                    "typeIdentifier": "t_uint256",
+                                    "typeString": "uint256"
+                                },
+                                "typeName": {
+                                    "id": 1556,
+                                    "name": "uint256",
+                                    "nodeType": "ElementaryTypeName",
+                                    "src": "116:7:5",
+                                    "typeDescriptions": {
+                                        "typeIdentifier": "t_uint256",
+                                        "typeString": "uint256"
+                                    }
+                                },
+                                "visibility": "internal"
+                            },
+                            {
+                                "constant": false,
+                                "id": 1559,
+                                "mutability": "mutable",
+                                "name": "defaultGasLimit",
+                                "nameLocation": "157:15:5",
+                                "nodeType": "VariableDeclaration",
+                                "scope": 1560,
+                                "src": "149:23:5",
+                                "stateVariable": false,
+                                "storageLocation": "default",
+                                "typeDescriptions": {
+                                    "typeIdentifier": "t_uint256",
+                                    "typeString": "uint256"
+                                },
+                                "typeName": {
+                                    "id": 1558,
+                                    "name": "uint256",
+                                    "nodeType": "ElementaryTypeName",
+                                    "src": "149:7:5",
+                                    "typeDescriptions": {
+                                        "typeIdentifier": "t_uint256",
+                                        "typeString": "uint256"
+                                    }
+                                },
+                                "visibility": "internal"
+                            }
+                        ],
+                        "name": "GasParams",
+                        "nameLocation": "96:9:5",
+                        "nodeType": "StructDefinition",
+                        "scope": 1561,
+                        "src": "89:90:5",
+                        "visibility": "public"
+                    }
+                ],
+                "scope": 1562,
+                "src": "57:124:5",
+                "usedErrors": []
+            }
+        ],
+        "src": "32:149:5"
+    },
+    "functionHashes": {},
+    "gasEstimates": {
+        "creation": {
+            "codeDepositCost": "17200",
+            "executionCost": "103",
+            "totalCost": "17303"
+        }
+    }
+}

@@ -9,12 +9,15 @@ import {
 } from "@material-tailwind/react";
 import { postAsset } from "@/lib/utils/helper";
 import { useActiveAccount } from "thirdweb/react";
+import axios from "axios";
 
 interface Asset {
   name: string;
   address: string;
-  walletBalance: number;
+  balance: number;
 }
+
+
 
 export function LendDialog({
   asset,
@@ -25,6 +28,8 @@ export function LendDialog({
 }) {
   const [amount, setAmount] = useState(0);
   const activeAccount = useActiveAccount();
+
+  console.log(asset);
 
   const storeTransaction = (transactionData: any) => {
     const existingTransactions = localStorage.getItem("transactionData");
@@ -97,7 +102,7 @@ export function LendDialog({
             {asset.name}
           </div>
           <div className="text-white border-[1px] border-white p-2  rounded-lg w-full ">
-            {asset.walletBalance}
+            {asset.balance.toString()}
           </div>
 
           <Input

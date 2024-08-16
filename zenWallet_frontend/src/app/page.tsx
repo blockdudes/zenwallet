@@ -6,13 +6,21 @@ import toast from "react-hot-toast";
 import { ConnectButton } from "thirdweb/react";
 import { useActiveWalletConnectionStatus } from "thirdweb/react";
 
+import { useAppDispatch, useAppSelector } from "@/lib/hook";
+import { getUserData } from "@/lib/features/getUserDataSlice";
+
+
 export default function Home() {
   const status = useActiveWalletConnectionStatus();
+
 
   useEffect(() => {
     console.log(status);
   }, [status]);
- 
+
+
+
+
   return (
     <main>
       <button

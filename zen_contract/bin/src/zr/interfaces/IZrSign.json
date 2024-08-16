@@ -1,0 +1,2515 @@
+{
+    "contractName": "IZrSign",
+    "abi": [
+        {
+            "inputs": [
+                {
+                    "internalType": "uint8",
+                    "name": "monitoring",
+                    "type": "uint8"
+                },
+                {
+                    "internalType": "uint256",
+                    "name": "value",
+                    "type": "uint256"
+                }
+            ],
+            "name": "estimateFee",
+            "outputs": [
+                {
+                    "internalType": "uint256",
+                    "name": "mpc",
+                    "type": "uint256"
+                },
+                {
+                    "internalType": "uint256",
+                    "name": "netResp",
+                    "type": "uint256"
+                },
+                {
+                    "internalType": "uint256",
+                    "name": "total",
+                    "type": "uint256"
+                }
+            ],
+            "stateMutability": "view",
+            "type": "function"
+        },
+        {
+            "inputs": [
+                {
+                    "internalType": "bytes32",
+                    "name": "walletTypeId",
+                    "type": "bytes32"
+                },
+                {
+                    "internalType": "address",
+                    "name": "owner",
+                    "type": "address"
+                },
+                {
+                    "internalType": "uint256",
+                    "name": "walletIndex",
+                    "type": "uint256"
+                },
+                {
+                    "internalType": "uint256",
+                    "name": "value",
+                    "type": "uint256"
+                }
+            ],
+            "name": "estimateFee",
+            "outputs": [
+                {
+                    "internalType": "uint256",
+                    "name": "mpc",
+                    "type": "uint256"
+                },
+                {
+                    "internalType": "uint256",
+                    "name": "netResp",
+                    "type": "uint256"
+                },
+                {
+                    "internalType": "uint256",
+                    "name": "total",
+                    "type": "uint256"
+                }
+            ],
+            "stateMutability": "view",
+            "type": "function"
+        },
+        {
+            "inputs": [],
+            "name": "getMPCFee",
+            "outputs": [
+                {
+                    "internalType": "uint256",
+                    "name": "",
+                    "type": "uint256"
+                }
+            ],
+            "stateMutability": "view",
+            "type": "function"
+        },
+        {
+            "inputs": [
+                {
+                    "internalType": "uint256",
+                    "name": "traceId",
+                    "type": "uint256"
+                }
+            ],
+            "name": "getRequestState",
+            "outputs": [
+                {
+                    "components": [
+                        {
+                            "internalType": "uint8",
+                            "name": "status",
+                            "type": "uint8"
+                        },
+                        {
+                            "internalType": "uint256",
+                            "name": "value",
+                            "type": "uint256"
+                        }
+                    ],
+                    "internalType": "struct SignTypes.ReqRegistry",
+                    "name": "",
+                    "type": "tuple"
+                }
+            ],
+            "stateMutability": "view",
+            "type": "function"
+        },
+        {
+            "inputs": [],
+            "name": "getRespGas",
+            "outputs": [
+                {
+                    "internalType": "uint256",
+                    "name": "",
+                    "type": "uint256"
+                }
+            ],
+            "stateMutability": "view",
+            "type": "function"
+        },
+        {
+            "inputs": [],
+            "name": "getRespGasPriceBuffer",
+            "outputs": [
+                {
+                    "internalType": "uint256",
+                    "name": "",
+                    "type": "uint256"
+                }
+            ],
+            "stateMutability": "view",
+            "type": "function"
+        },
+        {
+            "inputs": [],
+            "name": "getTraceId",
+            "outputs": [
+                {
+                    "internalType": "uint256",
+                    "name": "",
+                    "type": "uint256"
+                }
+            ],
+            "stateMutability": "view",
+            "type": "function"
+        },
+        {
+            "inputs": [
+                {
+                    "internalType": "bytes32",
+                    "name": "walletTypeId",
+                    "type": "bytes32"
+                },
+                {
+                    "internalType": "uint256",
+                    "name": "walletIndex",
+                    "type": "uint256"
+                },
+                {
+                    "internalType": "address",
+                    "name": "owner",
+                    "type": "address"
+                }
+            ],
+            "name": "getWalletRegistry",
+            "outputs": [
+                {
+                    "components": [
+                        {
+                            "internalType": "uint8",
+                            "name": "status",
+                            "type": "uint8"
+                        },
+                        {
+                            "internalType": "uint8",
+                            "name": "options",
+                            "type": "uint8"
+                        },
+                        {
+                            "internalType": "uint256",
+                            "name": "value",
+                            "type": "uint256"
+                        }
+                    ],
+                    "internalType": "struct SignTypes.WalletRegistry",
+                    "name": "",
+                    "type": "tuple"
+                }
+            ],
+            "stateMutability": "view",
+            "type": "function"
+        },
+        {
+            "inputs": [
+                {
+                    "internalType": "bytes32",
+                    "name": "walletTypeId",
+                    "type": "bytes32"
+                },
+                {
+                    "internalType": "address",
+                    "name": "owner",
+                    "type": "address"
+                },
+                {
+                    "internalType": "uint256",
+                    "name": "index",
+                    "type": "uint256"
+                }
+            ],
+            "name": "getZrKey",
+            "outputs": [
+                {
+                    "internalType": "string",
+                    "name": "",
+                    "type": "string"
+                }
+            ],
+            "stateMutability": "view",
+            "type": "function"
+        },
+        {
+            "inputs": [
+                {
+                    "internalType": "bytes32",
+                    "name": "walletTypeId",
+                    "type": "bytes32"
+                },
+                {
+                    "internalType": "address",
+                    "name": "owner",
+                    "type": "address"
+                }
+            ],
+            "name": "getZrKeys",
+            "outputs": [
+                {
+                    "internalType": "string[]",
+                    "name": "",
+                    "type": "string[]"
+                }
+            ],
+            "stateMutability": "view",
+            "type": "function"
+        },
+        {
+            "inputs": [
+                {
+                    "internalType": "bytes32",
+                    "name": "walletTypeId",
+                    "type": "bytes32"
+                },
+                {
+                    "internalType": "bytes32",
+                    "name": "chainId",
+                    "type": "bytes32"
+                }
+            ],
+            "name": "isChainIdSupported",
+            "outputs": [
+                {
+                    "internalType": "bool",
+                    "name": "",
+                    "type": "bool"
+                }
+            ],
+            "stateMutability": "view",
+            "type": "function"
+        },
+        {
+            "inputs": [
+                {
+                    "internalType": "bytes32",
+                    "name": "walletTypeId",
+                    "type": "bytes32"
+                }
+            ],
+            "name": "isWalletTypeSupported",
+            "outputs": [
+                {
+                    "internalType": "bool",
+                    "name": "",
+                    "type": "bool"
+                }
+            ],
+            "stateMutability": "view",
+            "type": "function"
+        },
+        {
+            "inputs": [],
+            "name": "version",
+            "outputs": [
+                {
+                    "internalType": "uint256",
+                    "name": "",
+                    "type": "uint256"
+                }
+            ],
+            "stateMutability": "view",
+            "type": "function"
+        },
+        {
+            "inputs": [
+                {
+                    "components": [
+                        {
+                            "internalType": "bytes32",
+                            "name": "walletTypeId",
+                            "type": "bytes32"
+                        },
+                        {
+                            "internalType": "uint8",
+                            "name": "options",
+                            "type": "uint8"
+                        }
+                    ],
+                    "internalType": "struct SignTypes.ZrKeyReqParams",
+                    "name": "params",
+                    "type": "tuple"
+                }
+            ],
+            "name": "zrKeyReq",
+            "outputs": [],
+            "stateMutability": "payable",
+            "type": "function"
+        },
+        {
+            "inputs": [
+                {
+                    "components": [
+                        {
+                            "internalType": "bytes32",
+                            "name": "walletTypeId",
+                            "type": "bytes32"
+                        },
+                        {
+                            "internalType": "address",
+                            "name": "owner",
+                            "type": "address"
+                        },
+                        {
+                            "internalType": "uint256",
+                            "name": "walletIndex",
+                            "type": "uint256"
+                        },
+                        {
+                            "internalType": "string",
+                            "name": "wallet",
+                            "type": "string"
+                        },
+                        {
+                            "internalType": "uint8",
+                            "name": "options",
+                            "type": "uint8"
+                        },
+                        {
+                            "internalType": "bytes",
+                            "name": "authSignature",
+                            "type": "bytes"
+                        }
+                    ],
+                    "internalType": "struct SignTypes.ZrKeyResParams",
+                    "name": "params",
+                    "type": "tuple"
+                }
+            ],
+            "name": "zrKeyRes",
+            "outputs": [],
+            "stateMutability": "nonpayable",
+            "type": "function"
+        },
+        {
+            "inputs": [
+                {
+                    "components": [
+                        {
+                            "internalType": "bytes32",
+                            "name": "walletTypeId",
+                            "type": "bytes32"
+                        },
+                        {
+                            "internalType": "uint256",
+                            "name": "walletIndex",
+                            "type": "uint256"
+                        },
+                        {
+                            "internalType": "bytes32",
+                            "name": "dstChainId",
+                            "type": "bytes32"
+                        },
+                        {
+                            "internalType": "bytes",
+                            "name": "payload",
+                            "type": "bytes"
+                        },
+                        {
+                            "internalType": "bool",
+                            "name": "broadcast",
+                            "type": "bool"
+                        }
+                    ],
+                    "internalType": "struct SignTypes.ZrSignParams",
+                    "name": "params",
+                    "type": "tuple"
+                }
+            ],
+            "name": "zrSignData",
+            "outputs": [],
+            "stateMutability": "payable",
+            "type": "function"
+        },
+        {
+            "inputs": [
+                {
+                    "components": [
+                        {
+                            "internalType": "bytes32",
+                            "name": "walletTypeId",
+                            "type": "bytes32"
+                        },
+                        {
+                            "internalType": "uint256",
+                            "name": "walletIndex",
+                            "type": "uint256"
+                        },
+                        {
+                            "internalType": "bytes32",
+                            "name": "dstChainId",
+                            "type": "bytes32"
+                        },
+                        {
+                            "internalType": "bytes",
+                            "name": "payload",
+                            "type": "bytes"
+                        },
+                        {
+                            "internalType": "bool",
+                            "name": "broadcast",
+                            "type": "bool"
+                        }
+                    ],
+                    "internalType": "struct SignTypes.ZrSignParams",
+                    "name": "params",
+                    "type": "tuple"
+                }
+            ],
+            "name": "zrSignHash",
+            "outputs": [],
+            "stateMutability": "payable",
+            "type": "function"
+        },
+        {
+            "inputs": [
+                {
+                    "components": [
+                        {
+                            "internalType": "uint256",
+                            "name": "traceId",
+                            "type": "uint256"
+                        },
+                        {
+                            "internalType": "address",
+                            "name": "owner",
+                            "type": "address"
+                        },
+                        {
+                            "internalType": "bytes",
+                            "name": "metaData",
+                            "type": "bytes"
+                        },
+                        {
+                            "internalType": "bytes",
+                            "name": "signature",
+                            "type": "bytes"
+                        },
+                        {
+                            "internalType": "bool",
+                            "name": "broadcast",
+                            "type": "bool"
+                        },
+                        {
+                            "internalType": "bytes",
+                            "name": "authSignature",
+                            "type": "bytes"
+                        }
+                    ],
+                    "internalType": "struct SignTypes.SignResParams",
+                    "name": "params",
+                    "type": "tuple"
+                }
+            ],
+            "name": "zrSignRes",
+            "outputs": [],
+            "stateMutability": "nonpayable",
+            "type": "function"
+        },
+        {
+            "inputs": [
+                {
+                    "components": [
+                        {
+                            "internalType": "bytes32",
+                            "name": "walletTypeId",
+                            "type": "bytes32"
+                        },
+                        {
+                            "internalType": "uint256",
+                            "name": "walletIndex",
+                            "type": "uint256"
+                        },
+                        {
+                            "internalType": "bytes32",
+                            "name": "dstChainId",
+                            "type": "bytes32"
+                        },
+                        {
+                            "internalType": "bytes",
+                            "name": "payload",
+                            "type": "bytes"
+                        },
+                        {
+                            "internalType": "bool",
+                            "name": "broadcast",
+                            "type": "bool"
+                        }
+                    ],
+                    "internalType": "struct SignTypes.ZrSignParams",
+                    "name": "params",
+                    "type": "tuple"
+                }
+            ],
+            "name": "zrSignSimpleTx",
+            "outputs": [],
+            "stateMutability": "payable",
+            "type": "function"
+        },
+        {
+            "inputs": [
+                {
+                    "components": [
+                        {
+                            "internalType": "bytes32",
+                            "name": "walletTypeId",
+                            "type": "bytes32"
+                        },
+                        {
+                            "internalType": "uint256",
+                            "name": "walletIndex",
+                            "type": "uint256"
+                        },
+                        {
+                            "internalType": "bytes32",
+                            "name": "dstChainId",
+                            "type": "bytes32"
+                        },
+                        {
+                            "internalType": "bytes",
+                            "name": "payload",
+                            "type": "bytes"
+                        },
+                        {
+                            "internalType": "bool",
+                            "name": "broadcast",
+                            "type": "bool"
+                        }
+                    ],
+                    "internalType": "struct SignTypes.ZrSignParams",
+                    "name": "params",
+                    "type": "tuple"
+                }
+            ],
+            "name": "zrSignTx",
+            "outputs": [],
+            "stateMutability": "payable",
+            "type": "function"
+        }
+    ],
+    "metadata": "{\"compiler\":{\"version\":\"0.8.19+commit.7dd6d404\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"inputs\":[{\"internalType\":\"uint8\",\"name\":\"monitoring\",\"type\":\"uint8\"},{\"internalType\":\"uint256\",\"name\":\"value\",\"type\":\"uint256\"}],\"name\":\"estimateFee\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"mpc\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"netResp\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"total\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"bytes32\",\"name\":\"walletTypeId\",\"type\":\"bytes32\"},{\"internalType\":\"address\",\"name\":\"owner\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"walletIndex\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"value\",\"type\":\"uint256\"}],\"name\":\"estimateFee\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"mpc\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"netResp\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"total\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"getMPCFee\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"traceId\",\"type\":\"uint256\"}],\"name\":\"getRequestState\",\"outputs\":[{\"components\":[{\"internalType\":\"uint8\",\"name\":\"status\",\"type\":\"uint8\"},{\"internalType\":\"uint256\",\"name\":\"value\",\"type\":\"uint256\"}],\"internalType\":\"struct SignTypes.ReqRegistry\",\"name\":\"\",\"type\":\"tuple\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"getRespGas\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"getRespGasPriceBuffer\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"getTraceId\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"bytes32\",\"name\":\"walletTypeId\",\"type\":\"bytes32\"},{\"internalType\":\"uint256\",\"name\":\"walletIndex\",\"type\":\"uint256\"},{\"internalType\":\"address\",\"name\":\"owner\",\"type\":\"address\"}],\"name\":\"getWalletRegistry\",\"outputs\":[{\"components\":[{\"internalType\":\"uint8\",\"name\":\"status\",\"type\":\"uint8\"},{\"internalType\":\"uint8\",\"name\":\"options\",\"type\":\"uint8\"},{\"internalType\":\"uint256\",\"name\":\"value\",\"type\":\"uint256\"}],\"internalType\":\"struct SignTypes.WalletRegistry\",\"name\":\"\",\"type\":\"tuple\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"bytes32\",\"name\":\"walletTypeId\",\"type\":\"bytes32\"},{\"internalType\":\"address\",\"name\":\"owner\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"index\",\"type\":\"uint256\"}],\"name\":\"getZrKey\",\"outputs\":[{\"internalType\":\"string\",\"name\":\"\",\"type\":\"string\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"bytes32\",\"name\":\"walletTypeId\",\"type\":\"bytes32\"},{\"internalType\":\"address\",\"name\":\"owner\",\"type\":\"address\"}],\"name\":\"getZrKeys\",\"outputs\":[{\"internalType\":\"string[]\",\"name\":\"\",\"type\":\"string[]\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"bytes32\",\"name\":\"walletTypeId\",\"type\":\"bytes32\"},{\"internalType\":\"bytes32\",\"name\":\"chainId\",\"type\":\"bytes32\"}],\"name\":\"isChainIdSupported\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"bytes32\",\"name\":\"walletTypeId\",\"type\":\"bytes32\"}],\"name\":\"isWalletTypeSupported\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"version\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"components\":[{\"internalType\":\"bytes32\",\"name\":\"walletTypeId\",\"type\":\"bytes32\"},{\"internalType\":\"uint8\",\"name\":\"options\",\"type\":\"uint8\"}],\"internalType\":\"struct SignTypes.ZrKeyReqParams\",\"name\":\"params\",\"type\":\"tuple\"}],\"name\":\"zrKeyReq\",\"outputs\":[],\"stateMutability\":\"payable\",\"type\":\"function\"},{\"inputs\":[{\"components\":[{\"internalType\":\"bytes32\",\"name\":\"walletTypeId\",\"type\":\"bytes32\"},{\"internalType\":\"address\",\"name\":\"owner\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"walletIndex\",\"type\":\"uint256\"},{\"internalType\":\"string\",\"name\":\"wallet\",\"type\":\"string\"},{\"internalType\":\"uint8\",\"name\":\"options\",\"type\":\"uint8\"},{\"internalType\":\"bytes\",\"name\":\"authSignature\",\"type\":\"bytes\"}],\"internalType\":\"struct SignTypes.ZrKeyResParams\",\"name\":\"params\",\"type\":\"tuple\"}],\"name\":\"zrKeyRes\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"components\":[{\"internalType\":\"bytes32\",\"name\":\"walletTypeId\",\"type\":\"bytes32\"},{\"internalType\":\"uint256\",\"name\":\"walletIndex\",\"type\":\"uint256\"},{\"internalType\":\"bytes32\",\"name\":\"dstChainId\",\"type\":\"bytes32\"},{\"internalType\":\"bytes\",\"name\":\"payload\",\"type\":\"bytes\"},{\"internalType\":\"bool\",\"name\":\"broadcast\",\"type\":\"bool\"}],\"internalType\":\"struct SignTypes.ZrSignParams\",\"name\":\"params\",\"type\":\"tuple\"}],\"name\":\"zrSignData\",\"outputs\":[],\"stateMutability\":\"payable\",\"type\":\"function\"},{\"inputs\":[{\"components\":[{\"internalType\":\"bytes32\",\"name\":\"walletTypeId\",\"type\":\"bytes32\"},{\"internalType\":\"uint256\",\"name\":\"walletIndex\",\"type\":\"uint256\"},{\"internalType\":\"bytes32\",\"name\":\"dstChainId\",\"type\":\"bytes32\"},{\"internalType\":\"bytes\",\"name\":\"payload\",\"type\":\"bytes\"},{\"internalType\":\"bool\",\"name\":\"broadcast\",\"type\":\"bool\"}],\"internalType\":\"struct SignTypes.ZrSignParams\",\"name\":\"params\",\"type\":\"tuple\"}],\"name\":\"zrSignHash\",\"outputs\":[],\"stateMutability\":\"payable\",\"type\":\"function\"},{\"inputs\":[{\"components\":[{\"internalType\":\"uint256\",\"name\":\"traceId\",\"type\":\"uint256\"},{\"internalType\":\"address\",\"name\":\"owner\",\"type\":\"address\"},{\"internalType\":\"bytes\",\"name\":\"metaData\",\"type\":\"bytes\"},{\"internalType\":\"bytes\",\"name\":\"signature\",\"type\":\"bytes\"},{\"internalType\":\"bool\",\"name\":\"broadcast\",\"type\":\"bool\"},{\"internalType\":\"bytes\",\"name\":\"authSignature\",\"type\":\"bytes\"}],\"internalType\":\"struct SignTypes.SignResParams\",\"name\":\"params\",\"type\":\"tuple\"}],\"name\":\"zrSignRes\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"components\":[{\"internalType\":\"bytes32\",\"name\":\"walletTypeId\",\"type\":\"bytes32\"},{\"internalType\":\"uint256\",\"name\":\"walletIndex\",\"type\":\"uint256\"},{\"internalType\":\"bytes32\",\"name\":\"dstChainId\",\"type\":\"bytes32\"},{\"internalType\":\"bytes\",\"name\":\"payload\",\"type\":\"bytes\"},{\"internalType\":\"bool\",\"name\":\"broadcast\",\"type\":\"bool\"}],\"internalType\":\"struct SignTypes.ZrSignParams\",\"name\":\"params\",\"type\":\"tuple\"}],\"name\":\"zrSignSimpleTx\",\"outputs\":[],\"stateMutability\":\"payable\",\"type\":\"function\"},{\"inputs\":[{\"components\":[{\"internalType\":\"bytes32\",\"name\":\"walletTypeId\",\"type\":\"bytes32\"},{\"internalType\":\"uint256\",\"name\":\"walletIndex\",\"type\":\"uint256\"},{\"internalType\":\"bytes32\",\"name\":\"dstChainId\",\"type\":\"bytes32\"},{\"internalType\":\"bytes\",\"name\":\"payload\",\"type\":\"bytes\"},{\"internalType\":\"bool\",\"name\":\"broadcast\",\"type\":\"bool\"}],\"internalType\":\"struct SignTypes.ZrSignParams\",\"name\":\"params\",\"type\":\"tuple\"}],\"name\":\"zrSignTx\",\"outputs\":[],\"stateMutability\":\"payable\",\"type\":\"function\"}],\"devdoc\":{\"kind\":\"dev\",\"methods\":{},\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{},\"version\":1}},\"settings\":{\"compilationTarget\":{\"/Users/chiragkumar/Desktop/zenPayWallet/zen_contract/src/zr/interfaces/IZrSign.sol\":\"IZrSign\"},\"evmVersion\":\"paris\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\"},\"optimizer\":{\"enabled\":true,\"runs\":200},\"remappings\":[]},\"sources\":{\"/Users/chiragkumar/Desktop/zenPayWallet/zen_contract/src/zr/interfaces/IZrSign.sol\":{\"keccak256\":\"0x86a65b5dc6a8d4d3be6806f3477f6413fdaad2280de12e6f91dc2a9d274b1045\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://057a7c5d3ad2ecc269e5e73f0fbcb832b27366f4eaf0c7f4569c1a11446441ca\",\"dweb:/ipfs/QmcAPQTtkjeZdxCJ628baYzQkVFEaLHnmqN4NJdZSG4dZ9\"]},\"/Users/chiragkumar/Desktop/zenPayWallet/zen_contract/src/zr/libraries/SignTypes.sol\":{\"keccak256\":\"0xc963542c4cadc99f23540911b5d751e9ddc3e9e2b00653f4c1318895a58fca81\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://9bd4d6064a16fb94b9008d71c028c3ee91d914721365244e13edf5a5c1ea331d\",\"dweb:/ipfs/QmU6XWyPfsf9a8oucY9vWi1M3pmMu7unoh5m5wXYfFDHj3\"]}},\"version\":1}",
+    "bytecode": "",
+    "deployedBytecode": "",
+    "sourceMap": "",
+    "deployedSourceMap": "",
+    "sourcePath": "/Users/chiragkumar/Desktop/zenPayWallet/zen_contract/src/zr/interfaces/IZrSign.sol",
+    "compiler": {
+        "name": "solc",
+        "version": "0.8.19+commit.7dd6d404"
+    },
+    "ast": {
+        "absolutePath": "/Users/chiragkumar/Desktop/zenPayWallet/zen_contract/src/zr/interfaces/IZrSign.sol",
+        "exportedSymbols": {
+            "IZrSign": [
+                906
+            ],
+            "SignTypes": [
+                1553
+            ]
+        },
+        "id": 907,
+        "license": "MIT",
+        "nodeType": "SourceUnit",
+        "nodes": [
+            {
+                "id": 749,
+                "literals": [
+                    "solidity",
+                    "0.8",
+                    ".19"
+                ],
+                "nodeType": "PragmaDirective",
+                "src": "32:23:2"
+            },
+            {
+                "absolutePath": "/Users/chiragkumar/Desktop/zenPayWallet/zen_contract/src/zr/libraries/SignTypes.sol",
+                "file": "../libraries/SignTypes.sol",
+                "id": 751,
+                "nameLocation": "-1:-1:-1",
+                "nodeType": "ImportDirective",
+                "scope": 907,
+                "sourceUnit": 1554,
+                "src": "57:53:2",
+                "symbolAliases": [
+                    {
+                        "foreign": {
+                            "id": 750,
+                            "name": "SignTypes",
+                            "nodeType": "Identifier",
+                            "overloadedDeclarations": [],
+                            "referencedDeclaration": 1553,
+                            "src": "65:9:2",
+                            "typeDescriptions": {}
+                        },
+                        "nameLocation": "-1:-1:-1"
+                    }
+                ],
+                "unitAlias": ""
+            },
+            {
+                "abstract": false,
+                "baseContracts": [],
+                "canonicalName": "IZrSign",
+                "contractDependencies": [],
+                "contractKind": "interface",
+                "fullyImplemented": false,
+                "id": 906,
+                "linearizedBaseContracts": [
+                    906
+                ],
+                "name": "IZrSign",
+                "nameLocation": "122:7:2",
+                "nodeType": "ContractDefinition",
+                "nodes": [
+                    {
+                        "functionSelector": "5c706c9b",
+                        "id": 757,
+                        "implemented": false,
+                        "kind": "function",
+                        "modifiers": [],
+                        "name": "zrKeyReq",
+                        "nameLocation": "145:8:2",
+                        "nodeType": "FunctionDefinition",
+                        "parameters": {
+                            "id": 755,
+                            "nodeType": "ParameterList",
+                            "parameters": [
+                                {
+                                    "constant": false,
+                                    "id": 754,
+                                    "mutability": "mutable",
+                                    "name": "params",
+                                    "nameLocation": "197:6:2",
+                                    "nodeType": "VariableDeclaration",
+                                    "scope": 757,
+                                    "src": "163:40:2",
+                                    "stateVariable": false,
+                                    "storageLocation": "calldata",
+                                    "typeDescriptions": {
+                                        "typeIdentifier": "t_struct$_ZrKeyReqParams_$1419_calldata_ptr",
+                                        "typeString": "struct SignTypes.ZrKeyReqParams"
+                                    },
+                                    "typeName": {
+                                        "id": 753,
+                                        "nodeType": "UserDefinedTypeName",
+                                        "pathNode": {
+                                            "id": 752,
+                                            "name": "SignTypes.ZrKeyReqParams",
+                                            "nameLocations": [
+                                                "163:9:2",
+                                                "173:14:2"
+                                            ],
+                                            "nodeType": "IdentifierPath",
+                                            "referencedDeclaration": 1419,
+                                            "src": "163:24:2"
+                                        },
+                                        "referencedDeclaration": 1419,
+                                        "src": "163:24:2",
+                                        "typeDescriptions": {
+                                            "typeIdentifier": "t_struct$_ZrKeyReqParams_$1419_storage_ptr",
+                                            "typeString": "struct SignTypes.ZrKeyReqParams"
+                                        }
+                                    },
+                                    "visibility": "internal"
+                                }
+                            ],
+                            "src": "153:56:2"
+                        },
+                        "returnParameters": {
+                            "id": 756,
+                            "nodeType": "ParameterList",
+                            "parameters": [],
+                            "src": "226:0:2"
+                        },
+                        "scope": 906,
+                        "src": "136:91:2",
+                        "stateMutability": "payable",
+                        "virtual": false,
+                        "visibility": "external"
+                    },
+                    {
+                        "functionSelector": "31852273",
+                        "id": 763,
+                        "implemented": false,
+                        "kind": "function",
+                        "modifiers": [],
+                        "name": "zrKeyRes",
+                        "nameLocation": "242:8:2",
+                        "nodeType": "FunctionDefinition",
+                        "parameters": {
+                            "id": 761,
+                            "nodeType": "ParameterList",
+                            "parameters": [
+                                {
+                                    "constant": false,
+                                    "id": 760,
+                                    "mutability": "mutable",
+                                    "name": "params",
+                                    "nameLocation": "285:6:2",
+                                    "nodeType": "VariableDeclaration",
+                                    "scope": 763,
+                                    "src": "251:40:2",
+                                    "stateVariable": false,
+                                    "storageLocation": "calldata",
+                                    "typeDescriptions": {
+                                        "typeIdentifier": "t_struct$_ZrKeyResParams_$1444_calldata_ptr",
+                                        "typeString": "struct SignTypes.ZrKeyResParams"
+                                    },
+                                    "typeName": {
+                                        "id": 759,
+                                        "nodeType": "UserDefinedTypeName",
+                                        "pathNode": {
+                                            "id": 758,
+                                            "name": "SignTypes.ZrKeyResParams",
+                                            "nameLocations": [
+                                                "251:9:2",
+                                                "261:14:2"
+                                            ],
+                                            "nodeType": "IdentifierPath",
+                                            "referencedDeclaration": 1444,
+                                            "src": "251:24:2"
+                                        },
+                                        "referencedDeclaration": 1444,
+                                        "src": "251:24:2",
+                                        "typeDescriptions": {
+                                            "typeIdentifier": "t_struct$_ZrKeyResParams_$1444_storage_ptr",
+                                            "typeString": "struct SignTypes.ZrKeyResParams"
+                                        }
+                                    },
+                                    "visibility": "internal"
+                                }
+                            ],
+                            "src": "250:42:2"
+                        },
+                        "returnParameters": {
+                            "id": 762,
+                            "nodeType": "ParameterList",
+                            "parameters": [],
+                            "src": "301:0:2"
+                        },
+                        "scope": 906,
+                        "src": "233:69:2",
+                        "stateMutability": "nonpayable",
+                        "virtual": false,
+                        "visibility": "external"
+                    },
+                    {
+                        "functionSelector": "15c39391",
+                        "id": 769,
+                        "implemented": false,
+                        "kind": "function",
+                        "modifiers": [],
+                        "name": "zrSignHash",
+                        "nameLocation": "317:10:2",
+                        "nodeType": "FunctionDefinition",
+                        "parameters": {
+                            "id": 767,
+                            "nodeType": "ParameterList",
+                            "parameters": [
+                                {
+                                    "constant": false,
+                                    "id": 766,
+                                    "mutability": "mutable",
+                                    "name": "params",
+                                    "nameLocation": "369:6:2",
+                                    "nodeType": "VariableDeclaration",
+                                    "scope": 769,
+                                    "src": "337:38:2",
+                                    "stateVariable": false,
+                                    "storageLocation": "calldata",
+                                    "typeDescriptions": {
+                                        "typeIdentifier": "t_struct$_ZrSignParams_$1455_calldata_ptr",
+                                        "typeString": "struct SignTypes.ZrSignParams"
+                                    },
+                                    "typeName": {
+                                        "id": 765,
+                                        "nodeType": "UserDefinedTypeName",
+                                        "pathNode": {
+                                            "id": 764,
+                                            "name": "SignTypes.ZrSignParams",
+                                            "nameLocations": [
+                                                "337:9:2",
+                                                "347:12:2"
+                                            ],
+                                            "nodeType": "IdentifierPath",
+                                            "referencedDeclaration": 1455,
+                                            "src": "337:22:2"
+                                        },
+                                        "referencedDeclaration": 1455,
+                                        "src": "337:22:2",
+                                        "typeDescriptions": {
+                                            "typeIdentifier": "t_struct$_ZrSignParams_$1455_storage_ptr",
+                                            "typeString": "struct SignTypes.ZrSignParams"
+                                        }
+                                    },
+                                    "visibility": "internal"
+                                }
+                            ],
+                            "src": "327:54:2"
+                        },
+                        "returnParameters": {
+                            "id": 768,
+                            "nodeType": "ParameterList",
+                            "parameters": [],
+                            "src": "398:0:2"
+                        },
+                        "scope": 906,
+                        "src": "308:91:2",
+                        "stateMutability": "payable",
+                        "virtual": false,
+                        "visibility": "external"
+                    },
+                    {
+                        "functionSelector": "052347e6",
+                        "id": 775,
+                        "implemented": false,
+                        "kind": "function",
+                        "modifiers": [],
+                        "name": "zrSignData",
+                        "nameLocation": "414:10:2",
+                        "nodeType": "FunctionDefinition",
+                        "parameters": {
+                            "id": 773,
+                            "nodeType": "ParameterList",
+                            "parameters": [
+                                {
+                                    "constant": false,
+                                    "id": 772,
+                                    "mutability": "mutable",
+                                    "name": "params",
+                                    "nameLocation": "466:6:2",
+                                    "nodeType": "VariableDeclaration",
+                                    "scope": 775,
+                                    "src": "434:38:2",
+                                    "stateVariable": false,
+                                    "storageLocation": "calldata",
+                                    "typeDescriptions": {
+                                        "typeIdentifier": "t_struct$_ZrSignParams_$1455_calldata_ptr",
+                                        "typeString": "struct SignTypes.ZrSignParams"
+                                    },
+                                    "typeName": {
+                                        "id": 771,
+                                        "nodeType": "UserDefinedTypeName",
+                                        "pathNode": {
+                                            "id": 770,
+                                            "name": "SignTypes.ZrSignParams",
+                                            "nameLocations": [
+                                                "434:9:2",
+                                                "444:12:2"
+                                            ],
+                                            "nodeType": "IdentifierPath",
+                                            "referencedDeclaration": 1455,
+                                            "src": "434:22:2"
+                                        },
+                                        "referencedDeclaration": 1455,
+                                        "src": "434:22:2",
+                                        "typeDescriptions": {
+                                            "typeIdentifier": "t_struct$_ZrSignParams_$1455_storage_ptr",
+                                            "typeString": "struct SignTypes.ZrSignParams"
+                                        }
+                                    },
+                                    "visibility": "internal"
+                                }
+                            ],
+                            "src": "424:54:2"
+                        },
+                        "returnParameters": {
+                            "id": 774,
+                            "nodeType": "ParameterList",
+                            "parameters": [],
+                            "src": "495:0:2"
+                        },
+                        "scope": 906,
+                        "src": "405:91:2",
+                        "stateMutability": "payable",
+                        "virtual": false,
+                        "visibility": "external"
+                    },
+                    {
+                        "functionSelector": "93f874c4",
+                        "id": 781,
+                        "implemented": false,
+                        "kind": "function",
+                        "modifiers": [],
+                        "name": "zrSignTx",
+                        "nameLocation": "511:8:2",
+                        "nodeType": "FunctionDefinition",
+                        "parameters": {
+                            "id": 779,
+                            "nodeType": "ParameterList",
+                            "parameters": [
+                                {
+                                    "constant": false,
+                                    "id": 778,
+                                    "mutability": "mutable",
+                                    "name": "params",
+                                    "nameLocation": "552:6:2",
+                                    "nodeType": "VariableDeclaration",
+                                    "scope": 781,
+                                    "src": "520:38:2",
+                                    "stateVariable": false,
+                                    "storageLocation": "calldata",
+                                    "typeDescriptions": {
+                                        "typeIdentifier": "t_struct$_ZrSignParams_$1455_calldata_ptr",
+                                        "typeString": "struct SignTypes.ZrSignParams"
+                                    },
+                                    "typeName": {
+                                        "id": 777,
+                                        "nodeType": "UserDefinedTypeName",
+                                        "pathNode": {
+                                            "id": 776,
+                                            "name": "SignTypes.ZrSignParams",
+                                            "nameLocations": [
+                                                "520:9:2",
+                                                "530:12:2"
+                                            ],
+                                            "nodeType": "IdentifierPath",
+                                            "referencedDeclaration": 1455,
+                                            "src": "520:22:2"
+                                        },
+                                        "referencedDeclaration": 1455,
+                                        "src": "520:22:2",
+                                        "typeDescriptions": {
+                                            "typeIdentifier": "t_struct$_ZrSignParams_$1455_storage_ptr",
+                                            "typeString": "struct SignTypes.ZrSignParams"
+                                        }
+                                    },
+                                    "visibility": "internal"
+                                }
+                            ],
+                            "src": "519:40:2"
+                        },
+                        "returnParameters": {
+                            "id": 780,
+                            "nodeType": "ParameterList",
+                            "parameters": [],
+                            "src": "576:0:2"
+                        },
+                        "scope": 906,
+                        "src": "502:75:2",
+                        "stateMutability": "payable",
+                        "virtual": false,
+                        "visibility": "external"
+                    },
+                    {
+                        "functionSelector": "daefde8e",
+                        "id": 787,
+                        "implemented": false,
+                        "kind": "function",
+                        "modifiers": [],
+                        "name": "zrSignSimpleTx",
+                        "nameLocation": "592:14:2",
+                        "nodeType": "FunctionDefinition",
+                        "parameters": {
+                            "id": 785,
+                            "nodeType": "ParameterList",
+                            "parameters": [
+                                {
+                                    "constant": false,
+                                    "id": 784,
+                                    "mutability": "mutable",
+                                    "name": "params",
+                                    "nameLocation": "646:6:2",
+                                    "nodeType": "VariableDeclaration",
+                                    "scope": 787,
+                                    "src": "616:36:2",
+                                    "stateVariable": false,
+                                    "storageLocation": "memory",
+                                    "typeDescriptions": {
+                                        "typeIdentifier": "t_struct$_ZrSignParams_$1455_memory_ptr",
+                                        "typeString": "struct SignTypes.ZrSignParams"
+                                    },
+                                    "typeName": {
+                                        "id": 783,
+                                        "nodeType": "UserDefinedTypeName",
+                                        "pathNode": {
+                                            "id": 782,
+                                            "name": "SignTypes.ZrSignParams",
+                                            "nameLocations": [
+                                                "616:9:2",
+                                                "626:12:2"
+                                            ],
+                                            "nodeType": "IdentifierPath",
+                                            "referencedDeclaration": 1455,
+                                            "src": "616:22:2"
+                                        },
+                                        "referencedDeclaration": 1455,
+                                        "src": "616:22:2",
+                                        "typeDescriptions": {
+                                            "typeIdentifier": "t_struct$_ZrSignParams_$1455_storage_ptr",
+                                            "typeString": "struct SignTypes.ZrSignParams"
+                                        }
+                                    },
+                                    "visibility": "internal"
+                                }
+                            ],
+                            "src": "606:52:2"
+                        },
+                        "returnParameters": {
+                            "id": 786,
+                            "nodeType": "ParameterList",
+                            "parameters": [],
+                            "src": "675:0:2"
+                        },
+                        "scope": 906,
+                        "src": "583:93:2",
+                        "stateMutability": "payable",
+                        "virtual": false,
+                        "visibility": "external"
+                    },
+                    {
+                        "functionSelector": "050a5784",
+                        "id": 793,
+                        "implemented": false,
+                        "kind": "function",
+                        "modifiers": [],
+                        "name": "zrSignRes",
+                        "nameLocation": "691:9:2",
+                        "nodeType": "FunctionDefinition",
+                        "parameters": {
+                            "id": 791,
+                            "nodeType": "ParameterList",
+                            "parameters": [
+                                {
+                                    "constant": false,
+                                    "id": 790,
+                                    "mutability": "mutable",
+                                    "name": "params",
+                                    "nameLocation": "734:6:2",
+                                    "nodeType": "VariableDeclaration",
+                                    "scope": 793,
+                                    "src": "701:39:2",
+                                    "stateVariable": false,
+                                    "storageLocation": "calldata",
+                                    "typeDescriptions": {
+                                        "typeIdentifier": "t_struct$_SignResParams_$1552_calldata_ptr",
+                                        "typeString": "struct SignTypes.SignResParams"
+                                    },
+                                    "typeName": {
+                                        "id": 789,
+                                        "nodeType": "UserDefinedTypeName",
+                                        "pathNode": {
+                                            "id": 788,
+                                            "name": "SignTypes.SignResParams",
+                                            "nameLocations": [
+                                                "701:9:2",
+                                                "711:13:2"
+                                            ],
+                                            "nodeType": "IdentifierPath",
+                                            "referencedDeclaration": 1552,
+                                            "src": "701:23:2"
+                                        },
+                                        "referencedDeclaration": 1552,
+                                        "src": "701:23:2",
+                                        "typeDescriptions": {
+                                            "typeIdentifier": "t_struct$_SignResParams_$1552_storage_ptr",
+                                            "typeString": "struct SignTypes.SignResParams"
+                                        }
+                                    },
+                                    "visibility": "internal"
+                                }
+                            ],
+                            "src": "700:41:2"
+                        },
+                        "returnParameters": {
+                            "id": 792,
+                            "nodeType": "ParameterList",
+                            "parameters": [],
+                            "src": "750:0:2"
+                        },
+                        "scope": 906,
+                        "src": "682:69:2",
+                        "stateMutability": "nonpayable",
+                        "virtual": false,
+                        "visibility": "external"
+                    },
+                    {
+                        "functionSelector": "54fd4d50",
+                        "id": 798,
+                        "implemented": false,
+                        "kind": "function",
+                        "modifiers": [],
+                        "name": "version",
+                        "nameLocation": "766:7:2",
+                        "nodeType": "FunctionDefinition",
+                        "parameters": {
+                            "id": 794,
+                            "nodeType": "ParameterList",
+                            "parameters": [],
+                            "src": "773:2:2"
+                        },
+                        "returnParameters": {
+                            "id": 797,
+                            "nodeType": "ParameterList",
+                            "parameters": [
+                                {
+                                    "constant": false,
+                                    "id": 796,
+                                    "mutability": "mutable",
+                                    "name": "",
+                                    "nameLocation": "-1:-1:-1",
+                                    "nodeType": "VariableDeclaration",
+                                    "scope": 798,
+                                    "src": "799:7:2",
+                                    "stateVariable": false,
+                                    "storageLocation": "default",
+                                    "typeDescriptions": {
+                                        "typeIdentifier": "t_uint256",
+                                        "typeString": "uint256"
+                                    },
+                                    "typeName": {
+                                        "id": 795,
+                                        "name": "uint256",
+                                        "nodeType": "ElementaryTypeName",
+                                        "src": "799:7:2",
+                                        "typeDescriptions": {
+                                            "typeIdentifier": "t_uint256",
+                                            "typeString": "uint256"
+                                        }
+                                    },
+                                    "visibility": "internal"
+                                }
+                            ],
+                            "src": "798:9:2"
+                        },
+                        "scope": 906,
+                        "src": "757:51:2",
+                        "stateMutability": "view",
+                        "virtual": false,
+                        "visibility": "external"
+                    },
+                    {
+                        "functionSelector": "b3f63094",
+                        "id": 805,
+                        "implemented": false,
+                        "kind": "function",
+                        "modifiers": [],
+                        "name": "isWalletTypeSupported",
+                        "nameLocation": "823:21:2",
+                        "nodeType": "FunctionDefinition",
+                        "parameters": {
+                            "id": 801,
+                            "nodeType": "ParameterList",
+                            "parameters": [
+                                {
+                                    "constant": false,
+                                    "id": 800,
+                                    "mutability": "mutable",
+                                    "name": "walletTypeId",
+                                    "nameLocation": "862:12:2",
+                                    "nodeType": "VariableDeclaration",
+                                    "scope": 805,
+                                    "src": "854:20:2",
+                                    "stateVariable": false,
+                                    "storageLocation": "default",
+                                    "typeDescriptions": {
+                                        "typeIdentifier": "t_bytes32",
+                                        "typeString": "bytes32"
+                                    },
+                                    "typeName": {
+                                        "id": 799,
+                                        "name": "bytes32",
+                                        "nodeType": "ElementaryTypeName",
+                                        "src": "854:7:2",
+                                        "typeDescriptions": {
+                                            "typeIdentifier": "t_bytes32",
+                                            "typeString": "bytes32"
+                                        }
+                                    },
+                                    "visibility": "internal"
+                                }
+                            ],
+                            "src": "844:36:2"
+                        },
+                        "returnParameters": {
+                            "id": 804,
+                            "nodeType": "ParameterList",
+                            "parameters": [
+                                {
+                                    "constant": false,
+                                    "id": 803,
+                                    "mutability": "mutable",
+                                    "name": "",
+                                    "nameLocation": "-1:-1:-1",
+                                    "nodeType": "VariableDeclaration",
+                                    "scope": 805,
+                                    "src": "904:4:2",
+                                    "stateVariable": false,
+                                    "storageLocation": "default",
+                                    "typeDescriptions": {
+                                        "typeIdentifier": "t_bool",
+                                        "typeString": "bool"
+                                    },
+                                    "typeName": {
+                                        "id": 802,
+                                        "name": "bool",
+                                        "nodeType": "ElementaryTypeName",
+                                        "src": "904:4:2",
+                                        "typeDescriptions": {
+                                            "typeIdentifier": "t_bool",
+                                            "typeString": "bool"
+                                        }
+                                    },
+                                    "visibility": "internal"
+                                }
+                            ],
+                            "src": "903:6:2"
+                        },
+                        "scope": 906,
+                        "src": "814:96:2",
+                        "stateMutability": "view",
+                        "virtual": false,
+                        "visibility": "external"
+                    },
+                    {
+                        "functionSelector": "aa400591",
+                        "id": 814,
+                        "implemented": false,
+                        "kind": "function",
+                        "modifiers": [],
+                        "name": "isChainIdSupported",
+                        "nameLocation": "925:18:2",
+                        "nodeType": "FunctionDefinition",
+                        "parameters": {
+                            "id": 810,
+                            "nodeType": "ParameterList",
+                            "parameters": [
+                                {
+                                    "constant": false,
+                                    "id": 807,
+                                    "mutability": "mutable",
+                                    "name": "walletTypeId",
+                                    "nameLocation": "961:12:2",
+                                    "nodeType": "VariableDeclaration",
+                                    "scope": 814,
+                                    "src": "953:20:2",
+                                    "stateVariable": false,
+                                    "storageLocation": "default",
+                                    "typeDescriptions": {
+                                        "typeIdentifier": "t_bytes32",
+                                        "typeString": "bytes32"
+                                    },
+                                    "typeName": {
+                                        "id": 806,
+                                        "name": "bytes32",
+                                        "nodeType": "ElementaryTypeName",
+                                        "src": "953:7:2",
+                                        "typeDescriptions": {
+                                            "typeIdentifier": "t_bytes32",
+                                            "typeString": "bytes32"
+                                        }
+                                    },
+                                    "visibility": "internal"
+                                },
+                                {
+                                    "constant": false,
+                                    "id": 809,
+                                    "mutability": "mutable",
+                                    "name": "chainId",
+                                    "nameLocation": "991:7:2",
+                                    "nodeType": "VariableDeclaration",
+                                    "scope": 814,
+                                    "src": "983:15:2",
+                                    "stateVariable": false,
+                                    "storageLocation": "default",
+                                    "typeDescriptions": {
+                                        "typeIdentifier": "t_bytes32",
+                                        "typeString": "bytes32"
+                                    },
+                                    "typeName": {
+                                        "id": 808,
+                                        "name": "bytes32",
+                                        "nodeType": "ElementaryTypeName",
+                                        "src": "983:7:2",
+                                        "typeDescriptions": {
+                                            "typeIdentifier": "t_bytes32",
+                                            "typeString": "bytes32"
+                                        }
+                                    },
+                                    "visibility": "internal"
+                                }
+                            ],
+                            "src": "943:61:2"
+                        },
+                        "returnParameters": {
+                            "id": 813,
+                            "nodeType": "ParameterList",
+                            "parameters": [
+                                {
+                                    "constant": false,
+                                    "id": 812,
+                                    "mutability": "mutable",
+                                    "name": "",
+                                    "nameLocation": "-1:-1:-1",
+                                    "nodeType": "VariableDeclaration",
+                                    "scope": 814,
+                                    "src": "1028:4:2",
+                                    "stateVariable": false,
+                                    "storageLocation": "default",
+                                    "typeDescriptions": {
+                                        "typeIdentifier": "t_bool",
+                                        "typeString": "bool"
+                                    },
+                                    "typeName": {
+                                        "id": 811,
+                                        "name": "bool",
+                                        "nodeType": "ElementaryTypeName",
+                                        "src": "1028:4:2",
+                                        "typeDescriptions": {
+                                            "typeIdentifier": "t_bool",
+                                            "typeString": "bool"
+                                        }
+                                    },
+                                    "visibility": "internal"
+                                }
+                            ],
+                            "src": "1027:6:2"
+                        },
+                        "scope": 906,
+                        "src": "916:118:2",
+                        "stateMutability": "view",
+                        "virtual": false,
+                        "visibility": "external"
+                    },
+                    {
+                        "functionSelector": "5432f642",
+                        "id": 826,
+                        "implemented": false,
+                        "kind": "function",
+                        "modifiers": [],
+                        "name": "getWalletRegistry",
+                        "nameLocation": "1049:17:2",
+                        "nodeType": "FunctionDefinition",
+                        "parameters": {
+                            "id": 821,
+                            "nodeType": "ParameterList",
+                            "parameters": [
+                                {
+                                    "constant": false,
+                                    "id": 816,
+                                    "mutability": "mutable",
+                                    "name": "walletTypeId",
+                                    "nameLocation": "1084:12:2",
+                                    "nodeType": "VariableDeclaration",
+                                    "scope": 826,
+                                    "src": "1076:20:2",
+                                    "stateVariable": false,
+                                    "storageLocation": "default",
+                                    "typeDescriptions": {
+                                        "typeIdentifier": "t_bytes32",
+                                        "typeString": "bytes32"
+                                    },
+                                    "typeName": {
+                                        "id": 815,
+                                        "name": "bytes32",
+                                        "nodeType": "ElementaryTypeName",
+                                        "src": "1076:7:2",
+                                        "typeDescriptions": {
+                                            "typeIdentifier": "t_bytes32",
+                                            "typeString": "bytes32"
+                                        }
+                                    },
+                                    "visibility": "internal"
+                                },
+                                {
+                                    "constant": false,
+                                    "id": 818,
+                                    "mutability": "mutable",
+                                    "name": "walletIndex",
+                                    "nameLocation": "1114:11:2",
+                                    "nodeType": "VariableDeclaration",
+                                    "scope": 826,
+                                    "src": "1106:19:2",
+                                    "stateVariable": false,
+                                    "storageLocation": "default",
+                                    "typeDescriptions": {
+                                        "typeIdentifier": "t_uint256",
+                                        "typeString": "uint256"
+                                    },
+                                    "typeName": {
+                                        "id": 817,
+                                        "name": "uint256",
+                                        "nodeType": "ElementaryTypeName",
+                                        "src": "1106:7:2",
+                                        "typeDescriptions": {
+                                            "typeIdentifier": "t_uint256",
+                                            "typeString": "uint256"
+                                        }
+                                    },
+                                    "visibility": "internal"
+                                },
+                                {
+                                    "constant": false,
+                                    "id": 820,
+                                    "mutability": "mutable",
+                                    "name": "owner",
+                                    "nameLocation": "1143:5:2",
+                                    "nodeType": "VariableDeclaration",
+                                    "scope": 826,
+                                    "src": "1135:13:2",
+                                    "stateVariable": false,
+                                    "storageLocation": "default",
+                                    "typeDescriptions": {
+                                        "typeIdentifier": "t_address",
+                                        "typeString": "address"
+                                    },
+                                    "typeName": {
+                                        "id": 819,
+                                        "name": "address",
+                                        "nodeType": "ElementaryTypeName",
+                                        "src": "1135:7:2",
+                                        "stateMutability": "nonpayable",
+                                        "typeDescriptions": {
+                                            "typeIdentifier": "t_address",
+                                            "typeString": "address"
+                                        }
+                                    },
+                                    "visibility": "internal"
+                                }
+                            ],
+                            "src": "1066:88:2"
+                        },
+                        "returnParameters": {
+                            "id": 825,
+                            "nodeType": "ParameterList",
+                            "parameters": [
+                                {
+                                    "constant": false,
+                                    "id": 824,
+                                    "mutability": "mutable",
+                                    "name": "",
+                                    "nameLocation": "-1:-1:-1",
+                                    "nodeType": "VariableDeclaration",
+                                    "scope": 826,
+                                    "src": "1178:31:2",
+                                    "stateVariable": false,
+                                    "storageLocation": "memory",
+                                    "typeDescriptions": {
+                                        "typeIdentifier": "t_struct$_WalletRegistry_$1426_memory_ptr",
+                                        "typeString": "struct SignTypes.WalletRegistry"
+                                    },
+                                    "typeName": {
+                                        "id": 823,
+                                        "nodeType": "UserDefinedTypeName",
+                                        "pathNode": {
+                                            "id": 822,
+                                            "name": "SignTypes.WalletRegistry",
+                                            "nameLocations": [
+                                                "1178:9:2",
+                                                "1188:14:2"
+                                            ],
+                                            "nodeType": "IdentifierPath",
+                                            "referencedDeclaration": 1426,
+                                            "src": "1178:24:2"
+                                        },
+                                        "referencedDeclaration": 1426,
+                                        "src": "1178:24:2",
+                                        "typeDescriptions": {
+                                            "typeIdentifier": "t_struct$_WalletRegistry_$1426_storage_ptr",
+                                            "typeString": "struct SignTypes.WalletRegistry"
+                                        }
+                                    },
+                                    "visibility": "internal"
+                                }
+                            ],
+                            "src": "1177:33:2"
+                        },
+                        "scope": 906,
+                        "src": "1040:171:2",
+                        "stateMutability": "view",
+                        "virtual": false,
+                        "visibility": "external"
+                    },
+                    {
+                        "functionSelector": "b933e46f",
+                        "id": 843,
+                        "implemented": false,
+                        "kind": "function",
+                        "modifiers": [],
+                        "name": "estimateFee",
+                        "nameLocation": "1226:11:2",
+                        "nodeType": "FunctionDefinition",
+                        "parameters": {
+                            "id": 835,
+                            "nodeType": "ParameterList",
+                            "parameters": [
+                                {
+                                    "constant": false,
+                                    "id": 828,
+                                    "mutability": "mutable",
+                                    "name": "walletTypeId",
+                                    "nameLocation": "1255:12:2",
+                                    "nodeType": "VariableDeclaration",
+                                    "scope": 843,
+                                    "src": "1247:20:2",
+                                    "stateVariable": false,
+                                    "storageLocation": "default",
+                                    "typeDescriptions": {
+                                        "typeIdentifier": "t_bytes32",
+                                        "typeString": "bytes32"
+                                    },
+                                    "typeName": {
+                                        "id": 827,
+                                        "name": "bytes32",
+                                        "nodeType": "ElementaryTypeName",
+                                        "src": "1247:7:2",
+                                        "typeDescriptions": {
+                                            "typeIdentifier": "t_bytes32",
+                                            "typeString": "bytes32"
+                                        }
+                                    },
+                                    "visibility": "internal"
+                                },
+                                {
+                                    "constant": false,
+                                    "id": 830,
+                                    "mutability": "mutable",
+                                    "name": "owner",
+                                    "nameLocation": "1285:5:2",
+                                    "nodeType": "VariableDeclaration",
+                                    "scope": 843,
+                                    "src": "1277:13:2",
+                                    "stateVariable": false,
+                                    "storageLocation": "default",
+                                    "typeDescriptions": {
+                                        "typeIdentifier": "t_address",
+                                        "typeString": "address"
+                                    },
+                                    "typeName": {
+                                        "id": 829,
+                                        "name": "address",
+                                        "nodeType": "ElementaryTypeName",
+                                        "src": "1277:7:2",
+                                        "stateMutability": "nonpayable",
+                                        "typeDescriptions": {
+                                            "typeIdentifier": "t_address",
+                                            "typeString": "address"
+                                        }
+                                    },
+                                    "visibility": "internal"
+                                },
+                                {
+                                    "constant": false,
+                                    "id": 832,
+                                    "mutability": "mutable",
+                                    "name": "walletIndex",
+                                    "nameLocation": "1308:11:2",
+                                    "nodeType": "VariableDeclaration",
+                                    "scope": 843,
+                                    "src": "1300:19:2",
+                                    "stateVariable": false,
+                                    "storageLocation": "default",
+                                    "typeDescriptions": {
+                                        "typeIdentifier": "t_uint256",
+                                        "typeString": "uint256"
+                                    },
+                                    "typeName": {
+                                        "id": 831,
+                                        "name": "uint256",
+                                        "nodeType": "ElementaryTypeName",
+                                        "src": "1300:7:2",
+                                        "typeDescriptions": {
+                                            "typeIdentifier": "t_uint256",
+                                            "typeString": "uint256"
+                                        }
+                                    },
+                                    "visibility": "internal"
+                                },
+                                {
+                                    "constant": false,
+                                    "id": 834,
+                                    "mutability": "mutable",
+                                    "name": "value",
+                                    "nameLocation": "1337:5:2",
+                                    "nodeType": "VariableDeclaration",
+                                    "scope": 843,
+                                    "src": "1329:13:2",
+                                    "stateVariable": false,
+                                    "storageLocation": "default",
+                                    "typeDescriptions": {
+                                        "typeIdentifier": "t_uint256",
+                                        "typeString": "uint256"
+                                    },
+                                    "typeName": {
+                                        "id": 833,
+                                        "name": "uint256",
+                                        "nodeType": "ElementaryTypeName",
+                                        "src": "1329:7:2",
+                                        "typeDescriptions": {
+                                            "typeIdentifier": "t_uint256",
+                                            "typeString": "uint256"
+                                        }
+                                    },
+                                    "visibility": "internal"
+                                }
+                            ],
+                            "src": "1237:111:2"
+                        },
+                        "returnParameters": {
+                            "id": 842,
+                            "nodeType": "ParameterList",
+                            "parameters": [
+                                {
+                                    "constant": false,
+                                    "id": 837,
+                                    "mutability": "mutable",
+                                    "name": "mpc",
+                                    "nameLocation": "1380:3:2",
+                                    "nodeType": "VariableDeclaration",
+                                    "scope": 843,
+                                    "src": "1372:11:2",
+                                    "stateVariable": false,
+                                    "storageLocation": "default",
+                                    "typeDescriptions": {
+                                        "typeIdentifier": "t_uint256",
+                                        "typeString": "uint256"
+                                    },
+                                    "typeName": {
+                                        "id": 836,
+                                        "name": "uint256",
+                                        "nodeType": "ElementaryTypeName",
+                                        "src": "1372:7:2",
+                                        "typeDescriptions": {
+                                            "typeIdentifier": "t_uint256",
+                                            "typeString": "uint256"
+                                        }
+                                    },
+                                    "visibility": "internal"
+                                },
+                                {
+                                    "constant": false,
+                                    "id": 839,
+                                    "mutability": "mutable",
+                                    "name": "netResp",
+                                    "nameLocation": "1393:7:2",
+                                    "nodeType": "VariableDeclaration",
+                                    "scope": 843,
+                                    "src": "1385:15:2",
+                                    "stateVariable": false,
+                                    "storageLocation": "default",
+                                    "typeDescriptions": {
+                                        "typeIdentifier": "t_uint256",
+                                        "typeString": "uint256"
+                                    },
+                                    "typeName": {
+                                        "id": 838,
+                                        "name": "uint256",
+                                        "nodeType": "ElementaryTypeName",
+                                        "src": "1385:7:2",
+                                        "typeDescriptions": {
+                                            "typeIdentifier": "t_uint256",
+                                            "typeString": "uint256"
+                                        }
+                                    },
+                                    "visibility": "internal"
+                                },
+                                {
+                                    "constant": false,
+                                    "id": 841,
+                                    "mutability": "mutable",
+                                    "name": "total",
+                                    "nameLocation": "1410:5:2",
+                                    "nodeType": "VariableDeclaration",
+                                    "scope": 843,
+                                    "src": "1402:13:2",
+                                    "stateVariable": false,
+                                    "storageLocation": "default",
+                                    "typeDescriptions": {
+                                        "typeIdentifier": "t_uint256",
+                                        "typeString": "uint256"
+                                    },
+                                    "typeName": {
+                                        "id": 840,
+                                        "name": "uint256",
+                                        "nodeType": "ElementaryTypeName",
+                                        "src": "1402:7:2",
+                                        "typeDescriptions": {
+                                            "typeIdentifier": "t_uint256",
+                                            "typeString": "uint256"
+                                        }
+                                    },
+                                    "visibility": "internal"
+                                }
+                            ],
+                            "src": "1371:45:2"
+                        },
+                        "scope": 906,
+                        "src": "1217:200:2",
+                        "stateMutability": "view",
+                        "virtual": false,
+                        "visibility": "external"
+                    },
+                    {
+                        "functionSelector": "a213cbaa",
+                        "id": 856,
+                        "implemented": false,
+                        "kind": "function",
+                        "modifiers": [],
+                        "name": "estimateFee",
+                        "nameLocation": "1432:11:2",
+                        "nodeType": "FunctionDefinition",
+                        "parameters": {
+                            "id": 848,
+                            "nodeType": "ParameterList",
+                            "parameters": [
+                                {
+                                    "constant": false,
+                                    "id": 845,
+                                    "mutability": "mutable",
+                                    "name": "monitoring",
+                                    "nameLocation": "1459:10:2",
+                                    "nodeType": "VariableDeclaration",
+                                    "scope": 856,
+                                    "src": "1453:16:2",
+                                    "stateVariable": false,
+                                    "storageLocation": "default",
+                                    "typeDescriptions": {
+                                        "typeIdentifier": "t_uint8",
+                                        "typeString": "uint8"
+                                    },
+                                    "typeName": {
+                                        "id": 844,
+                                        "name": "uint8",
+                                        "nodeType": "ElementaryTypeName",
+                                        "src": "1453:5:2",
+                                        "typeDescriptions": {
+                                            "typeIdentifier": "t_uint8",
+                                            "typeString": "uint8"
+                                        }
+                                    },
+                                    "visibility": "internal"
+                                },
+                                {
+                                    "constant": false,
+                                    "id": 847,
+                                    "mutability": "mutable",
+                                    "name": "value",
+                                    "nameLocation": "1487:5:2",
+                                    "nodeType": "VariableDeclaration",
+                                    "scope": 856,
+                                    "src": "1479:13:2",
+                                    "stateVariable": false,
+                                    "storageLocation": "default",
+                                    "typeDescriptions": {
+                                        "typeIdentifier": "t_uint256",
+                                        "typeString": "uint256"
+                                    },
+                                    "typeName": {
+                                        "id": 846,
+                                        "name": "uint256",
+                                        "nodeType": "ElementaryTypeName",
+                                        "src": "1479:7:2",
+                                        "typeDescriptions": {
+                                            "typeIdentifier": "t_uint256",
+                                            "typeString": "uint256"
+                                        }
+                                    },
+                                    "visibility": "internal"
+                                }
+                            ],
+                            "src": "1443:55:2"
+                        },
+                        "returnParameters": {
+                            "id": 855,
+                            "nodeType": "ParameterList",
+                            "parameters": [
+                                {
+                                    "constant": false,
+                                    "id": 850,
+                                    "mutability": "mutable",
+                                    "name": "mpc",
+                                    "nameLocation": "1530:3:2",
+                                    "nodeType": "VariableDeclaration",
+                                    "scope": 856,
+                                    "src": "1522:11:2",
+                                    "stateVariable": false,
+                                    "storageLocation": "default",
+                                    "typeDescriptions": {
+                                        "typeIdentifier": "t_uint256",
+                                        "typeString": "uint256"
+                                    },
+                                    "typeName": {
+                                        "id": 849,
+                                        "name": "uint256",
+                                        "nodeType": "ElementaryTypeName",
+                                        "src": "1522:7:2",
+                                        "typeDescriptions": {
+                                            "typeIdentifier": "t_uint256",
+                                            "typeString": "uint256"
+                                        }
+                                    },
+                                    "visibility": "internal"
+                                },
+                                {
+                                    "constant": false,
+                                    "id": 852,
+                                    "mutability": "mutable",
+                                    "name": "netResp",
+                                    "nameLocation": "1543:7:2",
+                                    "nodeType": "VariableDeclaration",
+                                    "scope": 856,
+                                    "src": "1535:15:2",
+                                    "stateVariable": false,
+                                    "storageLocation": "default",
+                                    "typeDescriptions": {
+                                        "typeIdentifier": "t_uint256",
+                                        "typeString": "uint256"
+                                    },
+                                    "typeName": {
+                                        "id": 851,
+                                        "name": "uint256",
+                                        "nodeType": "ElementaryTypeName",
+                                        "src": "1535:7:2",
+                                        "typeDescriptions": {
+                                            "typeIdentifier": "t_uint256",
+                                            "typeString": "uint256"
+                                        }
+                                    },
+                                    "visibility": "internal"
+                                },
+                                {
+                                    "constant": false,
+                                    "id": 854,
+                                    "mutability": "mutable",
+                                    "name": "total",
+                                    "nameLocation": "1560:5:2",
+                                    "nodeType": "VariableDeclaration",
+                                    "scope": 856,
+                                    "src": "1552:13:2",
+                                    "stateVariable": false,
+                                    "storageLocation": "default",
+                                    "typeDescriptions": {
+                                        "typeIdentifier": "t_uint256",
+                                        "typeString": "uint256"
+                                    },
+                                    "typeName": {
+                                        "id": 853,
+                                        "name": "uint256",
+                                        "nodeType": "ElementaryTypeName",
+                                        "src": "1552:7:2",
+                                        "typeDescriptions": {
+                                            "typeIdentifier": "t_uint256",
+                                            "typeString": "uint256"
+                                        }
+                                    },
+                                    "visibility": "internal"
+                                }
+                            ],
+                            "src": "1521:45:2"
+                        },
+                        "scope": 906,
+                        "src": "1423:144:2",
+                        "stateMutability": "view",
+                        "virtual": false,
+                        "visibility": "external"
+                    },
+                    {
+                        "functionSelector": "379e3349",
+                        "id": 861,
+                        "implemented": false,
+                        "kind": "function",
+                        "modifiers": [],
+                        "name": "getTraceId",
+                        "nameLocation": "1582:10:2",
+                        "nodeType": "FunctionDefinition",
+                        "parameters": {
+                            "id": 857,
+                            "nodeType": "ParameterList",
+                            "parameters": [],
+                            "src": "1592:2:2"
+                        },
+                        "returnParameters": {
+                            "id": 860,
+                            "nodeType": "ParameterList",
+                            "parameters": [
+                                {
+                                    "constant": false,
+                                    "id": 859,
+                                    "mutability": "mutable",
+                                    "name": "",
+                                    "nameLocation": "-1:-1:-1",
+                                    "nodeType": "VariableDeclaration",
+                                    "scope": 861,
+                                    "src": "1618:7:2",
+                                    "stateVariable": false,
+                                    "storageLocation": "default",
+                                    "typeDescriptions": {
+                                        "typeIdentifier": "t_uint256",
+                                        "typeString": "uint256"
+                                    },
+                                    "typeName": {
+                                        "id": 858,
+                                        "name": "uint256",
+                                        "nodeType": "ElementaryTypeName",
+                                        "src": "1618:7:2",
+                                        "typeDescriptions": {
+                                            "typeIdentifier": "t_uint256",
+                                            "typeString": "uint256"
+                                        }
+                                    },
+                                    "visibility": "internal"
+                                }
+                            ],
+                            "src": "1617:9:2"
+                        },
+                        "scope": 906,
+                        "src": "1573:54:2",
+                        "stateMutability": "view",
+                        "virtual": false,
+                        "visibility": "external"
+                    },
+                    {
+                        "functionSelector": "ed979dd6",
+                        "id": 869,
+                        "implemented": false,
+                        "kind": "function",
+                        "modifiers": [],
+                        "name": "getRequestState",
+                        "nameLocation": "1642:15:2",
+                        "nodeType": "FunctionDefinition",
+                        "parameters": {
+                            "id": 864,
+                            "nodeType": "ParameterList",
+                            "parameters": [
+                                {
+                                    "constant": false,
+                                    "id": 863,
+                                    "mutability": "mutable",
+                                    "name": "traceId",
+                                    "nameLocation": "1675:7:2",
+                                    "nodeType": "VariableDeclaration",
+                                    "scope": 869,
+                                    "src": "1667:15:2",
+                                    "stateVariable": false,
+                                    "storageLocation": "default",
+                                    "typeDescriptions": {
+                                        "typeIdentifier": "t_uint256",
+                                        "typeString": "uint256"
+                                    },
+                                    "typeName": {
+                                        "id": 862,
+                                        "name": "uint256",
+                                        "nodeType": "ElementaryTypeName",
+                                        "src": "1667:7:2",
+                                        "typeDescriptions": {
+                                            "typeIdentifier": "t_uint256",
+                                            "typeString": "uint256"
+                                        }
+                                    },
+                                    "visibility": "internal"
+                                }
+                            ],
+                            "src": "1657:31:2"
+                        },
+                        "returnParameters": {
+                            "id": 868,
+                            "nodeType": "ParameterList",
+                            "parameters": [
+                                {
+                                    "constant": false,
+                                    "id": 867,
+                                    "mutability": "mutable",
+                                    "name": "",
+                                    "nameLocation": "-1:-1:-1",
+                                    "nodeType": "VariableDeclaration",
+                                    "scope": 869,
+                                    "src": "1712:28:2",
+                                    "stateVariable": false,
+                                    "storageLocation": "memory",
+                                    "typeDescriptions": {
+                                        "typeIdentifier": "t_struct$_ReqRegistry_$1431_memory_ptr",
+                                        "typeString": "struct SignTypes.ReqRegistry"
+                                    },
+                                    "typeName": {
+                                        "id": 866,
+                                        "nodeType": "UserDefinedTypeName",
+                                        "pathNode": {
+                                            "id": 865,
+                                            "name": "SignTypes.ReqRegistry",
+                                            "nameLocations": [
+                                                "1712:9:2",
+                                                "1722:11:2"
+                                            ],
+                                            "nodeType": "IdentifierPath",
+                                            "referencedDeclaration": 1431,
+                                            "src": "1712:21:2"
+                                        },
+                                        "referencedDeclaration": 1431,
+                                        "src": "1712:21:2",
+                                        "typeDescriptions": {
+                                            "typeIdentifier": "t_struct$_ReqRegistry_$1431_storage_ptr",
+                                            "typeString": "struct SignTypes.ReqRegistry"
+                                        }
+                                    },
+                                    "visibility": "internal"
+                                }
+                            ],
+                            "src": "1711:30:2"
+                        },
+                        "scope": 906,
+                        "src": "1633:109:2",
+                        "stateMutability": "view",
+                        "virtual": false,
+                        "visibility": "external"
+                    },
+                    {
+                        "functionSelector": "c45ec7ab",
+                        "id": 874,
+                        "implemented": false,
+                        "kind": "function",
+                        "modifiers": [],
+                        "name": "getMPCFee",
+                        "nameLocation": "1757:9:2",
+                        "nodeType": "FunctionDefinition",
+                        "parameters": {
+                            "id": 870,
+                            "nodeType": "ParameterList",
+                            "parameters": [],
+                            "src": "1766:2:2"
+                        },
+                        "returnParameters": {
+                            "id": 873,
+                            "nodeType": "ParameterList",
+                            "parameters": [
+                                {
+                                    "constant": false,
+                                    "id": 872,
+                                    "mutability": "mutable",
+                                    "name": "",
+                                    "nameLocation": "-1:-1:-1",
+                                    "nodeType": "VariableDeclaration",
+                                    "scope": 874,
+                                    "src": "1792:7:2",
+                                    "stateVariable": false,
+                                    "storageLocation": "default",
+                                    "typeDescriptions": {
+                                        "typeIdentifier": "t_uint256",
+                                        "typeString": "uint256"
+                                    },
+                                    "typeName": {
+                                        "id": 871,
+                                        "name": "uint256",
+                                        "nodeType": "ElementaryTypeName",
+                                        "src": "1792:7:2",
+                                        "typeDescriptions": {
+                                            "typeIdentifier": "t_uint256",
+                                            "typeString": "uint256"
+                                        }
+                                    },
+                                    "visibility": "internal"
+                                }
+                            ],
+                            "src": "1791:9:2"
+                        },
+                        "scope": 906,
+                        "src": "1748:53:2",
+                        "stateMutability": "view",
+                        "virtual": false,
+                        "visibility": "external"
+                    },
+                    {
+                        "functionSelector": "4dd4c753",
+                        "id": 879,
+                        "implemented": false,
+                        "kind": "function",
+                        "modifiers": [],
+                        "name": "getRespGas",
+                        "nameLocation": "1815:10:2",
+                        "nodeType": "FunctionDefinition",
+                        "parameters": {
+                            "id": 875,
+                            "nodeType": "ParameterList",
+                            "parameters": [],
+                            "src": "1825:2:2"
+                        },
+                        "returnParameters": {
+                            "id": 878,
+                            "nodeType": "ParameterList",
+                            "parameters": [
+                                {
+                                    "constant": false,
+                                    "id": 877,
+                                    "mutability": "mutable",
+                                    "name": "",
+                                    "nameLocation": "-1:-1:-1",
+                                    "nodeType": "VariableDeclaration",
+                                    "scope": 879,
+                                    "src": "1851:7:2",
+                                    "stateVariable": false,
+                                    "storageLocation": "default",
+                                    "typeDescriptions": {
+                                        "typeIdentifier": "t_uint256",
+                                        "typeString": "uint256"
+                                    },
+                                    "typeName": {
+                                        "id": 876,
+                                        "name": "uint256",
+                                        "nodeType": "ElementaryTypeName",
+                                        "src": "1851:7:2",
+                                        "typeDescriptions": {
+                                            "typeIdentifier": "t_uint256",
+                                            "typeString": "uint256"
+                                        }
+                                    },
+                                    "visibility": "internal"
+                                }
+                            ],
+                            "src": "1850:9:2"
+                        },
+                        "scope": 906,
+                        "src": "1806:54:2",
+                        "stateMutability": "view",
+                        "virtual": false,
+                        "visibility": "external"
+                    },
+                    {
+                        "functionSelector": "f4727b9b",
+                        "id": 884,
+                        "implemented": false,
+                        "kind": "function",
+                        "modifiers": [],
+                        "name": "getRespGasPriceBuffer",
+                        "nameLocation": "1874:21:2",
+                        "nodeType": "FunctionDefinition",
+                        "parameters": {
+                            "id": 880,
+                            "nodeType": "ParameterList",
+                            "parameters": [],
+                            "src": "1895:2:2"
+                        },
+                        "returnParameters": {
+                            "id": 883,
+                            "nodeType": "ParameterList",
+                            "parameters": [
+                                {
+                                    "constant": false,
+                                    "id": 882,
+                                    "mutability": "mutable",
+                                    "name": "",
+                                    "nameLocation": "-1:-1:-1",
+                                    "nodeType": "VariableDeclaration",
+                                    "scope": 884,
+                                    "src": "1921:7:2",
+                                    "stateVariable": false,
+                                    "storageLocation": "default",
+                                    "typeDescriptions": {
+                                        "typeIdentifier": "t_uint256",
+                                        "typeString": "uint256"
+                                    },
+                                    "typeName": {
+                                        "id": 881,
+                                        "name": "uint256",
+                                        "nodeType": "ElementaryTypeName",
+                                        "src": "1921:7:2",
+                                        "typeDescriptions": {
+                                            "typeIdentifier": "t_uint256",
+                                            "typeString": "uint256"
+                                        }
+                                    },
+                                    "visibility": "internal"
+                                }
+                            ],
+                            "src": "1920:9:2"
+                        },
+                        "scope": 906,
+                        "src": "1865:65:2",
+                        "stateMutability": "view",
+                        "virtual": false,
+                        "visibility": "external"
+                    },
+                    {
+                        "functionSelector": "a11a572d",
+                        "id": 894,
+                        "implemented": false,
+                        "kind": "function",
+                        "modifiers": [],
+                        "name": "getZrKeys",
+                        "nameLocation": "1945:9:2",
+                        "nodeType": "FunctionDefinition",
+                        "parameters": {
+                            "id": 889,
+                            "nodeType": "ParameterList",
+                            "parameters": [
+                                {
+                                    "constant": false,
+                                    "id": 886,
+                                    "mutability": "mutable",
+                                    "name": "walletTypeId",
+                                    "nameLocation": "1972:12:2",
+                                    "nodeType": "VariableDeclaration",
+                                    "scope": 894,
+                                    "src": "1964:20:2",
+                                    "stateVariable": false,
+                                    "storageLocation": "default",
+                                    "typeDescriptions": {
+                                        "typeIdentifier": "t_bytes32",
+                                        "typeString": "bytes32"
+                                    },
+                                    "typeName": {
+                                        "id": 885,
+                                        "name": "bytes32",
+                                        "nodeType": "ElementaryTypeName",
+                                        "src": "1964:7:2",
+                                        "typeDescriptions": {
+                                            "typeIdentifier": "t_bytes32",
+                                            "typeString": "bytes32"
+                                        }
+                                    },
+                                    "visibility": "internal"
+                                },
+                                {
+                                    "constant": false,
+                                    "id": 888,
+                                    "mutability": "mutable",
+                                    "name": "owner",
+                                    "nameLocation": "2002:5:2",
+                                    "nodeType": "VariableDeclaration",
+                                    "scope": 894,
+                                    "src": "1994:13:2",
+                                    "stateVariable": false,
+                                    "storageLocation": "default",
+                                    "typeDescriptions": {
+                                        "typeIdentifier": "t_address",
+                                        "typeString": "address"
+                                    },
+                                    "typeName": {
+                                        "id": 887,
+                                        "name": "address",
+                                        "nodeType": "ElementaryTypeName",
+                                        "src": "1994:7:2",
+                                        "stateMutability": "nonpayable",
+                                        "typeDescriptions": {
+                                            "typeIdentifier": "t_address",
+                                            "typeString": "address"
+                                        }
+                                    },
+                                    "visibility": "internal"
+                                }
+                            ],
+                            "src": "1954:59:2"
+                        },
+                        "returnParameters": {
+                            "id": 893,
+                            "nodeType": "ParameterList",
+                            "parameters": [
+                                {
+                                    "constant": false,
+                                    "id": 892,
+                                    "mutability": "mutable",
+                                    "name": "",
+                                    "nameLocation": "-1:-1:-1",
+                                    "nodeType": "VariableDeclaration",
+                                    "scope": 894,
+                                    "src": "2037:15:2",
+                                    "stateVariable": false,
+                                    "storageLocation": "memory",
+                                    "typeDescriptions": {
+                                        "typeIdentifier": "t_array$_t_string_memory_ptr_$dyn_memory_ptr",
+                                        "typeString": "string[]"
+                                    },
+                                    "typeName": {
+                                        "baseType": {
+                                            "id": 890,
+                                            "name": "string",
+                                            "nodeType": "ElementaryTypeName",
+                                            "src": "2037:6:2",
+                                            "typeDescriptions": {
+                                                "typeIdentifier": "t_string_storage_ptr",
+                                                "typeString": "string"
+                                            }
+                                        },
+                                        "id": 891,
+                                        "nodeType": "ArrayTypeName",
+                                        "src": "2037:8:2",
+                                        "typeDescriptions": {
+                                            "typeIdentifier": "t_array$_t_string_storage_$dyn_storage_ptr",
+                                            "typeString": "string[]"
+                                        }
+                                    },
+                                    "visibility": "internal"
+                                }
+                            ],
+                            "src": "2036:17:2"
+                        },
+                        "scope": 906,
+                        "src": "1936:118:2",
+                        "stateMutability": "view",
+                        "virtual": false,
+                        "visibility": "external"
+                    },
+                    {
+                        "functionSelector": "187e5818",
+                        "id": 905,
+                        "implemented": false,
+                        "kind": "function",
+                        "modifiers": [],
+                        "name": "getZrKey",
+                        "nameLocation": "2069:8:2",
+                        "nodeType": "FunctionDefinition",
+                        "parameters": {
+                            "id": 901,
+                            "nodeType": "ParameterList",
+                            "parameters": [
+                                {
+                                    "constant": false,
+                                    "id": 896,
+                                    "mutability": "mutable",
+                                    "name": "walletTypeId",
+                                    "nameLocation": "2095:12:2",
+                                    "nodeType": "VariableDeclaration",
+                                    "scope": 905,
+                                    "src": "2087:20:2",
+                                    "stateVariable": false,
+                                    "storageLocation": "default",
+                                    "typeDescriptions": {
+                                        "typeIdentifier": "t_bytes32",
+                                        "typeString": "bytes32"
+                                    },
+                                    "typeName": {
+                                        "id": 895,
+                                        "name": "bytes32",
+                                        "nodeType": "ElementaryTypeName",
+                                        "src": "2087:7:2",
+                                        "typeDescriptions": {
+                                            "typeIdentifier": "t_bytes32",
+                                            "typeString": "bytes32"
+                                        }
+                                    },
+                                    "visibility": "internal"
+                                },
+                                {
+                                    "constant": false,
+                                    "id": 898,
+                                    "mutability": "mutable",
+                                    "name": "owner",
+                                    "nameLocation": "2125:5:2",
+                                    "nodeType": "VariableDeclaration",
+                                    "scope": 905,
+                                    "src": "2117:13:2",
+                                    "stateVariable": false,
+                                    "storageLocation": "default",
+                                    "typeDescriptions": {
+                                        "typeIdentifier": "t_address",
+                                        "typeString": "address"
+                                    },
+                                    "typeName": {
+                                        "id": 897,
+                                        "name": "address",
+                                        "nodeType": "ElementaryTypeName",
+                                        "src": "2117:7:2",
+                                        "stateMutability": "nonpayable",
+                                        "typeDescriptions": {
+                                            "typeIdentifier": "t_address",
+                                            "typeString": "address"
+                                        }
+                                    },
+                                    "visibility": "internal"
+                                },
+                                {
+                                    "constant": false,
+                                    "id": 900,
+                                    "mutability": "mutable",
+                                    "name": "index",
+                                    "nameLocation": "2148:5:2",
+                                    "nodeType": "VariableDeclaration",
+                                    "scope": 905,
+                                    "src": "2140:13:2",
+                                    "stateVariable": false,
+                                    "storageLocation": "default",
+                                    "typeDescriptions": {
+                                        "typeIdentifier": "t_uint256",
+                                        "typeString": "uint256"
+                                    },
+                                    "typeName": {
+                                        "id": 899,
+                                        "name": "uint256",
+                                        "nodeType": "ElementaryTypeName",
+                                        "src": "2140:7:2",
+                                        "typeDescriptions": {
+                                            "typeIdentifier": "t_uint256",
+                                            "typeString": "uint256"
+                                        }
+                                    },
+                                    "visibility": "internal"
+                                }
+                            ],
+                            "src": "2077:82:2"
+                        },
+                        "returnParameters": {
+                            "id": 904,
+                            "nodeType": "ParameterList",
+                            "parameters": [
+                                {
+                                    "constant": false,
+                                    "id": 903,
+                                    "mutability": "mutable",
+                                    "name": "",
+                                    "nameLocation": "-1:-1:-1",
+                                    "nodeType": "VariableDeclaration",
+                                    "scope": 905,
+                                    "src": "2183:13:2",
+                                    "stateVariable": false,
+                                    "storageLocation": "memory",
+                                    "typeDescriptions": {
+                                        "typeIdentifier": "t_string_memory_ptr",
+                                        "typeString": "string"
+                                    },
+                                    "typeName": {
+                                        "id": 902,
+                                        "name": "string",
+                                        "nodeType": "ElementaryTypeName",
+                                        "src": "2183:6:2",
+                                        "typeDescriptions": {
+                                            "typeIdentifier": "t_string_storage_ptr",
+                                            "typeString": "string"
+                                        }
+                                    },
+                                    "visibility": "internal"
+                                }
+                            ],
+                            "src": "2182:15:2"
+                        },
+                        "scope": 906,
+                        "src": "2060:138:2",
+                        "stateMutability": "view",
+                        "virtual": false,
+                        "visibility": "external"
+                    }
+                ],
+                "scope": 907,
+                "src": "112:2089:2",
+                "usedErrors": []
+            }
+        ],
+        "src": "32:2170:2"
+    },
+    "functionHashes": {
+        "estimateFee(bytes32,address,uint256,uint256)": "b933e46f",
+        "estimateFee(uint8,uint256)": "a213cbaa",
+        "getMPCFee()": "c45ec7ab",
+        "getRequestState(uint256)": "ed979dd6",
+        "getRespGas()": "4dd4c753",
+        "getRespGasPriceBuffer()": "f4727b9b",
+        "getTraceId()": "379e3349",
+        "getWalletRegistry(bytes32,uint256,address)": "5432f642",
+        "getZrKey(bytes32,address,uint256)": "187e5818",
+        "getZrKeys(bytes32,address)": "a11a572d",
+        "isChainIdSupported(bytes32,bytes32)": "aa400591",
+        "isWalletTypeSupported(bytes32)": "b3f63094",
+        "version()": "54fd4d50",
+        "zrKeyReq((bytes32,uint8))": "5c706c9b",
+        "zrKeyRes((bytes32,address,uint256,string,uint8,bytes))": "31852273",
+        "zrSignData((bytes32,uint256,bytes32,bytes,bool))": "052347e6",
+        "zrSignHash((bytes32,uint256,bytes32,bytes,bool))": "15c39391",
+        "zrSignRes((uint256,address,bytes,bytes,bool,bytes))": "050a5784",
+        "zrSignSimpleTx((bytes32,uint256,bytes32,bytes,bool))": "daefde8e",
+        "zrSignTx((bytes32,uint256,bytes32,bytes,bool))": "93f874c4"
+    },
+    "gasEstimates": null
+}

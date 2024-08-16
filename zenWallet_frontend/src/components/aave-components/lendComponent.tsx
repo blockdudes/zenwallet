@@ -1,19 +1,36 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { LendDialog } from "./LendDialog"; // Import LendDialog
+import { useAppDispatch, useAppSelector } from "@/lib/hook";
+import { getERC20Token } from "@/lib/features/getERC20TokenSlice";
+import { useActiveAccount } from "thirdweb/react";
+
 
 const ASSETS = [
-  { name: "USDC", walletBalance: 1.5, address: "0x94a9D9AC8a22534E3FaCa9F4e7F2E2cf85d5E4C8" },
+  { name: "USDC", balance: 1.5, address: "0x94a9D9AC8a22534E3FaCa9F4e7F2E2cf85d5E4C8" },
 ];
 
 const LendComponent = () => {
   const [dialogOpen, setDialogOpen] = useState(false);
   const [selectedAsset, setSelectedAsset] = useState(null);
+  const assetsData = useAppSelector((state) => state.getERC20Token.assets);
+  console.log(assetsData);
+  const dispatch = useAppDispatch();
+  const activeAccount = useActiveAccount();
+
 
   const handleLendClick = (asset: any) => {
+    console.log(asset);
     setSelectedAsset(asset);
     setDialogOpen(true);
   };
+
+
+  useEffect(() => {
+    if (activeAccount) {
+      dispatch(getERC20Token({ assets: ASSETS, userAddress: activeAccount.address }));
+    }
+  }, [activeAccount]);
 
   return (
     <div className="w-full h-full flex flex-col gap-3">
@@ -36,13 +53,13 @@ const LendComponent = () => {
           <div className="overflow-auto rounded-b-lg bg-white/10 backdrop-blur-md">
             <table className="w-full">
               <tbody className="bg-transparent">
-                {ASSETS.map((asset, index) => (
+                {assetsData && assetsData.map((asset, index) => (
                   <tr key={index}>
                     <td className="py-4 px-6 text-white justify-center">
                       {asset.name}
                     </td>
                     <td className="py-4 px-6 text-white justify-center">
-                      {asset.walletBalance}
+                      {asset.balance.toString()}
                     </td>
                     <td className="py-4 px-6 flex justify-center">
                       <button
