@@ -3,6 +3,8 @@ import React from "react";
 import { useAppDispatch, useAppSelector } from "@/lib/hook";
 import { setPage } from "@/lib/features/pageSelector/pageSelectorSlice";
 import { usePathname, useRouter } from "next/navigation"; // Corrected import for useRouter
+import { ConnectButton, lightTheme } from "thirdweb/react";
+import { client } from "@/lib/client";
 
 const Navbar = () => {
   const router = useRouter();
@@ -20,13 +22,31 @@ const Navbar = () => {
   const isActive = (pageName: string) => pathname === `/${pageName}`;
 
   return (
-    <div >
+    <div>
       <img
         src="/logoText.svg"
         alt="logo"
         className="fixed top-4 left-5 z-[100] cursor-pointer select-none"
         onClick={() => router.push("/")}
       />
+      {pathname === "/" ? (
+        <></>
+      ) : (
+        <div className="fixed z-[100] top-3 right-3">
+          <div className="flex justify-center mb-20 ">
+            <ConnectButton
+              client={client}
+              theme={lightTheme({
+                colors: {
+                  primaryButtonBg: "#ffffff",
+                  primaryButtonText: "#000000",
+                },
+              })}
+              connectModal={{ size: "wide" }}
+            />
+          </div>
+        </div>
+      )}
       <div className="flex items-center justify-center w-full h-20 space-x-10 ">
         <span
           className={`text-l cursor-pointer select-none ${

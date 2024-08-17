@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { readContract, getContract } from "thirdweb";
-import { TokenContractABI } from "@/abis/tokenContractABI";
+import { tokenContractABI } from "@/abis/tokenContractABI";
 import { client } from "@/lib/client";
 import axios from "axios";
 import { sepolia } from "thirdweb/chains";
@@ -29,7 +29,7 @@ export const getERC20Token = createAsyncThunk("getUserData", async ({ assets, us
         for (const asset of assets) {
             const contract = await getContract({
                 address: asset.address,
-                abi: TokenContractABI.abi as any,
+                abi: tokenContractABI.abi as any,
                 client: client,
                 chain: sepolia
             });

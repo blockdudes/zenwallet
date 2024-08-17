@@ -95,9 +95,9 @@ const UserBorrowed = () => {
   };
 
   return (
-    <div className="w-full h-full flex flex-col gap-3">
+    <div className="w-full h-full flex flex-col gap-1">
       <button onClick={readRContract}>TTTt</button>
-      <div className="text-white ">ASSETS YOU BORROWED</div>
+      <div className="text-white bg-white/10 hover:bg-white/20 rounded-md px-5 py-1 backdrop-blur-sm ">ASSETS YOU BORROWED</div>
       <div className="relative">
         <div className="text-sm text-left text-gray-300">
           {/* Static header */}

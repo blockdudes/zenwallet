@@ -6,6 +6,8 @@ import {
   TabsBody,
   Tab,
   TabPanel,
+  Select,
+  Option,
 } from "@material-tailwind/react";
 import React, { useState } from "react";
 import toast from "react-hot-toast";
@@ -13,14 +15,30 @@ import { FaEthereum } from "react-icons/fa";
 import { SiJsonwebtokens } from "react-icons/si";
 import { BeatLoader } from "react-spinners";
 import { useActiveAccount } from "thirdweb/react";
+import { polygon, polygonAmoy, sepolia } from "thirdweb/chains";
+import { getContract, prepareContractCall, readContract } from "thirdweb";
+import { client } from "@/lib/client";
+import { zenContractABI } from "@/abis/zenContractABI";
+import { getNonce } from "thirdweb/extensions/farcaster"
+import { ethers } from "ethers";
+import { sendAndConfirmTransaction } from "thirdweb";
+import { tokenContractABI } from "@/abis/tokenContractABI"
 
 const SendDetailsTabs = () => {
+
   const [tokenAddress, setTokenAddress] = useState("");
   const [recipientAddress, setRecipientAddress] = useState("");
   const [amount, setAmount] = useState("");
   const [isEth, setIsEth] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const activeAccount = useActiveAccount();
+
+  const [selectedChain, setSelectedChain] = useState<typeof sepolia | typeof polygon>(sepolia);
+  // ... existing functions ...
+
+  const handleChainChange = (value: string | undefined) => {
+    setSelectedChain(value === "polygon" ? polygon : sepolia);
+  };
 
   const storeTransaction = (transactionData: any) => {
     // Fetch existing transactions from localStorage
@@ -43,43 +61,55 @@ const SendDetailsTabs = () => {
     );
   };
 
-  async function handleSend() {
-    setIsLoading(true);
-    // Store transaction data in local storage
-    const transactionData = {
-      TYPE: "send",
-      AMOUNT: amount,
-      TOKEN_ADDRESS: tokenAddress,
-      SENDER_ADDRESS: activeAccount?.address,
-      RECEIVER_ADDRESS: recipientAddress,
-    };
-    storeTransaction(transactionData);
+  async function handleSend(type: string) {
+    let result;
 
-    toast.promise(
-      new Promise<void>((resolve, reject) => {
-        console.log(isLoading);
-        setTimeout(() => {
-          setIsLoading(false);
-          resolve();
-          setRecipientAddress("");
-          setTokenAddress("");
-          setAmount("");
-        }, 3000);
-      }),
-      {
-        loading: "Sending...",
-        success: <b>Transaction sent!</b>,
-        error: <b>Could not send transaction.</b>,
-      }
-    );
-    console.log({
-      tokenAddress: isEth
-        ? "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"
-        : tokenAddress,
-      recipientAddress,
-      amount,
-      isEth,
-    });
+    if (type === "NATIVE") {
+      result = await handleSendETH();
+    } else if (type === "TOKEN") {
+      result = await handleSendERC20();
+    }
+
+    if (result) {
+      setIsLoading(true);
+      // Store transaction data in local storage
+      const transactionData = {
+        TYPE: "send",
+        AMOUNT: amount,
+        TOKEN_ADDRESS: tokenAddress,
+        SENDER_ADDRESS: activeAccount?.address,
+        RECEIVER_ADDRESS: recipientAddress,
+      };
+      storeTransaction(transactionData);
+
+      toast.promise(
+        new Promise<void>((resolve, reject) => {
+          console.log(isLoading);
+          setTimeout(() => {
+            setIsLoading(false);
+            resolve();
+            setRecipientAddress("");
+            setTokenAddress("");
+            setAmount("");
+          }, 3000);
+        }),
+        {
+          loading: "Sending...",
+          success: <b>Transaction sent!</b>,
+          error: <b>Could not send transaction.</b>,
+        }
+      );
+      console.log({
+        tokenAddress: isEth
+          ? "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"
+          : tokenAddress,
+        recipientAddress,
+        amount,
+        isEth,
+      });
+    } else {
+      toast.error("Transaction failed");
+    }
   }
 
   const handleTokenAddressChange = (e: React.ChangeEvent<HTMLInputElement>) =>
@@ -89,6 +119,148 @@ const SendDetailsTabs = () => {
   ) => setRecipientAddress(e.target.value);
   const handleAmountChange = (e: React.ChangeEvent<HTMLInputElement>) =>
     setAmount(e.target.value);
+
+
+  const handleSendERC20 = async () => {
+    try {
+      console.log(selectedChain.name, tokenAddress, recipientAddress, amount);
+
+      if (tokenAddress && recipientAddress && amount) {
+        console.log(tokenAddress, recipientAddress, amount);
+        const erc20Contract = getContract({
+          address: tokenAddress,
+          abi: tokenContractABI.abi as any,
+          client: client,
+          chain: polygonAmoy
+        });
+
+        console.log(erc20Contract);
+
+        const decimal = await readContract({
+          contract: erc20Contract,
+          method: "decimals",
+          params: []
+        });
+
+        console.log(decimal);
+
+        const approveTransaction = prepareContractCall({
+          contract: erc20Contract,
+          method: "function approve(address spender, uint256 value)",
+          params: ["0x54Dd044528656B3b43b037C7D3c189AbfD940a71", BigInt(ethers.utils.parseUnits(amount, decimal).toString())],
+          gas: BigInt(10000000)
+        });
+
+        const approveResult = activeAccount && await sendAndConfirmTransaction({
+          account: activeAccount,
+          transaction: approveTransaction
+        })
+
+        if (approveResult) {
+          if (approveResult.status === "success") {
+            const contract = getContract({
+              address: "0x54Dd044528656B3b43b037C7D3c189AbfD940a71",
+              abi: zenContractABI as any,
+              client: client,
+              chain: polygonAmoy
+            });
+            const addr = await readContract({
+              contract: contract,
+              method: "getWallet",
+              params: []
+            });
+            const nonce = await getNonce({
+              address: (addr as any).walletAddress,
+              client: client
+            });
+
+            const transaction = prepareContractCall({
+              contract: contract,
+              method: "sendToken(uint256 chainId, uint256 nonce, address to, address token, uint256 value, uint256 gasPrice, uint256 gasLimit) public payable",
+              params: [BigInt(selectedChain.id), nonce, recipientAddress, tokenAddress, BigInt(ethers.utils.parseUnits(amount, decimal).toString()), BigInt(31000000000), BigInt(80000)],
+              value: BigInt(ethers.utils.parseEther("0.001").toString()),
+              gas: BigInt(10000000)
+            });
+
+            const result = activeAccount && await sendAndConfirmTransaction({
+              account: activeAccount,
+              transaction: transaction
+            })
+
+            if (result) {
+              if (result.status === "success") {
+                return true
+              } else {
+                return false
+              }
+            } else {
+              return false
+            }
+          } else {
+            return false
+          }
+        } else {
+          return false
+        }
+      } else {
+        console.log("All Fields Required!");
+        toast.error("All Fields Required!");
+      }
+    } catch (error) {
+      console.log(error);
+      return false;
+    }
+  }
+
+  const handleSendETH = async () => {
+    try {
+      if (recipientAddress && amount) {
+        const contract = getContract({
+          address: "0x54Dd044528656B3b43b037C7D3c189AbfD940a71",
+          abi: zenContractABI as any,
+          client: client,
+          chain: polygonAmoy
+        });
+        const addr = await readContract({
+          contract: contract,
+          method: "getWallet",
+          params: []
+        });
+        const nonce = await getNonce({
+          address: (addr as any).walletAddress,
+          client: client,
+          chain: sepolia
+        });
+
+        const transaction = prepareContractCall({
+          contract: contract,
+          method: "function send(uint256 chainId, bytes memory data, uint256 nonce, address to, uint256 value, uint256 gasPrice, uint256 gasLimit) public payable",
+          params: [BigInt(selectedChain.id), "0x", nonce, recipientAddress, BigInt(ethers.utils.parseEther(amount).toString()), BigInt(31000000000), BigInt(25000)],
+          value: BigInt(ethers.utils.parseEther((Number(amount) + 0.001).toString()).toString()),
+          gas: BigInt(10000000)
+        });
+
+        const result = activeAccount && await sendAndConfirmTransaction({
+          account: activeAccount,
+          transaction: transaction
+        })
+
+        if (result) {
+          if (result.status === "success") {
+            return true
+          } else {
+            return false
+          }
+        } else {
+          return false
+        }
+      } else {
+        toast.error("All Fields Required!");
+      }
+    } catch (error) {
+      return false
+    }
+  }
 
   return (
     <div className="flex justify-center items-center h-full w-full">
@@ -140,6 +312,21 @@ const SendDetailsTabs = () => {
           >
             <TabPanel value="erc20">
               <div className="flex flex-col gap-2">
+                <Select
+                  label="Select Chain"
+                  value={selectedChain === polygon ? "polygon" : "sepolia"}
+                  onChange={handleChainChange}
+                  color="gray"
+                  // colors="white"
+                  className="w-full"
+                  placeholder="Choose a chain"
+                  onPointerEnterCapture={undefined}
+                  onPointerLeaveCapture={undefined}
+                >
+                  <Option value="polygon">Polygon</Option>
+                  <Option value="sepolia">Sepolia</Option>
+                  {/* Add more chains as needed */}
+                </Select>
                 <Input
                   type="text"
                   variant="outlined"
@@ -177,9 +364,36 @@ const SendDetailsTabs = () => {
                   crossOrigin={undefined}
                 />
               </div>
+              <div className="flex gap-2 items-center justify-center">
+                <button
+                  className="w-1/2 bg-white/10 backdrop-blur-sm rounded-lg p-2 my-4"
+                  onClick={() => handleSend("TOKEN")}
+                >
+                  <div className="flex items-center justify-center h-[20px] text-white">
+                    {isLoading ? <BeatLoader size={5} color="white" /> : "SEND T"}
+                  </div>
+                </button>
+              </div>
+
+
             </TabPanel>
             <TabPanel value="ethereum">
               <div className="flex flex-col gap-2">
+                <Select
+                  label="Select Chain"
+                  value={selectedChain === polygon ? "polygon" : "sepolia"}
+                  onChange={handleChainChange}
+                  color="gray"
+                  // colors="white"
+                  className="w-full"
+                  placeholder="Choose a chain"
+                  onPointerEnterCapture={undefined}
+                  onPointerLeaveCapture={undefined}
+                >
+                  <Option value="polygon">Polygon</Option>
+                  <Option value="sepolia">Sepolia</Option>
+                  {/* Add more chains as needed */}
+                </Select>
                 <Input
                   type="text"
                   variant="outlined"
@@ -205,17 +419,28 @@ const SendDetailsTabs = () => {
                   crossOrigin={undefined}
                 />
               </div>
+
+              <div className="flex gap-2 items-center justify-center">
+                <button
+                  className="w-1/2 bg-white/10 backdrop-blur-sm rounded-lg p-2 my-4"
+                  onClick={() => handleSend("NATIVE")}
+                >
+                  <div className="flex items-center justify-center h-[20px] text-white">
+                    {isLoading ? <BeatLoader size={5} color="white" /> : "SEND N"}
+                  </div>
+                </button>
+              </div>
             </TabPanel>
           </TabsBody>
         </Tabs>
-        <button
+        {/* <button
           className="w-1/2 bg-white/10 backdrop-blur-sm rounded-lg p-2"
           onClick={handleSend}
         >
           <div className="flex items-center justify-center h-[20px] text-white">
             {isLoading ? <BeatLoader size={5} color="white" /> : "SEND"}
           </div>
-        </button>
+        </button> */}
       </div>
     </div>
   );

@@ -30,13 +30,13 @@ const UserLended = () => {
   };
 
   return (
-    <div className="w-full h-full flex flex-col gap-3">
+    <div className="w-full h-full flex flex-col gap-1">
       <button className=" bg-white/10 hover:bg-white/20 rounded-md px-5 py-1 backdrop-blur-sm text-black"
       onClick={handleRefresh}
       >
         Refresh
       </button>
-      <div className="text-white ">ASSETS YOU LENDED</div>
+      <div className=" bg-white/10 hover:bg-white/20 rounded-md px-5 py-1 backdrop-blur-sm text-white ">ASSETS YOU LENDED</div>
       <div className="relative">
         <div className="text-sm text-left text-gray-300">
           {/* Static header */}

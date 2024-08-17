@@ -7,6 +7,16 @@ import { TokenSelectDialog } from "./tokenSelectDialog"; // Import the TokenSele
 import toast from "react-hot-toast";
 import { BeatLoader } from "react-spinners";
 import { useActiveAccount } from "thirdweb/react";
+import { getContract, readContract } from "thirdweb";
+import { uniswapRouterABI } from "@/abis/uniswapRouterABI";
+import { tokenContractABI } from "@/abis/tokenContractABI";
+import { zenContractABI } from "@/abis/zenContractABI";
+import { client } from "@/lib/client";
+import { sepolia } from "thirdweb/chains";
+import { ethers } from "ethers";
+import { polygonAmoy } from "thirdweb/chains";
+import { prepareContractCall, sendAndConfirmTransaction } from "thirdweb";
+import { getNonce } from "thirdweb/extensions/farcaster";
 
 const SwapModal = () => {
   const [sellAmount, setSellAmount] = useState("");
@@ -28,12 +38,61 @@ const SwapModal = () => {
   const activeAccount = useActiveAccount();
 
   // Define a new function to handle the sell amount change and calculate the buy amount
-  function handleSellAmountChange(e: React.ChangeEvent<HTMLInputElement>) {
+  async function handleSellAmountChange(e: React.ChangeEvent<HTMLInputElement>) {
     const sellValue = e.target.value;
     setSellAmount(sellValue);
-    const calculatedBuyAmount = sellValue ? (parseFloat(sellValue) * 5).toString() : "";
-    setBuyAmount(calculatedBuyAmount);
+
+    // If sellValue is empty or not a valid number, reset buyAmount and return
+    if (!sellValue || isNaN(Number(sellValue))) {
+      console.log("here");
+      setBuyAmount("");
+      return;
+    }
+
+    try {
+
+      const contract = getContract({
+        address: "0xC532a74256D3Db42D0Bf7a0400fEFDbad7694008",
+        abi: uniswapRouterABI as any,
+        client: client,
+        chain: sepolia
+      });
+
+      const erc20Contract = getContract({
+        address: sellToken.address,
+        abi: tokenContractABI.abi as any,
+        client: client,
+        chain: sepolia
+      });
+
+      const decimal = await readContract({
+        contract: erc20Contract,
+        method: "decimals",
+        params: []
+      });
+
+      console.log(decimal, sellValue);
+
+      const amountOut = await readContract({
+        contract: contract,
+        method: "getAmountsOut",
+        params: [BigInt(ethers.utils.parseUnits(sellValue, decimal).toString()), [sellToken.address, buyToken.address]]
+      })
+
+      console.log(amountOut);
+
+      const buyValueBigInt = amountOut[1];
+      const buyValueFormatted = ethers.utils.formatUnits(buyValueBigInt, decimal);
+
+      console.log(buyValueFormatted);
+      setBuyAmount((prev) => buyValueFormatted);
+    } catch (error) {
+      console.error("Error calculating buy amount:", error);
+      setBuyAmount("");
+    }
   }
+
+  console.log(buyAmount, "HELL");
 
   const storeTransaction = (transactionData: any) => {
     // Fetch existing transactions from localStorage
@@ -57,57 +116,155 @@ const SwapModal = () => {
   };
 
   async function handleSwap() {
-    setIsLoading(true);
-    if (sellToken.address === buyToken.address) {
-      toast.error("Tokens cannot be the same");
-      setIsLoading(false);
-      return;
-    }
-    const transactionData = {
-      TYPE: "swap",
-      AMOUNT: sellAmount,
-      TOKEN_ADDRESS: sellToken.address,
-      SENDER_ADDRESS: activeAccount?.address,
-      RECEIVER_ADDRESS: "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48",
-    };
-    storeTransaction(transactionData);
-
-    toast.promise(
-      new Promise<void>((resolve, reject) => {
-        console.log(isLoading);
-        setTimeout(() => {
-          setIsLoading(false);
-          resolve();
-          setSellAmount("");
-          setBuyAmount("");
-          setSellToken({
-            label: "",
-            address: "",
-            src: "https://assets.coingecko.com/coins/images/26580/standard/ONDO.png?1696525656",
-          });
-          setBuyToken({
-            label: "",
-            address: "",
-            src: "https://assets.coingecko.com/coins/images/26580/standard/ONDO.png?1696525656",
-          });
-        }, 3000);
-      }),
-      {
-        loading: "Sending...",
-        success: <b>Swap successful!</b>,
-        error: <b>Could not swap.</b>,
+    let result = await handleSwapToken();
+    if (result) {
+      setIsLoading(true);
+      if (sellToken.address === buyToken.address) {
+        toast.error("Tokens cannot be the same");
+        setIsLoading(false);
+        return;
       }
-    );
-    console.log({
-      "sell amount: ": sellAmount,
-      "sell token: ": sellToken.address,
-      "buy amount: ": buyAmount,
-      "buy token: ": buyToken.address,
-    });
+      const transactionData = {
+        TYPE: "swap",
+        AMOUNT: sellAmount,
+        TOKEN_ADDRESS: sellToken.address,
+        SENDER_ADDRESS: activeAccount?.address,
+        RECEIVER_ADDRESS: "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48",
+      };
+      storeTransaction(transactionData);
+
+      toast.promise(
+        new Promise<void>((resolve, reject) => {
+          console.log(isLoading);
+          setTimeout(() => {
+            setIsLoading(false);
+            resolve();
+            setSellAmount("");
+            setBuyAmount("");
+            setSellToken({
+              label: "",
+              address: "",
+              src: "https://assets.coingecko.com/coins/images/26580/standard/ONDO.png?1696525656",
+            });
+            setBuyToken({
+              label: "",
+              address: "",
+              src: "https://assets.coingecko.com/coins/images/26580/standard/ONDO.png?1696525656",
+            });
+          }, 3000);
+        }),
+        {
+          loading: "Sending...",
+          success: <b>Swap successful!</b>,
+          error: <b>Could not swap.</b>,
+        }
+      );
+      console.log({
+        "sell amount: ": sellAmount,
+        "sell token: ": sellToken.address,
+        "buy amount: ": buyAmount,
+        "buy token: ": buyToken.address,
+      });
+    }
+  }
+
+
+  const handleSwapToken = async () => {
+    try {
+      if (sellToken.address && buyToken.address && sellAmount && buyAmount) {
+        console.log("here");
+
+
+        const erc20Contract = getContract({
+          address: sellToken.address,
+          abi: tokenContractABI.abi as any,
+          client: client,
+          chain: polygonAmoy
+        });
+
+        console.log(erc20Contract);
+
+        const decimal = await readContract({
+          contract: erc20Contract,
+          method: "decimals",
+          params: []
+        });
+
+        console.log(decimal);
+
+        const approveTransaction = prepareContractCall({
+          contract: erc20Contract,
+          method: "function approve(address spender, uint256 value)",
+          params: ["0x54Dd044528656B3b43b037C7D3c189AbfD940a71", BigInt(ethers.utils.parseUnits(sellAmount, decimal).toString())],
+          gas: BigInt(10000000)
+        });
+
+        const approveResult = activeAccount && await sendAndConfirmTransaction({
+          account: activeAccount,
+          transaction: approveTransaction
+        })
+
+        if (approveResult) {
+          if (approveResult.status === "success") {
+            if (approveResult.status === "success") {
+              const contract = getContract({
+                address: "0x54Dd044528656B3b43b037C7D3c189AbfD940a71",
+                abi: zenContractABI as any,
+                client: client,
+                chain: polygonAmoy
+              });
+              const addr = await readContract({
+                contract: contract,
+                method: "getWallet",
+                params: []
+              });
+              const nonce = await getNonce({
+                address: (addr as any).walletAddress,
+                client: client
+              });
+
+              const transaction = prepareContractCall({
+                contract: contract,
+                method: "function swapTokens(address tokenIn, address tokenOut, uint256 amountIn, uint256 amountOutMinimum, address recipient, uint256 nonce, uint256 gasPrice, uint256 gasLimit, uint256 chainId) public",
+                params: [sellToken.address, buyToken.address, BigInt(ethers.utils.parseUnits(sellAmount, decimal).toString()), BigInt(ethers.utils.parseUnits(buyAmount, decimal).toString()), "0x54Dd044528656B3b43b037C7D3c189AbfD940a71", nonce, BigInt(31000000000), BigInt(80000), BigInt(polygonAmoy.id)],
+                value: BigInt(ethers.utils.parseEther("0.001").toString()),
+                gas: BigInt(10000000)
+              });
+
+              const result = activeAccount && await sendAndConfirmTransaction({
+                account: activeAccount,
+                transaction: transaction
+              })
+
+              if (result) {
+                if (result.status === "success") {
+                  return true
+                } else {
+                  return false
+                }
+              } else {
+                return false
+              }
+            }
+          } else {
+            return false;
+          }
+        } else {
+          return false;
+        }
+      } else {
+        toast.error("Please select a token and amount");
+      }
+
+    } catch (error) {
+      console.log(error);
+      return false;
+    }
   }
 
   return (
     <div className="flex flex-col justify-center items-center h-full w-full gap-4 bg-gray-500/10 backdrop-blur-md p-2 rounded-lg">
+      <button onClick={handleSwapToken}>uniswap</button>
       <div className="relative flex flex-col justify-center items-center h-full w-full gap-2">
         {/* Sell Section */}
         <div className="w-full h-[120px] rounded-[10px] p-4 border-white/20 border-[1px] bg-white/10 backdrop-blur-md">
@@ -162,12 +319,12 @@ const SwapModal = () => {
         <div className="w-full h-[120px] rounded-[10px] p-4 border-white/20 border-[1px] bg-white/20 backdrop-blur-md">
           <div className="flex w-full h-full justify-between items-center gap-4">
             <Input
-              type="number"
+              type="text"
               variant="standard"
               color="white"
               label="Buy"
               className="w-full [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
-              value={buyAmount}
+              value={buyAmount.slice(0, 5)}
               readOnly
               onPointerEnterCapture={undefined}
               onPointerLeaveCapture={undefined}

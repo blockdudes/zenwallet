@@ -1,4 +1,4 @@
-export const TokenContractABI = {
+export const tokenContractABI = {
   abi: [
     {
       type: "constructor",
@@ -481,15 +481,15 @@ export const TokenContractABI = {
         license: "MIT",
       },
       "lib/openzeppelin-contracts/contracts/token/ERC20/extensions/IERC20Metadata.sol":
-        {
-          keccak256:
-            "0xaa761817f6cd7892fcf158b3c776b34551cde36f48ff9703d53898bc45a94ea2",
-          urls: [
-            "bzz-raw://0ad7c8d4d08938c8dfc43d75a148863fb324b80cf53e0a36f7e5a4ac29008850",
-            "dweb:/ipfs/QmcrhfPgVNf5mkdhQvy1pMv51TFokD3Y4Wa5WZhFqVh8UV",
-          ],
-          license: "MIT",
-        },
+      {
+        keccak256:
+          "0xaa761817f6cd7892fcf158b3c776b34551cde36f48ff9703d53898bc45a94ea2",
+        urls: [
+          "bzz-raw://0ad7c8d4d08938c8dfc43d75a148863fb324b80cf53e0a36f7e5a4ac29008850",
+          "dweb:/ipfs/QmcrhfPgVNf5mkdhQvy1pMv51TFokD3Y4Wa5WZhFqVh8UV",
+        ],
+        license: "MIT",
+      },
       "lib/openzeppelin-contracts/contracts/utils/Context.sol": {
         keccak256:
           "0x493033a8d1b176a037b2cc6a04dad01a5c157722049bbecf632ca876224dd4b2",

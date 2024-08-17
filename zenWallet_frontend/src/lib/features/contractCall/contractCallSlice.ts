@@ -1,9 +1,8 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { TokenContractABI } from "../../../abis/tokenContractABI";
+import { tokenContractABI } from "../../../abis/tokenContractABI";
 import { getContract, prepareContractCall, readContract } from "thirdweb";
 import { sepolia } from "thirdweb/chains";
 import { client } from "@/lib/client";
-
 type userAsset = {
   name: string;
   amount: number;
@@ -22,12 +21,12 @@ export const getUserAssets = createAsyncThunk(
     try {
       const erc20Contract = getContract({
         address: "0x0000000000000000000000000000000000000000",
-        abi: TokenContractABI.abi as any,
+        abi: tokenContractABI.abi as any,
         chain: sepolia,
         client: client,
       });
 
-      
+
 
       const tokenBalance = await readContract({
         contract: erc20Contract,
@@ -36,7 +35,7 @@ export const getUserAssets = createAsyncThunk(
       });
 
 
-      return ;
+      return;
 
     } catch (error) {
       return rejectWithValue(error);
