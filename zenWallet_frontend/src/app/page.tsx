@@ -19,6 +19,8 @@ import { useEffect } from "react";
 export default function Home() {
   const status = useActiveWalletConnectionStatus();
   const account = useActiveAccount();
+  const router = useRouter();
+
   // const balance = useWalletBalance();
 
   console.log(account);
@@ -30,17 +32,16 @@ export default function Home() {
 
 
   useEffect(() => {
-
+    if (status === "connected") {
+      router.push("/wallet")
+    }
   }, [status]);
+
   const wallets = [
     createWallet("io.metamask"),
     createWallet("com.coinbase.wallet"),
     walletConnect(),
   ];
-
-
-
-  const router = useRouter();
   return (
     <main>
       <div className="min-h-[calc(100vh_-_228px)] w-full flex p-10 justify-center items-center align-center">
@@ -61,30 +62,20 @@ export default function Home() {
         <div className="absolute w-[500px] flex justify-center items-center top-[180px]   text-white uppercase text-5xl font-bold ">
           ZEN Wallet
         </div>
+        <ConnectButton
 
-        {status === "connected" ? (
-          <button
-            className="backdrop-blur-md rounded-md px-[20px] py-[10px] w-[200px] text-white"
-            onClick={() => router.push("/wallet")}
-          >
-            Connect Wallet
-          </button>
-        ) : (
-          <ConnectButton
+          client={client}
+          chains={[arbitrumSepolia, sepolia]}
+          wallets={wallets}
 
-            client={client}
-            chains={[arbitrumSepolia, sepolia]}
-            wallets={wallets}
-
-            theme={lightTheme({
-              colors: {
-                primaryButtonBg: "#ffffff",
-                primaryButtonText: "#000000",
-              },
-            })}
-            connectModal={{ size: "wide" }}
-          />
-        )}
+          theme={lightTheme({
+            colors: {
+              primaryButtonBg: "#ffffff",
+              primaryButtonText: "#000000",
+            },
+          })}
+          connectModal={{ size: "wide" }}
+        />
       </div>
     </main>
   );

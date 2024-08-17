@@ -168,12 +168,10 @@ const SwapModal = () => {
     }
   }
 
-
   const handleSwapToken = async () => {
     try {
       if (sellToken.address && buyToken.address && sellAmount && buyAmount) {
         console.log("here");
-
 
         const erc20Contract = getContract({
           address: sellToken.address,
@@ -220,15 +218,15 @@ const SwapModal = () => {
               });
               const nonce = await getNonce({
                 address: (addr as any).walletAddress,
-                client: client
+                client: client,
               });
 
               const transaction = prepareContractCall({
                 contract: contract,
                 method: "function swapTokens(address tokenIn, address tokenOut, uint256 amountIn, uint256 amountOutMinimum, address recipient, uint256 nonce, uint256 gasPrice, uint256 gasLimit, uint256 chainId) public",
-                params: [sellToken.address, buyToken.address, BigInt(ethers.utils.parseUnits(sellAmount, decimal).toString()), BigInt(ethers.utils.parseUnits(buyAmount, decimal).toString()), "0x54Dd044528656B3b43b037C7D3c189AbfD940a71", nonce, BigInt(31000000000), BigInt(80000), BigInt(polygonAmoy.id)],
+                params: [sellToken.address, buyToken.address, BigInt(ethers.utils.parseUnits(sellAmount, decimal).toString()), BigInt(ethers.utils.parseUnits(buyAmount, decimal).toString()), "0x54Dd044528656B3b43b037C7D3c189AbfD940a71", nonce, BigInt(31000000000), BigInt(80000), BigInt(sepolia.id)],
                 value: BigInt(ethers.utils.parseEther("0.001").toString()),
-                gas: BigInt(10000000)
+                // gas: BigInt(10000000)
               });
 
               const result = activeAccount && await sendAndConfirmTransaction({

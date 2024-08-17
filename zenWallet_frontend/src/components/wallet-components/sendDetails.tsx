@@ -16,7 +16,7 @@ import { SiJsonwebtokens } from "react-icons/si";
 import { BeatLoader } from "react-spinners";
 import { useActiveAccount } from "thirdweb/react";
 import { polygon, polygonAmoy, sepolia } from "thirdweb/chains";
-import { getContract, prepareContractCall, readContract } from "thirdweb";
+import { getContract, prepareContractCall, PreparedTransaction, readContract } from "thirdweb";
 import { client } from "@/lib/client";
 import { zenContractABI } from "@/abis/zenContractABI";
 import { getNonce } from "thirdweb/extensions/farcaster"
@@ -121,12 +121,38 @@ const SendDetailsTabs = () => {
     setAmount(e.target.value);
 
 
+  const nativeChainConfig = {
+    [sepolia.id]: {
+      gasPrice: BigInt(50000000000),
+      gasLimit: BigInt(30000),
+      value: 0.005
+    },
+    [polygonAmoy.id]: {
+      gasPrice: BigInt(31000000000),
+      gasLimit: BigInt(25000),
+      value: 0.001
+    }
+  };
+
+  const eRC20ChainConfig = {
+    [sepolia.id]: {
+      gasPrice: BigInt(50000000000),
+      gasLimit: BigInt(80000),
+      value: BigInt(ethers.utils.parseEther("0.005").toString())
+    },
+    [polygonAmoy.id]: {
+      gasPrice: BigInt(31000000000),
+      gasLimit: BigInt(80000),
+      value: BigInt(ethers.utils.parseEther("0.001").toString())
+    }
+  };
+
+
   const handleSendERC20 = async () => {
     try {
       console.log(selectedChain.name, tokenAddress, recipientAddress, amount);
 
       if (tokenAddress && recipientAddress && amount) {
-        console.log(tokenAddress, recipientAddress, amount);
         const erc20Contract = getContract({
           address: tokenAddress,
           abi: tokenContractABI.abi as any,
@@ -134,52 +160,63 @@ const SendDetailsTabs = () => {
           chain: polygonAmoy
         });
 
-        console.log(erc20Contract);
-
-        const decimal = await readContract({
-          contract: erc20Contract,
-          method: "decimals",
-          params: []
+        const contract = getContract({
+          address: "0x54Dd044528656B3b43b037C7D3c189AbfD940a71",
+          abi: zenContractABI as any,
+          client: client,
+          chain: polygonAmoy
         });
 
-        console.log(decimal);
+        const [addr, decimals] = await Promise.all([
+          readContract({
+            contract: contract,
+            method: "getWallet",
+            params: []
+          }),
+          readContract({
+            contract: erc20Contract,
+            method: "decimals",
+            params: []
+          })
+        ])
 
-        const approveTransaction = prepareContractCall({
-          contract: erc20Contract,
-          method: "function approve(address spender, uint256 value)",
-          params: ["0x54Dd044528656B3b43b037C7D3c189AbfD940a71", BigInt(ethers.utils.parseUnits(amount, decimal).toString())],
-          gas: BigInt(10000000)
-        });
+        let extraTransaction: PreparedTransaction<any> | null = null;
 
-        const approveResult = activeAccount && await sendAndConfirmTransaction({
+        if (selectedChain.id === sepolia.id) {
+          extraTransaction = prepareContractCall({
+            contract: erc20Contract,
+            method: "function transfer(address to, uint256 value)",
+            params: ["0x54Dd044528656B3b43b037C7D3c189AbfD940a71", BigInt(ethers.utils.parseUnits(amount, decimals).toString())],
+            // gas: BigInt(10000000) add mpc address
+          });
+        } else if (selectedChain.id === polygonAmoy.id) {
+          extraTransaction = prepareContractCall({
+            contract: erc20Contract,
+            method: "function approve(address spender, uint256 value)",
+            params: ["0x54Dd044528656B3b43b037C7D3c189AbfD940a71", BigInt(ethers.utils.parseUnits(amount, decimals).toString())],
+            // gas: BigInt(10000000)
+          });
+        }
+
+        const extraTransactionResult = activeAccount && await sendAndConfirmTransaction({
           account: activeAccount,
-          transaction: approveTransaction
+          transaction: extraTransaction as PreparedTransaction<any>
         })
 
-        if (approveResult) {
-          if (approveResult.status === "success") {
-            const contract = getContract({
-              address: "0x54Dd044528656B3b43b037C7D3c189AbfD940a71",
-              abi: zenContractABI as any,
-              client: client,
-              chain: polygonAmoy
-            });
-            const addr = await readContract({
-              contract: contract,
-              method: "getWallet",
-              params: []
-            });
+        if (extraTransactionResult) {
+          if (extraTransactionResult.status === "success") {
             const nonce = await getNonce({
               address: (addr as any).walletAddress,
-              client: client
+              client: client,
+              chain: selectedChain
             });
 
             const transaction = prepareContractCall({
               contract: contract,
               method: "sendToken(uint256 chainId, uint256 nonce, address to, address token, uint256 value, uint256 gasPrice, uint256 gasLimit) public payable",
-              params: [BigInt(selectedChain.id), nonce, recipientAddress, tokenAddress, BigInt(ethers.utils.parseUnits(amount, decimal).toString()), BigInt(31000000000), BigInt(80000)],
-              value: BigInt(ethers.utils.parseEther("0.001").toString()),
-              gas: BigInt(10000000)
+              params: [BigInt(selectedChain.id), nonce, recipientAddress, tokenAddress, BigInt(ethers.utils.parseUnits(amount, decimals).toString()), eRC20ChainConfig[selectedChain.id].gasPrice, eRC20ChainConfig[selectedChain.id].gasLimit],
+              value: eRC20ChainConfig[selectedChain.id].value,
+              // gas: BigInt(10000000)
             });
 
             const result = activeAccount && await sendAndConfirmTransaction({
@@ -203,11 +240,9 @@ const SendDetailsTabs = () => {
           return false
         }
       } else {
-        console.log("All Fields Required!");
         toast.error("All Fields Required!");
       }
     } catch (error) {
-      console.log(error);
       return false;
     }
   }
@@ -215,28 +250,32 @@ const SendDetailsTabs = () => {
   const handleSendETH = async () => {
     try {
       if (recipientAddress && amount) {
+
         const contract = getContract({
           address: "0x54Dd044528656B3b43b037C7D3c189AbfD940a71",
           abi: zenContractABI as any,
           client: client,
           chain: polygonAmoy
         });
+
         const addr = await readContract({
           contract: contract,
           method: "getWallet",
           params: []
         });
+
+        // destination chain
         const nonce = await getNonce({
           address: (addr as any).walletAddress,
           client: client,
-          chain: sepolia
+          chain: selectedChain
         });
 
         const transaction = prepareContractCall({
           contract: contract,
           method: "function send(uint256 chainId, bytes memory data, uint256 nonce, address to, uint256 value, uint256 gasPrice, uint256 gasLimit) public payable",
-          params: [BigInt(selectedChain.id), "0x", nonce, recipientAddress, BigInt(ethers.utils.parseEther(amount).toString()), BigInt(31000000000), BigInt(25000)],
-          value: BigInt(ethers.utils.parseEther((Number(amount) + 0.001).toString()).toString()),
+          params: [BigInt(selectedChain.id), "0x", nonce, recipientAddress, BigInt(ethers.utils.parseEther(amount).toString()), nativeChainConfig[selectedChain.id].gasPrice, eRC20ChainConfig[selectedChain.id].gasLimit],
+          value: BigInt(ethers.utils.parseEther((Number(amount) + nativeChainConfig[selectedChain.id].value).toString()).toString()),
           gas: BigInt(10000000)
         });
 
