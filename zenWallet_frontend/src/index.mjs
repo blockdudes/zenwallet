@@ -8,8 +8,8 @@
 
 
 import RLP from 'rlp';
-import {ethers} from "ethers";
 import { Transaction } from "ethers";
+import {ethers} from "ethers";
 
 const provider = new ethers.JsonRpcProvider("https://polygon-amoy.g.alchemy.com/v2/0hnyAnUKEEZR33s1EVRNly0BXZThh_XS");
 const wallet = new ethers.Wallet("7931780b6318d124c3e3c0b8654f59a5a31f561970b66e1b609b1e28f5b9438e", provider);
@@ -42,13 +42,13 @@ export async function rlpEncodeTx(to, value, gasLimit, gasPrice, nonce, data) {
     // );
 
     // console.log("rlpEncodedTx:", Buffer.from(rlpEncodedTx).toString('hex')); 
-    console.log( await provider.getTransactionCount('0xf858B9B489005f7E09B568ff05A91B5ab761a91F'))
+    // console.log( await provider.getTransactionCount('0xf858B9B489005f7E09B568ff05A91B5ab761a91F'))
 // const hexString = '0x' + transaction.map(byte => byte.toString(16).padStart(2, '0')).join('');
 // console.log(hexString);
 
-// const signature = ethers.id("Transfer(address indexed from, address indexed to, address indexed token, uint256 amount)")
-// const signatureHash = ethers.keccak256(signature)
-// console.log(signatureHash)
+const signature = ethers.id("Transfer(address,address,uint256,address,address)")
+const signatureHash = ethers.keccak256(signature)
+console.log(signatureHash)
 
 
 // latest 0.2512 balance before recieved

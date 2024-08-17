@@ -13,3 +13,6 @@
 [submodule "zen_contract/lib/v2-periphery"]
 	path = zen_contract/lib/v2-periphery
 	url = https://github.com/Uniswap/v2-periphery
+[submodule "zen_contract/lib/openzeppelin-contracts"]
+	path = zen_contract/lib/openzeppelin-contracts
+	url = https://github.com/OpenZeppelin/openzeppelin-contracts

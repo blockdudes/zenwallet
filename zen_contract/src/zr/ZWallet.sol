@@ -8,7 +8,7 @@ import "v2-periphery/interfaces/IUniswapV2Router01.sol";
 import "v2-core/interfaces/IERC20.sol";
 import "../aaveV3/IPool.sol";
 
-contract ZenContract {
+contract ZWallet {
     using Lib_RLPWriter for uint256;
     using Lib_RLPWriter for address;
     using Lib_RLPWriter for bytes;
@@ -19,6 +19,8 @@ contract ZenContract {
     error WalletAlreadyRegistered();
     error WalletNotExists();
     error ChainNotSupported();
+    event Transfer(address indexed from, address indexed to, uint256 value, address tokenin, address tokenout);
+
 
     bytes32 internal constant EVM_WALLET_TYPE =
         0xe146c2986893c43af5ff396310220be92058fb9f4ce76b929b80ef0d5307100a;
@@ -39,10 +41,10 @@ contract ZenContract {
         uint256 defaultGasLimit;
     }
 
-    modifier isWalletExists() {
-        require(isWalletCreated[msg.sender], "Wallet does not exist");
-        _;
-    }
+    // modifier isWalletExists() {
+    //     require(isWalletCreated[msg.sender], "Wallet does not exist");
+    //     _;
+    // }
 
     constructor(
         address _zrSignAddress,
@@ -54,6 +56,7 @@ contract ZenContract {
         aavePool = IPool(_aavePoolAddress);
         isChainSupported[11155111] = true;
         isChainSupported[80002] = true;
+        owner = msg.sender;
          _gasParams[11155111] = GasParams({
             defaultGasPrice: 50000000000,
             defaultGasLimit: 250000
@@ -68,8 +71,8 @@ contract ZenContract {
     IZrSign public signContract;
     IUniswapV2Router01 public uniswapRouter;
     IPool public aavePool;
-    mapping(address => uint256) public userMultisupportWallet;
-    mapping(address => bool) public isWalletCreated;
+    address public owner;
+    // mapping(address => uint256) public userMultisupportWallet;
     mapping(uint256 => bool) public isChainSupported;
     mapping(uint256 => GasParams) internal _gasParams;
     uint256 public walletIndex = 0;
@@ -84,21 +87,20 @@ contract ZenContract {
 
         signContract.zrKeyReq{value: msg.value}(params);
 
-        isWalletCreated[msg.sender] = true;
-        userMultisupportWallet[msg.sender] = walletIndex;
-        walletIndex++;
+        // isWalletCreated[msg.sender] = true;
+        // userMultisupportWallet[msg.sender] = walletIndex;
     }
 
-    function getWallet(address signer) public view returns (Wallet memory) {
+    function getWallet() public view returns (Wallet memory) {
         string memory zrKey = signContract.getZrKey(
             EVM_WALLET_TYPE,
             address(this),
-            userMultisupportWallet[signer]
+            walletIndex
         );
         return
             Wallet({
                 walletAddress: zrKey,
-                walletIndex: userMultisupportWallet[signer]
+                walletIndex: walletIndex
             });
     }
 
@@ -175,7 +177,6 @@ contract ZenContract {
 
     function _signAndSend(
         uint256 chainId,
-        address signer,
         bytes memory calldataPayload
     ) internal {
         if (!isChainSupported[chainId]) {
@@ -191,14 +192,18 @@ contract ZenContract {
 
         SignTypes.ZrSignParams memory params = SignTypes.ZrSignParams({
             walletTypeId: EVM_WALLET_TYPE,
-            walletIndex: getWallet(signer).walletIndex,
+            walletIndex: getWallet().walletIndex,
             dstChainId: chainId == 11155111 ? sepoliaChainId : amoyChainId,
             payload: calldataPayload,
             broadcast: true
         });
 
-        signContract.zrSignTx{value: 30000000000}(params);
-        // signContract.zrSignTx{value: msg.value}(params);
+        if (block.chainid == 1155111) {
+            signContract.zrSignTx{value: 0.005 ether}(params);
+        } else {
+            signContract.zrSignTx{value: 0.001 ether}(params);
+        }        
+        // send 0.001 polygon 0xF71fcD63097A3Ca675db549c15b8912b47aBf428
     }
 
     function send(
@@ -209,7 +214,7 @@ contract ZenContract {
         uint256 value,
         uint256 gasPrice,
         uint256 gasLimit
-    ) public payable isWalletExists {
+    ) public payable {
         if (!isChainSupported[chainId]) {
             revert ChainNotSupported();
         }
@@ -229,7 +234,8 @@ contract ZenContract {
             rlpPayloadData
         );
 
-        _signAndSend(chainId, msg.sender, rlpTransactionData);
+        _signAndSend(chainId, rlpTransactionData);
+        emit Transfer(msg.sender, to, value, address(0), address(0));
     }
 
     function recieve(
@@ -239,9 +245,9 @@ contract ZenContract {
         uint256 value,
         uint256 gasPrice,
         uint256 gasLimit
-    ) public payable isWalletExists {
+    ) public payable  {
         address payable walletAddress = payable(
-            stringToAddress(getWallet(msg.sender).walletAddress)
+            stringToAddress(getWallet().walletAddress)
         );
         walletAddress.transfer(value);
 
@@ -254,7 +260,7 @@ contract ZenContract {
             "0x"
         );
 
-        _signAndSend(chainId, msg.sender, rlpTransactionData);
+        _signAndSend(chainId, rlpTransactionData);
     }
 
     function recieveErc20(
@@ -265,10 +271,10 @@ contract ZenContract {
         uint256 gasPrice,
         uint256 gasLimit,
         address token
-    ) public payable isWalletExists {
+    ) public payable {
         IERC20(token).transferFrom(
             msg.sender,
-            stringToAddress(getWallet(msg.sender).walletAddress),
+            stringToAddress(getWallet().walletAddress),
             value
         );
 
@@ -289,7 +295,7 @@ contract ZenContract {
             rlpPayloadData
         );
 
-        _signAndSend(chainId, msg.sender, rlpTransactionData);
+        _signAndSend(chainId, rlpTransactionData);
     }
 
     function sendToken(
@@ -300,16 +306,18 @@ contract ZenContract {
         uint256 value,
         uint256 gasPrice,
         uint256 gasLimit
-    ) public isWalletExists {
+    ) public payable {
         if (!isChainSupported[chainId]) {
             revert ChainNotSupported();
         }
 
-        IERC20(token).transferFrom(
-            msg.sender,
-            stringToAddress(getWallet(msg.sender).walletAddress),
-            value
-        );
+        // IERC20(token).transferFrom(
+        //     msg.sender,
+        //     stringToAddress(getWallet().walletAddress),
+        //     value
+        // );
+
+        //send token to mpc
 
         bytes memory data = abi.encodeWithSelector(
             IERC20(token).transfer.selector,
@@ -320,15 +328,17 @@ contract ZenContract {
         bytes memory rlpPayloadData = rlpEncodeData(data);
 
         bytes memory rlpTransactionData = rlpEncodeTransaction(
-            nonce,
+            nonce ,
             gasPrice,
             gasLimit,
-            to,
-            value,
+            token,
+            0,
             rlpPayloadData
         );
 
-        _signAndSend(chainId, msg.sender, rlpTransactionData);
+        _signAndSend(chainId, rlpTransactionData);
+        emit Transfer(msg.sender, to, value, token, address(0));
+
     }
 
     function swapTokens(
@@ -341,49 +351,59 @@ contract ZenContract {
         uint256 gasPrice,
         uint256 gasLimit,
         uint256 chainId
-    ) public isWalletExists {
+    ) public payable {
+        
+        if(chainId == 11155111){
         IERC20(tokenIn).transferFrom(
             msg.sender,
-            address(bytes20(bytes(getWallet(msg.sender).walletAddress))),
+            stringToAddress(getWallet().walletAddress),
             amountIn
         );
+        }
 
-        bytes memory approveCalldata = _encodeTransaction(
-            abi.encodePacked(uint256(nonce)),
-            abi.encodePacked(uint256(gasPrice)),
-            abi.encodePacked(uint256(gasLimit)),
-            abi.encodePacked(address(uniswapRouter)),
-            abi.encodePacked(uint256(amountIn)),
-            abi.encodeWithSelector(
+          bytes memory data =  abi.encodeWithSelector(
                 IERC20.approve.selector,
                 address(uniswapRouter),
                 amountIn
-            )
-        );
+            );
 
-        _signAndSend(chainId, msg.sender, approveCalldata);
+        bytes memory rlpPayloadData = rlpEncodeData(data);
+
+        bytes memory approveCalldata = rlpEncodeTransaction(
+        nonce ,
+        gasPrice,
+        gasLimit,
+        address(uniswapRouter),
+        0,
+        rlpPayloadData
+    );
+
+        _signAndSend(chainId, approveCalldata);
 
         address[] memory path = new address[](2);
         path[0] = tokenIn;
         path[1] = tokenOut;
 
-        bytes memory swapCalldata = _encodeTransaction(
-            abi.encodePacked(uint256(nonce + 1)),
-            abi.encodePacked(uint256(gasPrice)),
-            abi.encodePacked(uint256(gasLimit)),
-            abi.encodePacked(address(uniswapRouter)),
-            abi.encodePacked(uint256(0)),
-            abi.encodeWithSelector(
-                uniswapRouter.swapTokensForExactTokens.selector,
-                amountIn,
-                amountOutMinimum,
-                path,
-                recipient,
-                block.timestamp + 300
-            )
-        );
+        
+        bytes memory swapCalldata = rlpEncodeTransaction(
+        nonce + 1 ,
+        gasPrice,
+        gasLimit,
+        address(uniswapRouter),
+        0,
+        rlpEncodeData(abi.encodeWithSelector(
+            uniswapRouter.swapTokensForExactTokens.selector,
+            amountIn,
+            amountOutMinimum,
+            path,
+            recipient,
+            block.timestamp + 300
+        ))
+    );
 
-        _signAndSend(chainId, msg.sender, swapCalldata);
+
+        _signAndSend(chainId, swapCalldata);
+        emit Transfer(address(uniswapRouter), recipient, amountOutMinimum, tokenIn, tokenOut);
     }
 
     function getAmountOut(
@@ -405,12 +425,12 @@ contract ZenContract {
         uint256 gasPrice,
         uint256 gasLimit,
         uint256 chainId
-    ) public isWalletExists {
-        IERC20(token).transferFrom(
-            msg.sender,
-            address(bytes20(bytes(getWallet(msg.sender).walletAddress))),
-            amount
-        );
+    ) public payable {
+        // IERC20(token).transferFrom(
+        //     msg.sender,
+        //     stringToAddress(getWallet().walletAddress),
+        //     amount
+        // );
 
         bytes memory approveCalldata = _encodeTransaction(
             abi.encodePacked(uint256(nonce)),
@@ -425,7 +445,7 @@ contract ZenContract {
             )
         );
 
-        _signAndSend(chainId, msg.sender, approveCalldata);
+        _signAndSend(chainId, approveCalldata);
 
         bytes memory supplyCalldata = _encodeTransaction(
             abi.encodePacked(uint256(nonce + 1)),
@@ -442,7 +462,7 @@ contract ZenContract {
             )
         );
 
-        _signAndSend(chainId, msg.sender, supplyCalldata);
+        _signAndSend(chainId, supplyCalldata);
     }
 
     function aaveBorrow(
@@ -453,10 +473,10 @@ contract ZenContract {
         uint256 gasPrice,
         uint256 gasLimit,
         uint256 chainId
-    ) public isWalletExists {
+    ) public payable {
         IERC20(asset).transferFrom(
             msg.sender,
-            stringToAddress(getWallet(msg.sender).walletAddress),
+            stringToAddress(getWallet().walletAddress),
             amount
         );
 
@@ -473,7 +493,7 @@ contract ZenContract {
             )
         );
 
-        _signAndSend(chainId, msg.sender, approveCalldata);
+        _signAndSend(chainId, approveCalldata);
 
         bytes memory borrowCalldata = _encodeTransaction(
             abi.encodePacked(uint256(nonce)),
@@ -491,7 +511,7 @@ contract ZenContract {
             )
         );
 
-        _signAndSend(chainId, msg.sender, borrowCalldata);
+        _signAndSend(chainId, borrowCalldata);
     }
 
     function aaveRepay(
@@ -502,10 +522,10 @@ contract ZenContract {
         uint256 gasPrice,
         uint256 gasLimit,
         uint256 chainId
-    ) public isWalletExists {
+    ) public payable {
         IERC20(asset).transferFrom(
             msg.sender,
-            stringToAddress(getWallet(msg.sender).walletAddress),
+            stringToAddress(getWallet().walletAddress),
             amount
         );
 
@@ -522,7 +542,7 @@ contract ZenContract {
             )
         );
 
-        _signAndSend(chainId, msg.sender, approveCalldata);
+        _signAndSend(chainId, approveCalldata);
 
         bytes memory repayCalldata = _encodeTransaction(
             abi.encodePacked(uint256(nonce)),
@@ -539,6 +559,6 @@ contract ZenContract {
             )
         );
 
-        _signAndSend(chainId, msg.sender, repayCalldata);
+        _signAndSend(chainId, repayCalldata);
     }
 }
