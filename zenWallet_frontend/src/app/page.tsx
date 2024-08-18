@@ -21,8 +21,10 @@ export default function Home() {
   const account = useActiveAccount();
   const router = useRouter();
 
-
   const wallets = [
+    createWallet("io.metamask"),
+    createWallet("com.coinbase.wallet"),
+    walletConnect(),
     inAppWallet({
       auth: {
         options: [
@@ -38,8 +40,6 @@ export default function Home() {
   
 
   if (status === "connected") {
-    setTimeout(() => {
-    }, 1000)
     router.push("/wallet")
   }
   else if (status === "disconnected") {

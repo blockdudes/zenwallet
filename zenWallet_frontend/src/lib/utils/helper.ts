@@ -24,12 +24,20 @@ async function fetchWalletAddress(email: string): Promise<string | null> {
     }
 }
 
+
 async function sendMessage(chatId: number, text: string, options: any = {}) {
-    await axios.post(`${TELEGRAM_API}/sendMessage`, {
-        chat_id: chatId,
-        text: text,
-        ...options
-    });
+    console.log(`Attempting to send message to ${chatId}: ${text}`, options);
+
+    try {
+        const response = await axios.post(`${TELEGRAM_API}/sendMessage`, {
+            chat_id: chatId,
+            text: text,
+            ...options
+        });
+        console.log('Message sent successfully:', response.data);
+    } catch (error) {
+       console.log(error)
+    }
 }
 
 async function getUserData(address: string) {

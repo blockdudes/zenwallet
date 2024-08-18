@@ -34,6 +34,7 @@ setBotCommands();
 async function handleMessage(update: any) {
     
     let chatId;
+    console.log(chatId)
     let text;
 
     if (update.callback_query) {

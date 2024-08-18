@@ -6,7 +6,7 @@ import { usePathname, useRouter } from "next/navigation"; // Corrected import fo
 import { ConnectButton, lightTheme } from "thirdweb/react";
 import { client } from "@/lib/client";
 import { polygonAmoy } from "thirdweb/chains";
-import { inAppWallet } from "thirdweb/wallets";
+import { createWallet, inAppWallet, walletConnect } from "thirdweb/wallets";
 
 const Navbar = () => {
   const router = useRouter();
@@ -16,6 +16,9 @@ const Navbar = () => {
   const dispatch = useAppDispatch();
 
   const wallets = [
+    createWallet("io.metamask"),
+    createWallet("com.coinbase.wallet"),
+    walletConnect(),
     inAppWallet({
       auth: {
         options: [
@@ -83,13 +86,13 @@ const Navbar = () => {
         >
           Swap
         </span>
-        <span
+        {/* <span
           className={`text-l cursor-pointer select-none ${isActive("aave") ? "text-yellow-500" : "text-white"
             }`}
           onClick={() => handleNavigation("aave")}
         >
           Aave
-        </span>
+        </span> */}
         <span
           className={`text-l cursor-pointer select-none ${isActive("history") ? "text-yellow-500" : "text-white"
             }`}
