@@ -16,7 +16,7 @@ async function fetchWalletAddress(email: string): Promise<string | null> {
     };
     try {
         const response = await axios.get(apiUrl, config);
-        return response.data[0].walletAddress; 
+        return response.data[0].walletAddress;
     } catch (error) {
         console.error('Error fetching wallet address:', error);
         return null;
@@ -31,4 +31,26 @@ async function sendMessage(chatId: number, text: string, options: any = {}) {
     });
 }
 
-export { fetchWalletAddress , sendMessage};
+async function getUserData(address: string) {
+    console.log("helper");
+    const response = await axios.get(`${process.env.NEXT_PUBLIC_SERVER_URL}/api/getUser/${address}`);
+    console.log(response);
+    return response.data;
+}
+
+async function postAsset(address: string, asset: string, amount: number, type: number) {
+    console.log({
+
+        "as": "93485349859347598347*************)@#97340957340957",
+        "address": address,
+        "asset": asset,
+        "amount": amount,
+        "type": type
+    });
+
+    const response = await axios.post(`/api/saveAave`, { userAddress: address, amount: amount, tokenAddress: asset, callbackType: type });
+    return "response.data";
+}
+
+
+export { fetchWalletAddress, sendMessage, getUserData, postAsset };

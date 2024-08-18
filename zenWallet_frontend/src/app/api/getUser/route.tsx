@@ -13,4 +13,3 @@ export const GET = async (request: any) => {
         return new Response(JSON.stringify({ error: 'Internal Server Error' }), { status: 500 });
     }
 }
-
