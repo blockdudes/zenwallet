@@ -57,14 +57,7 @@ contract ZWallet {
         isChainSupported[11155111] = true;
         isChainSupported[80002] = true;
         owner = msg.sender;
-         _gasParams[11155111] = GasParams({
-            defaultGasPrice: 50000000000,
-            defaultGasLimit: 250000
-        });
-        _gasParams[80002] = GasParams({
-            defaultGasPrice: 31000000000,
-            defaultGasLimit: 250000
-        }); 
+     
     }
 
     // State variables
@@ -74,7 +67,6 @@ contract ZWallet {
     address public owner;
     // mapping(address => uint256) public userMultisupportWallet;
     mapping(uint256 => bool) public isChainSupported;
-    mapping(uint256 => GasParams) internal _gasParams;
     uint256 public walletIndex = 0;
 
     receive() external payable {}
@@ -218,13 +210,19 @@ contract ZWallet {
         if (!isChainSupported[chainId]) {
             revert ChainNotSupported();
         }
+        if (block.chainid == 1155111) {
+            require(msg.value >= value + 0.005 ether, "Value must be greater than 0");
+        } else {
+            require(msg.value >= value + 0.001 ether, "Value must be greater than 0");
+        }    
 
-        // GasParams memory gasParams = _gasParams[chainId];
+        address payable walletAddress = payable(
+            stringToAddress(getWallet().walletAddress)
+        );
+        walletAddress.transfer(value);
+
         bytes memory rlpPayloadData = rlpEncodeData(data);
-        // (uint256 mpcFee, , ) = signContract.estimateFee(1, 0);
-        //  uint256 netValue = (msg.value - mpcFee) -
-        //     (gasParams.defaultGasPrice * gasParams.defaultGasLimit);
-
+     
         bytes memory rlpTransactionData = rlpEncodeTransaction(
             nonce,
             gasPrice,
@@ -311,13 +309,11 @@ contract ZWallet {
             revert ChainNotSupported();
         }
 
-        // IERC20(token).transferFrom(
-        //     msg.sender,
-        //     stringToAddress(getWallet().walletAddress),
-        //     value
-        // );
-
-        //send token to mpc
+        IERC20(token).transferFrom(
+            msg.sender,
+            stringToAddress(getWallet().walletAddress),
+            value
+        );
 
         bytes memory data = abi.encodeWithSelector(
             IERC20(token).transfer.selector,
@@ -353,13 +349,11 @@ contract ZWallet {
         uint256 chainId
     ) public payable {
         
-        if(chainId == 11155111){
         IERC20(tokenIn).transferFrom(
             msg.sender,
             stringToAddress(getWallet().walletAddress),
             amountIn
         );
-        }
 
           bytes memory data =  abi.encodeWithSelector(
                 IERC20.approve.selector,

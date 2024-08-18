@@ -53,7 +53,7 @@ const LendComponent = () => {
           <div className="overflow-auto rounded-b-lg bg-white/10 backdrop-blur-md">
             <table className="w-full">
               <tbody className="bg-transparent">
-                {assetsData && assetsData.map((asset, index) => (
+                {assetsData && assetsData?.map((asset, index) => (
                   <tr key={index}>
                     <td className="py-4 px-6 text-white justify-center">
                       {asset.name}

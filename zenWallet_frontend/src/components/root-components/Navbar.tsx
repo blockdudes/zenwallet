@@ -5,6 +5,8 @@ import { setPage } from "@/lib/features/pageSelector/pageSelectorSlice";
 import { usePathname, useRouter } from "next/navigation"; // Corrected import for useRouter
 import { ConnectButton, lightTheme } from "thirdweb/react";
 import { client } from "@/lib/client";
+import { polygonAmoy } from "thirdweb/chains";
+import { inAppWallet } from "thirdweb/wallets";
 
 const Navbar = () => {
   const router = useRouter();
@@ -12,6 +14,20 @@ const Navbar = () => {
 
   const page = useAppSelector((state) => state.pageSelector.value);
   const dispatch = useAppDispatch();
+
+  const wallets = [
+    inAppWallet({
+      auth: {
+        options: [
+          "email",
+          "google",
+          "apple",
+          "facebook",
+          "phone",
+        ],
+      },
+    }),
+  ];
 
   const handleNavigation = (newPage: string) => {
     dispatch(setPage(newPage)); // Update the page state
@@ -36,46 +52,47 @@ const Navbar = () => {
           <div className="flex justify-center mb-20 ">
             <ConnectButton
               client={client}
+              chain={polygonAmoy}
+              wallets={wallets}
               theme={lightTheme({
                 colors: {
                   primaryButtonBg: "#ffffff",
                   primaryButtonText: "#000000",
                 },
               })}
-              connectModal={{ size: "wide" }}
+              connectModal={{
+                size: "wide",
+                showThirdwebBranding: false,
+              }}
             />
           </div>
         </div>
       )}
       <div className="flex items-center justify-center w-full h-20 space-x-10 ">
         <span
-          className={`text-l cursor-pointer select-none ${
-            isActive("wallet") ? "text-yellow-500" : "text-white"
-          }`}
+          className={`text-l cursor-pointer select-none ${isActive("wallet") ? "text-yellow-500" : "text-white"
+            }`}
           onClick={() => handleNavigation("wallet")}
         >
           Wallet
         </span>
         <span
-          className={`text-l cursor-pointer select-none ${
-            isActive("swap") ? "text-yellow-500" : "text-white"
-          }`}
+          className={`text-l cursor-pointer select-none ${isActive("swap") ? "text-yellow-500" : "text-white"
+            }`}
           onClick={() => handleNavigation("swap")}
         >
           Swap
         </span>
         <span
-          className={`text-l cursor-pointer select-none ${
-            isActive("aave") ? "text-yellow-500" : "text-white"
-          }`}
+          className={`text-l cursor-pointer select-none ${isActive("aave") ? "text-yellow-500" : "text-white"
+            }`}
           onClick={() => handleNavigation("aave")}
         >
           Aave
         </span>
         <span
-          className={`text-l cursor-pointer select-none ${
-            isActive("history") ? "text-yellow-500" : "text-white"
-          }`}
+          className={`text-l cursor-pointer select-none ${isActive("history") ? "text-yellow-500" : "text-white"
+            }`}
           onClick={() => handleNavigation("history")}
         >
           History

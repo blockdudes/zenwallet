@@ -17,6 +17,7 @@ import { ethers } from "ethers";
 import { polygonAmoy } from "thirdweb/chains";
 import { prepareContractCall, sendAndConfirmTransaction } from "thirdweb";
 import { getChainNonce } from "../wallet-components/sendDetails";
+import { providerSepolia, zwalletAddress } from "@/lib/utils/helper";
 
 const SwapModal = () => {
   const [sellAmount, setSellAmount] = useState("");
@@ -112,14 +113,19 @@ const SwapModal = () => {
   };
 
   async function handleSwap() {
-    let result = await handleSwapToken();
-    if (result) {
-      setIsLoading(true);
-      if (sellToken.address === buyToken.address) {
-        toast.error("Tokens cannot be the same");
-        setIsLoading(false);
-        return;
+    setIsLoading(true);
+  
+    try {
+      let result = await handleSwapToken();
+
+      if (!result) {
+        throw new Error('Transaction rejected or failed');
       }
+  
+      if (sellToken.address === buyToken.address) {
+        throw new Error("Tokens cannot be the same");
+      }
+  
       const transactionData = {
         TYPE: "swap",
         AMOUNT: sellAmount,
@@ -128,39 +134,25 @@ const SwapModal = () => {
         RECEIVER_ADDRESS: "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48",
       };
       storeTransaction(transactionData);
-
-      toast.promise(
-        new Promise<void>((resolve, reject) => {
-          console.log(isLoading);
-          setTimeout(() => {
-            setIsLoading(false);
-            resolve();
-            setSellAmount("");
-            setBuyAmount("");
-            setSellToken({
-              label: "",
-              address: "",
-              src: "https://assets.coingecko.com/coins/images/26580/standard/ONDO.png?1696525656",
-            });
-            setBuyToken({
-              label: "",
-              address: "",
-              src: "https://assets.coingecko.com/coins/images/26580/standard/ONDO.png?1696525656",
-            });
-          }, 3000);
-        }),
-        {
-          loading: "Sending...",
-          success: <b>Swap successful!</b>,
-          error: <b>Could not swap.</b>,
-        }
-      );
-      console.log({
-        "sell amount: ": sellAmount,
-        "sell token: ": sellToken.address,
-        "buy amount: ": buyAmount,
-        "buy token: ": buyToken.address,
+  
+      setSellAmount("");
+      setBuyAmount("");
+      setSellToken({
+        label: "",
+        address: "",
+        src: "https://assets.coingecko.com/coins/images/26580/standard/ONDO.png?1696525656",
       });
+      setBuyToken({
+        label: "",
+        address: "",
+        src: "https://assets.coingecko.com/coins/images/26580/standard/ONDO.png?1696525656",
+      });
+  
+      toast.success(<b>Swap successful!</b>);
+    } catch (error: any) {
+      toast.error(<b>{error.message || 'Swap failed due to unknown reason.'}</b>);
+    } finally {
+      setIsLoading(false);
     }
   }
 
@@ -186,7 +178,7 @@ const SwapModal = () => {
         const approveTransaction = prepareContractCall({
           contract: erc20Contract,
           method: "approve",
-          params: ["0xa1059f3a472BBb3e212ea81d056eD19cde6e5A5F", BigInt(ethers.utils.parseUnits(sellAmount, decimal).toString())],
+          params: [zwalletAddress, BigInt(ethers.utils.parseUnits(sellAmount, decimal).toString())],
           gas: BigInt(10000000)
         });
         console.log(approveTransaction)
@@ -199,9 +191,8 @@ const SwapModal = () => {
 
         if (approveResult) {
           if (approveResult.status === "success") {
-            if (approveResult.status === "success") {
               const contract = getContract({
-                address: "0xa1059f3a472BBb3e212ea81d056eD19cde6e5A5F",
+                address: zwalletAddress,
                 abi: zenContractABI as any,
                 client: client,
                 chain: polygonAmoy
@@ -230,17 +221,19 @@ const SwapModal = () => {
 
               if (result) {
                 if (result.status === "success") {
-                  const privateKey = "0x";
-                  const provider = new ethers.providers.JsonRpcProvider("https://sepolia.rpc.thirdweb.com");
-                  // const nonce = await provider.getTransactionCount(activeAccount?.address);
+                  const privateKey: string = process.env.NEXT_PUBLIC_PRIVATE_KEY || "";
+                  const provider = providerSepolia;
                   const wallet = new ethers.Wallet(privateKey, provider);
-                  const uniswapRouterAddress = '0x54Dd044528656B3b43b037C7D3c189AbfD940a71';
+                  const uniswapRouterAddress = '0xC532a74256D3Db42D0Bf7a0400fEFDbad7694008';
                   const uniswapRouter = new ethers.Contract(uniswapRouterAddress, uniswapRouterABI, wallet);
                   const amountIn = ethers.utils.parseUnits(sellAmount, decimal);
                   const amountOutMin = ethers.utils.parseUnits(buyAmount, decimal);
                   const path = [sellToken.address, buyToken.address];
                   const to = activeAccount?.address;
                   const deadline = Math.floor(Date.now() / 1000) + 60 * 20;
+                  const erc20_contract = new ethers.Contract(sellToken.address, tokenContractABI.abi, wallet);
+                  const approve = await erc20_contract.approve(uniswapRouterAddress, amountIn);
+                  await approve.wait();
                   const tx = await uniswapRouter.swapTokensForExactTokens(
                     amountOutMin,
                     amountIn,
@@ -248,7 +241,7 @@ const SwapModal = () => {
                     to,
                     deadline,
                     {
-                      gasLimit: ethers.utils.hexlify(1000000) // Adjust as needed
+                      gasLimit: ethers.utils.hexlify(1000000)
                     }
                   );
                   const receipt = await tx.wait();
@@ -260,7 +253,6 @@ const SwapModal = () => {
               } else {
                 return false
               }
-            }
           } else {
             return false;
           }
@@ -279,7 +271,6 @@ const SwapModal = () => {
 
   return (
     <div className="flex flex-col justify-center items-center h-full w-full gap-4 bg-gray-500/10 backdrop-blur-md p-2 rounded-lg">
-      <button onClick={handleSwapToken}>uniswap</button>
       <div className="relative flex flex-col justify-center items-center h-full w-full gap-2">
         {/* Sell Section */}
         <div className="w-full h-[120px] rounded-[10px] p-4 border-white/20 border-[1px] bg-white/10 backdrop-blur-md">

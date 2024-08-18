@@ -36,8 +36,10 @@ const WalletPage = () => {
 
   useEffect(() => {
     console.log("USER");
-    dispatch(getUserData("0x44EEA30C2C35B10E7858C44787df948b0aaA7c2E"));
-  }, [])
+    if(account && account?.address){
+      dispatch(getUserData(account?.address));
+    }
+  }, [account])
 
   return (
     <div className="min-h-[calc(100vh_-_228px)] w-full flex p-10 justify-between items-center align-middle">
@@ -48,10 +50,14 @@ const WalletPage = () => {
           className="w-[400px] h-[400px] object-cover"
         />
       </div>
-      <div className="absolute top-[150px] left-[370px] flex justify-center align-middle items-start flex-col ">
-        <span className="text-white/50">Balance</span>
-        <span className=" text-[12px] text-white">{polygonAmoy.name}: {userPolygonBalance.data?.displayValue.slice(0, 5)} {userPolygonBalance.data?.symbol}</span>
-        <span className=" text-[12px] text-white">{sepolia.name}: {userSepoliaBalance.data?.displayValue.slice(0, 5)} {userSepoliaBalance.data?.symbol}</span>
+      <div className="absolute top-[150px] left-[370px] flex flex-col items-start justify-center space-y-2">
+        <span className="text-white/70 font-semibold">Balance</span>
+        <span className="text-white text-sm font-medium">
+          {polygonAmoy.name}: {userPolygonBalance.data?.displayValue.slice(0, 5)} {userPolygonBalance.data?.symbol}
+        </span>
+        <span className="text-white text-sm font-medium">
+          {sepolia.name}: {userSepoliaBalance.data?.displayValue.slice(0, 5)} {userSepoliaBalance.data?.symbol}
+        </span>
       </div>
       <div className="flex justify-center items-end flex-col gap-4 w-full min-h-full p-2">
         <button

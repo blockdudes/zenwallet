@@ -11,17 +11,17 @@ import {
 const tokens = [
   {
     label: "DAI ",
-    address: "0x8D492c6bbbd7e876865a2a5d4833559e9b0b73c1",
+    address: "0xd9D669551F605c0032b6F853707dF74cBcb4B15F",
     src: "https://assets.coingecko.com/coins/images/9956/standard/Badge_Dai.png?1696509996",
   },
   {
     label: "USDC ",
-    address: "0x1854f0007819E877bA944C0eEEc198AE13675B05",
+    address: "0x267EFC7CCbCEf743FdA8EB1a3Ec95656a4A4CF25",
     src: "https://assets.coingecko.com/coins/images/6319/standard/usdc.png?1696506694",
   },
   {
     label: "USTD ",
-    address: "0xd7689c83e1Be126a9C1Cc2f387bBe6fE1e860708",
+    address: "0x21Dc74F18166F73d48978c3E3167F29c44a19328",
     src: "https://assets.coingecko.com/coins/images/325/standard/Tether.png?1696501661",
   },
 ];
