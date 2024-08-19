@@ -4,4 +4,5 @@ ngrok http --domain=terrapin-massive-moderately.ngrok-free.app 80
 
 curl -F "url=https://terrapin-massive-moderately.ngrok-free.app/api/registerUser" https://api.telegram.org/bot7229424671:AAEe6lbg_jszwwd7JFx3HrVyat4SJnLvva4/setWebhook
 
-curl -F "url=https://zenwallet.serveo.net/api/registerUser" https://api.telegram.org/bot7229424671:AAEe6lbg_jszwwd7JFx3HrVyat4SJnLvva4/setWebhook
+curl -F "url=https://zen-wallet.dev.blockdudes.com/api/registerUser" https://api.telegram.org/bot7229424671:AAEe6lbg_jszwwd7JFx3HrVyat4SJnLvva4/setWebhook
+

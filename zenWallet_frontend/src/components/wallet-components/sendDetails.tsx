@@ -16,7 +16,7 @@ import { SiJsonwebtokens } from "react-icons/si";
 import { BeatLoader } from "react-spinners";
 import { useActiveAccount } from "thirdweb/react";
 import { polygonAmoy, sepolia } from "thirdweb/chains";
-import { getContract, prepareContractCall, PreparedTransaction, readContract } from "thirdweb";
+import { getContract, prepareContractCall, PreparedTransaction, readContract, sendTransaction } from "thirdweb";
 import { client } from "@/lib/client";
 import { zenContractABI } from "@/abis/zenContractABI";
 import { getNonce } from "thirdweb/extensions/farcaster"
@@ -110,6 +110,7 @@ const SendDetailsTabs = () => {
         setAmount("");
       }
     } catch (error: any) {
+      console.log(error)
       toast.error(error.message || 'Could not send transaction.');
 
     } finally {
@@ -277,6 +278,7 @@ const SendDetailsTabs = () => {
         });
 
         const nonce  = await getChainNonce(selectedChain.id, (addr as any).walletAddress.toString());
+        console.log(BigInt(ethers.utils.parseEther((Number(amount) + nativeChainConfig[selectedChain.id].value).toString()).toString()))
 
         const transaction = prepareContractCall({
           contract: contract,
@@ -284,23 +286,26 @@ const SendDetailsTabs = () => {
           params: [BigInt(selectedChain.id), "0x", nonce, recipientAddress, BigInt(ethers.utils.parseEther(amount).toString()), nativeChainConfig[selectedChain.id].gasPrice, eRC20ChainConfig[selectedChain.id].gasLimit],
           // value: BigInt(ethers.utils.parseEther(Number(nativeChainConfig[selectedChain.id].value ).toString()).toString()),
           value: BigInt(ethers.utils.parseEther((Number(amount) + nativeChainConfig[selectedChain.id].value).toString()).toString()),
-          gas: BigInt(10000000)
+          gas: BigInt(1000000000000),
+          gasPrice: BigInt(210000),
         });
-   
-           const result = activeAccount && await sendAndConfirmTransaction({
+        
+        console.log(activeAccount)
+
+           const result = activeAccount && await sendTransaction({
             account: activeAccount,
             transaction: transaction
           })
 
-        if (result) {
-          if (result.status === "success") {
-            return true
-          } else {
-            return false
-          }
-        } else {
-          return false
-        }
+        // if (result) {
+        //   if (result.status === "success") {
+        //     return true
+        //   } else {
+        //     return false
+        //   }
+        // } else {
+        //   return false
+        // }
       } else {
         toast.error("All Fields Required!");
       }

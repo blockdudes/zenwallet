@@ -5,8 +5,8 @@ import { setPage } from "@/lib/features/pageSelector/pageSelectorSlice";
 import { usePathname, useRouter } from "next/navigation"; // Corrected import for useRouter
 import { ConnectButton, lightTheme } from "thirdweb/react";
 import { client } from "@/lib/client";
-import { polygonAmoy } from "thirdweb/chains";
-import { inAppWallet } from "thirdweb/wallets";
+import { polygonAmoy , defineChain} from "thirdweb/chains";
+import { createWallet, inAppWallet, walletConnect } from "thirdweb/wallets";
 
 const Navbar = () => {
   const router = useRouter();
@@ -16,6 +16,9 @@ const Navbar = () => {
   const dispatch = useAppDispatch();
 
   const wallets = [
+    createWallet("io.metamask"),
+    createWallet("com.coinbase.wallet"),
+    walletConnect(),
     inAppWallet({
       auth: {
         options: [
@@ -28,6 +31,7 @@ const Navbar = () => {
       },
     }),
   ];
+
 
   const handleNavigation = (newPage: string) => {
     dispatch(setPage(newPage)); // Update the page state

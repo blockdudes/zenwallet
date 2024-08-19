@@ -3,7 +3,7 @@ import { sendMessage } from "@/lib/utils/helper";
 import connectToDatabase from "@/lib/mongodb";
 import { User } from "@/lib/models/User";
 
-const UNISWAP_ROUTER_ADDRESS = "0x6CF35Df42a167B668cAae46AcE41A57D46cF51a9";
+const UNISWAP_ROUTER_ADDRESS = "0xC532a74256D3Db42D0Bf7a0400fEFDbad7694008";
 export const POST = async (request: any) => {
 	try {
         await connectToDatabase();

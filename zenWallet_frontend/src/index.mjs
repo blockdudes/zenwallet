@@ -8,12 +8,12 @@
 
 
 import RLP from 'rlp';
-import { Transaction } from "ethers";
+// import { Transaction } from "ethers";
 import {ethers} from "ethers";
 
-const provider = new ethers.JsonRpcProvider("https://polygon-amoy.g.alchemy.com/v2/0hnyAnUKEEZR33s1EVRNly0BXZThh_XS");
+const provider = new ethers.providers.JsonRpcProvider("https://polygon-amoy.g.alchemy.com/v2/0hnyAnUKEEZR33s1EVRNly0BXZThh_XS");
 const wallet = new ethers.Wallet("7931780b6318d124c3e3c0b8654f59a5a31f561970b66e1b609b1e28f5b9438e", provider);
-const abi = new ethers.AbiCoder()
+// const abi = new ethers.AbiCoder()
 
 export async function rlpEncodeTx(to, value, gasLimit, gasPrice, nonce, data) {
     const transaction = [
@@ -46,9 +46,8 @@ export async function rlpEncodeTx(to, value, gasLimit, gasPrice, nonce, data) {
 // const hexString = '0x' + transaction.map(byte => byte.toString(16).padStart(2, '0')).join('');
 // console.log(hexString);
 
-const signature = ethers.id("Transfer(address,address,uint256,address,address)")
-const signatureHash = ethers.keccak256(signature)
-console.log(signatureHash)
+const signature = ethers.utils.id("Transfer(address,address,uint256,address,address)")
+console.log(signature)
 
 
 // latest 0.2512 balance before recieved
