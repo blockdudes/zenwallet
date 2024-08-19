@@ -16,7 +16,6 @@ interface ISaveAaveData extends Document {
 }
 
 interface IUser extends Document {
-    email: string;
     walletAddress: string;
     telegramChatId: string;
     aaveData?: ISaveAaveData[];
@@ -30,8 +29,7 @@ const SaveAaveDataSchema = new Schema({
 });
 
 const UserSchema: Schema<IUser> = new Schema({
-    email: { type: String, required: true, unique: true, lowercase: true },
-    walletAddress: { type: String, required: true },
+    walletAddress: { type: String, required: true ,unique: true, lowercase: true},
     telegramChatId: { type: String, required: true },
     aaveData: { type: [SaveAaveDataSchema], default: [] },
 }, { timestamps: true });
