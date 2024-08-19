@@ -19,7 +19,7 @@ async function setBotCommands() {
     try {
         const commands = [
             { command: 'start', description: 'Start interacting with the bot' },
-            { command: 'register', description: 'Register your email' },
+            { command: 'register', description: 'Register your wallet address' },
             { command: 'help', description: 'Get help' },
         ];
         const response = await axios.post(`${TELEGRAM_API}/setMyCommands`, { commands });
@@ -34,6 +34,7 @@ setBotCommands();
 async function handleMessage(update: any) {
     
     let chatId;
+    console.log(chatId)
     let text;
 
     if (update.callback_query) {
@@ -61,33 +62,32 @@ async function handleMessage(update: any) {
         };
         await sendMessage(chatId, message, options);
     } else if (text === '/register' || text === 'register' && state !== 'awaiting_help') {
-        userStates[chatId] = 'awaiting_email';
-        await sendMessage(chatId, "Please enter your email:");
+        userStates[chatId] = 'awaiting_walletAddress';
+        await sendMessage(chatId, "Please enter your metamask wallet address:");
     } else if (text === 'help' || text === '/help') {
         userStates[chatId] = 'awaiting_help';
         await sendMessage(chatId, "Please write your query. We will contact you shortly.");
     } else if (state === 'awaiting_help') {
         await sendMessage(chatId, "Thanks, we will get back to you soon.");
         delete userStates[chatId];
-    } else if (state === 'awaiting_email') {
-        const existingUser = await User.findOne({email: text})
+    } else if (state === 'awaiting_walletAddress') {
+        const existingUser = await User.findOne({walletAddress: text})
         if(existingUser){
             await sendMessage(chatId, "You are already subscribed.");
         }else{
             await saveData(chatId, text);
             delete userStates[chatId];
-            await sendMessage(chatId, "Thank you, your email has been subscribed.");
+            await sendMessage(chatId, "Thank you, your wallet address has been subscribed.");
         }
     }
 }
 
 
-async function saveData(chatId: number, email: string) {
+async function saveData(chatId: number, walletAddress: string) {
     try {
         await connectToDatabase();
-        const walletAddress = await fetchWalletAddress(email);
+        // const walletAddress = await fetchWalletAddress(email);
         const newUser = new User({
-            email: email,
             walletAddress: walletAddress,
             telegramChatId: chatId,
         })
@@ -96,8 +96,8 @@ async function saveData(chatId: number, email: string) {
         await newUser.save(); 
         await sendMessage(chatId, "User registered successfully!");
     } catch (error) {
-        console.error('Failed to save email:', error);
-        await sendMessage(chatId, "Failed to save email.");
+        console.error('Failed to save wallet address:', error);
+        await sendMessage(chatId, "Failed to save wallet address.");
     }
 }
 

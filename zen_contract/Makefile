@@ -44,3 +44,5 @@ verify-token:
 # sepolia - libraries = ["src/zr/libraries/SignTypes.sol:SignTypes:0xa547575b26Ff136a9d2700ec067111cDAc67F158"]
 
 # amoy - libraries = ["src/	zr/libraries/SignTypes.sol:SignTypes:0xccF68f83A9A6A780cb00fC9C6509A1814dB617c8"]
+
+# curl -F "url=https://zen-wallet.dev.blockdudes.com/api/registerUser" https://api.telegram.org/bot7229424671:AAEe6lbg_jszwwd7JFx3HrVyat4SJnLvva4/setWebhook

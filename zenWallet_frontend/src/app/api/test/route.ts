@@ -21,33 +21,44 @@ export const POST = async (request: any) => {
         webhookData.event.data.block.logs.forEach(async (log: any) => {
 			if (log.topics.includes(erc20TransferSignatureHash)) {
                 console.log(log)
-				const fromAddress = ethers.utils.defaultAbiCoder.decode(['address'], log.topics[1])[0];
+                const fromAddress = ethers.utils.defaultAbiCoder.decode(['address'], log.topics[1])[0];
                 const toAddress = ethers.utils.defaultAbiCoder.decode(['address'], log.topics[2])[0];
                 const amount = ethers.utils.defaultAbiCoder.decode(['uint256'], log.data)[0];
-                const tokenInAddress = ethers.utils.defaultAbiCoder.decode(['address'], log.topics[3])[0];
-                const tokenOutAddress = ethers.utils.defaultAbiCoder.decode(['address'], log.topics[4])[0];
-
+                const tokenInAddress = log.topics[3] ? ethers.utils.defaultAbiCoder.decode(['address'], log.topics[3])[0] : ethers.constants.AddressZero;
+                const tokenOutAddress = log.topics[4] ? ethers.utils.defaultAbiCoder.decode(['address'], log.topics[4])[0] : ethers.constants.AddressZero;
+    
                 console.log(fromAddress, toAddress, tokenInAddress, tokenOutAddress, amount)
                 // 0xC96F22C409D374F33C577075178226aa838f0894 0x40181C67cD44a76BFE0aB62E439B6b3ef4CF096e 0x0000000000000000000000000000000000000000 10000000000000n
-                const fromUser = await User.findOne({ walletAddress: fromAddress });
-                const toUser = await User.findOne({ walletAddress: toAddress });
+                const fromUser = await User.findOne({ walletAddress: fromAddress }) || "null";
+                const toUser = await User.findOne({ walletAddress: toAddress }) || "null";
 
-                const fromChatId = fromUser?.chatId;
-                const toChatId = toUser?.chatId;
+                let fromChatId = null;
+                let toChatId = null;
 
-                
+                if(fromUser) {
+                    fromChatId = fromUser.telegramChatId;
+                }
+                if(toUser) {
+                    toChatId = toUser.telegramChatId;
+                }
+
 				if (fromAddress.toLowerCase() === UNISWAP_ROUTER_ADDRESS.toLowerCase() || toAddress.toLowerCase() === UNISWAP_ROUTER_ADDRESS.toLowerCase()) {
                     const action = fromAddress.toLowerCase() === UNISWAP_ROUTER_ADDRESS.toLowerCase() ? "received from" : "sent to";
                     const message = `A transaction of ${amount.toString()} tokens ${action} Uniswap.`;
+                    console.log("Sending message to Uniswap related addresses:", message);
                     fromChatId && await sendMessage(fromChatId, message);
                     toChatId && await sendMessage(toChatId, message);
                 } else {
-                    if (tokenInAddress === ethers.constants.AddressZero) { 
-                        fromChatId && await sendMessage(fromChatId, `ETH value of ${ethers.utils.formatEther(amount)} is deducted from your account.`);
-                        toChatId && await sendMessage(toChatId, `You have received ${ethers.utils.formatEther(amount)} ETH.`);
+                    if (tokenInAddress === "0x0000000000000000000000000000000000000000") { 
+                        console.log("Sending ETH transaction message.",fromChatId);
+                        console.log(fromChatId)
+                        console.log(toChatId)
+                        fromChatId && await sendMessage(fromChatId, `💰 ETH value of ${ethers.utils.formatEther(amount)} is deducted from your account.`);
+                        toChatId && await sendMessage(toChatId, `💰 You have received ${ethers.utils.formatEther(amount)} ETH.`);
                     } else { 
-                        fromChatId && await sendMessage(fromChatId, `Token value of ${amount.toString()} is deducted from your account.`);
-                        toChatId && await sendMessage(toChatId, `You have received ${amount.toString()} of token at address ${tokenInAddress}.`);
+                        console.log("Sending token transaction message.");
+                        fromChatId && await sendMessage(fromChatId, `💰 Token value of ${amount.toString()} is deducted from your account.`);
+                        toChatId && await sendMessage(toChatId, `💰 You have received ${amount.toString()} of token at address ${tokenInAddress}.`);
                     }
                 }
 			}

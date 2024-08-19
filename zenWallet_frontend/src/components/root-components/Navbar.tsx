@@ -5,7 +5,7 @@ import { setPage } from "@/lib/features/pageSelector/pageSelectorSlice";
 import { usePathname, useRouter } from "next/navigation"; // Corrected import for useRouter
 import { ConnectButton, lightTheme } from "thirdweb/react";
 import { client } from "@/lib/client";
-import { polygonAmoy , defineChain} from "thirdweb/chains";
+import { polygonAmoy } from "thirdweb/chains";
 import { createWallet, inAppWallet, walletConnect } from "thirdweb/wallets";
 
 const Navbar = () => {
@@ -87,13 +87,13 @@ const Navbar = () => {
         >
           Swap
         </span>
-        <span
+        {/* <span
           className={`text-l cursor-pointer select-none ${isActive("aave") ? "text-yellow-500" : "text-white"
             }`}
           onClick={() => handleNavigation("aave")}
         >
           Aave
-        </span>
+        </span> */}
         <span
           className={`text-l cursor-pointer select-none ${isActive("history") ? "text-yellow-500" : "text-white"
             }`}
